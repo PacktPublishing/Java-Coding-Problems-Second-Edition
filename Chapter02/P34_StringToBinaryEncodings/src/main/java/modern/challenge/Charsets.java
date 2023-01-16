@@ -19,13 +19,11 @@ public class Charsets {
         final StringBuilder strBinary = new StringBuilder();
 
         for (byte strbyte : strBytes) {
-
-            int copystrbyte = strbyte;
-
+           
             for (int i = 0; i < 8; i++) {
 
-                strBinary.append((copystrbyte & 128) == 0 ? 0 : 1);
-                copystrbyte <<= 1;
+                strBinary.append((strbyte & 128) == 0 ? 0 : 1);
+                strbyte <<= 1;
             }
 
             strBinary.append(" ");
