@@ -4,6 +4,10 @@ import java.io.IOException;
 
 public class Main {
 
+    public static final String LETTER = "A";
+    public static final String CHINESE = "暗";
+    public static final String EMOJI = "😍";
+    public static final String STR = "😍 I love 💕 you Ӝ so much 💕 😍 🎼🎼🎼!";
     public static void main(String[] args) throws IOException {
 
         System.out.println("""
@@ -12,46 +16,46 @@ public class Main {
             ////////////////////////////////////////////////////////////////////////
             """);
 
-        int cp1 = "A".charAt(0);
+        int cp1 = LETTER.charAt(0);
         String hcp1 = Integer.toHexString(cp1);
         String bcp1 = Integer.toBinaryString(cp1);
-        System.out.println("Decimal code point of 'A': " + cp1);
-        System.out.println("Hexadecimal code point of 'A': " + hcp1);
-        System.out.println("Binary encoding of 'A': " + bcp1);
+        System.out.println("LETTER, Decimal code point: " + cp1);
+        System.out.println("LETTER, Hexadecimal code point: " + hcp1);
+        System.out.println("LETTER, Binary encoding: " + bcp1);
 
         System.out.println();
 
-        int cp2 = "暗".charAt(0);
+        int cp2 = CHINESE.charAt(0);
         String hcp2 = Integer.toHexString(cp2);
         String bcp2 = Integer.toBinaryString(cp2);
-        System.out.println("Decimal code point of '暗': " + cp2);
-        System.out.println("Hexadecimal code point of '暗': " + hcp2);
-        System.out.println("Binary encoding of '暗': " + bcp2);
+        System.out.println("CHINESE, Decimal code point: " + cp2);
+        System.out.println("CHINESE, Hexadecimal code point: " + hcp2);
+        System.out.println("CHINESE, Binary encoding: " + bcp2);
 
         System.out.println();
 
         // this return a wrong result because the code point of 😍 is 128525 > 65535
-        int cp3 = "😍".charAt(0);
+        int cp3 = EMOJI.charAt(0);
         String hcp3 = Integer.toHexString(cp3);
         String bcp3 = Integer.toBinaryString(cp3);
-        System.out.println("Wrong decimal code point of '😍': " + cp3);
-        System.out.println("Wrong hexadecimal code point of '😍': " + hcp3);
-        System.out.println("Wrong binary encoding of '😍': " + bcp3);
+        System.out.println("EMOJI, Wrong decimal code point: " + cp3);
+        System.out.println("EMOJI, Wrong hexadecimal code point: " + hcp3);
+        System.out.println("EMOJI, Wrong binary encoding: " + bcp3);
 
         System.out.println();
 
         String result1 = Charsets.strToBinary("Hello World");
         System.out.println("Binary 'Hello World':" + result1);
 
-        String result2 = Charsets.strToBinary("A");
-        System.out.println("Binary 'A':" + result2);
+        String result2 = Charsets.strToBinary(LETTER);
+        System.out.println("LETTER, Binary:" + result2);
 
-        String result3 = Charsets.strToBinary("暗");
-        System.out.println("Binary '暗':" + result3);
+        String result3 = Charsets.strToBinary(CHINESE);
+        System.out.println("CHINESE, Binary:" + result3);
 
         // this return a wrong result because the code point of 😍 is 128525 > 65535
-        String result4 = Charsets.strToBinary("😍");
-        System.out.println("Binary '😍':" + result4);
+        String result4 = Charsets.strToBinary(EMOJI);
+        System.out.println("EMOJI, Binary:" + result4);
         
         System.out.println();
         System.out.println("""
@@ -60,63 +64,63 @@ public class Main {
             /////////////////////////////////
             """);
         
-        int ucp1 = "A".codePointAt(0);
+        int ucp1 = LETTER.codePointAt(0);
         String uhcp1 = Integer.toHexString(ucp1);
         String ubcp1 = Integer.toBinaryString(ucp1);
-        System.out.println("Decimal code point of 'A': " + ucp1);
-        System.out.println("Hexadecimal code point of 'A': " + uhcp1);
-        System.out.println("Binary encoding of 'A': " + ubcp1);
+        System.out.println("LETTER, Decimal code point: " + ucp1);
+        System.out.println("LETTER, Hexadecimal code point: " + uhcp1);
+        System.out.println("LETTER, Binary encoding: " + ubcp1);
 
         System.out.println();
 
-        int ucp2 = "暗".codePointAt(0);
+        int ucp2 = CHINESE.codePointAt(0);
         String uhcp2 = Integer.toHexString(ucp2);
         String ubcp2 = Integer.toBinaryString(ucp2);
-        System.out.println("Decimal code point of '暗': " + ucp2);
-        System.out.println("Hexadecimal code point of '暗': " + uhcp2);
-        System.out.println("Binary encoding of '暗': " + ubcp2);
+        System.out.println("CHINESE, Decimal code point: " + ucp2);
+        System.out.println("CHINESE, Hexadecimal code point: " + uhcp2);
+        System.out.println("CHINESE, Binary encoding: " + ubcp2);
 
         System.out.println();
 
-        int a1 = "A".charAt(0);
-        int a2 = "A".codePointAt(0);
+        int a1 = LETTER.charAt(0);
+        int a2 = LETTER.codePointAt(0);
         System.out.println("'a1', code point via charAt():" + a1);
         System.out.println("'a2', code point codePointAt():" + a2);
 
-        int b1 = "暗".charAt(0);
-        int b2 = "暗".codePointAt(0);
+        int b1 = CHINESE.charAt(0);
+        int b2 = CHINESE.codePointAt(0);
         System.out.println("'b1', code point via charAt():" + b1);
         System.out.println("'b2', code point codePointAt():" + b2);
 
-        int c1 = "😍".charAt(0);
-        int c2 = "😍".codePointAt(0);
+        int c1 = EMOJI.charAt(0);
+        int c2 = EMOJI.codePointAt(0);
         System.out.println("'c1', code point via charAt():" + c1);
         System.out.println("'c2', code point codePointAt():" + c2);
 
         System.out.println();
 
-        int ucp3 = "😍".codePointAt(0);
+        int ucp3 = EMOJI.codePointAt(0);
         String uhcp3 = Integer.toHexString(ucp3);
         String ubcp3 = Integer.toBinaryString(ucp3);
-        System.out.println("Wrong decimal code point of '😍': " + ucp3);
-        System.out.println("Wrong hexadecimal code point of '😍': " + uhcp3);
-        System.out.println("Binary encoding of '😍': " + ubcp3);
+        System.out.println("EMOJI, Decimal code point: " + ucp3);
+        System.out.println("EMOJI, Hexadecimal code point: " + uhcp3);
+        System.out.println("EMOJI, Binary encoding: " + ubcp3);
 
         System.out.println();
 
         String result5 = Charsets.codePointToBinary("Hello World");
         System.out.println("Binary 'Hello World':" + result5);
 
-        String result6 = Charsets.codePointToBinary("A");
-        System.out.println("Binary 'A':" + result6);
+        String result6 = Charsets.codePointToBinary(LETTER);
+        System.out.println("LETTER, Binary:" + result6);
 
-        String result7 = Charsets.codePointToBinary("暗");
-        System.out.println("Binary '暗':" + result7);
+        String result7 = Charsets.codePointToBinary(CHINESE);
+        System.out.println("CHINESE, Binary:" + result7);
 
-        String result8 = Charsets.codePointToBinary("😍");
-        System.out.println("Binary '😍':" + result8);
+        String result8 = Charsets.codePointToBinary(EMOJI);
+        System.out.println("EMOJI, Binary:" + result8);
 
-        String result9 = Charsets.codePointToBinary("😍 I love 💕 you Ӝ so much 💕 😍 🎼🎼🎼!");
+        String result9 = Charsets.codePointToBinary(STR);
         System.out.println("Binary of a combined string:" + result9);
 
         System.out.println();
@@ -129,7 +133,7 @@ public class Main {
         int cp = Character.codePointOf("Smiling Face with Heart-Shaped Eyes");
         System.out.println("Code point of 'Smiling Face with Heart-Shaped Eyes': " + cp);
 
-        int cpc = Character.codePointCount("😍", 0, "😍".length());
+        int cpc = Character.codePointCount(EMOJI, 0, EMOJI.length());
         System.out.println("Code point count of 'Smiling Face with Heart-Shaped Eyes': " + cpc);
     }
 }
