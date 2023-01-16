@@ -18,12 +18,12 @@ public class Charsets {
         final byte[] strBytes = str.getBytes(charset);
         final StringBuilder strBinary = new StringBuilder();
 
-        for (byte strbyte : strBytes) {
+        for (byte strByte : strBytes) {
            
             for (int i = 0; i < 8; i++) {
 
-                strBinary.append((strbyte & 128) == 0 ? 0 : 1);
-                strbyte <<= 1;
+                strBinary.append((strByte & 128) == 0 ? 0 : 1);
+                strByte <<= 1;
             }
 
             strBinary.append(" ");
