@@ -2,8 +2,12 @@ package modern.challenge;
 
 import java.util.Objects;
 
-public class NumberConverter {
-
+public final class NumberConverter {
+    
+    private NumberConverter() {
+        throw new AssertionError("Cannot be instantiated");
+    }
+    
     public static int toLeIntV1(byte[] arr, int offset) {
 
         if (offset < 0
