@@ -18,7 +18,6 @@ import java.awt.Point;
  * {@snippet lang="properties" :
  *     telemeter.precision.default=42
  *     telemeter.clazz.default=2
- *
  * }
  */
 public class Telemeter {
