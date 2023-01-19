@@ -9,8 +9,8 @@ import java.awt.Point;
  * {@snippet lang="java" :
  *     Telemeter.Calibrate.at(0.00001); // @link substring="Calibrate" target="Calibrate#at(double, String)"
  *     Telemeter telemeter = new Telemeter(
- *        ${telemeter.precision}, 
- *        ${telemeter.clazz}, 
+ *        #{telemeter.precision}, 
+ *        #{telemeter.clazz}, 
  *        "IP54" // @highlight regex='".*"'
  *     ); 
  * }
