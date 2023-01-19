@@ -48,7 +48,7 @@ public class Telemeter {
      * @return the computed distance as integer
      * 
      * <p><b>Example:</b></p>
-     * {@snippet file = "DistanceSnippet.java"}
+     * {@snippet class = "DistanceSnippet"}
      * 
      * <p><b>Defaults:</b></p>      
      * {@snippet file = ParamDefaultSnippet.properties region=dist}
@@ -76,12 +76,10 @@ public class Telemeter {
          * 
          * @param eps the telemeter is calibrated to this precision
          * @param type the type of calibration
-         * @return true, if calibration was done with success
-         *          
-         * {@snippet file = AtSnippet.txt region=only-code}       
+         * @return true, if calibration was done with success                              
          * 
          * <p><b>Example:</b></p>
-         * {@snippet file = "DistanceSnippet.java"}
+         * {@snippet file = AtSnippet.txt region=only-code}    
          * 
          * <p><b>Defaults:</b></p>      
          * {@snippet file = ParamDefaultSnippet.properties region=at}
