@@ -1,6 +1,6 @@
 // This is an example used in the documentation
 // @start region=only-code                
                                           // @highlight region substring="Calibrate" type=highlighted                                          
-Telemeter.Calibrate.at(0.00001, "HIGH");  // @replace substring='0.00001' replacement="eps" @replace substring='"HIGH"' replacement="..." 
+Telemeter.Calibrate.at(0.00001, "HIGH");  // @replace substring='0.00001' replacement="eps" @replace substring='"HIGH"' replacement='"..."' 
                                           // @end
 // @end region=only-code
