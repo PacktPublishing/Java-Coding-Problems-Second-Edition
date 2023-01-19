@@ -83,21 +83,22 @@ public class Main {
         System.out.println("\nInvoke Draft.write(String doc) and Writable.write(String doc):");
         Writable dpproxy = (Writable) Proxy.newProxyInstance(
                 Writable.class.getClassLoader(),
-                new Class<?>[]{Draft.class, Writable.class}, (o, m, p) -> {
+                new Class<?>[]{Writable.class, Draft.class}, (o, m, p) -> {
 
                     if (m.isDefault() && m.getName().equals("write")) {
 
                         Constructor<Lookup> cntr = Lookup.class
                                 .getDeclaredConstructor(Class.class);
 
-                        cntr.setAccessible(true);
+                        cntr.setAccessible(true);                      
 
                         cntr.newInstance(Draft.class)
                                 .in(Draft.class)
-                                .unreflectSpecial(m, Draft.class)
+                                .findSpecial(Draft.class, "write",
+                                        MethodType.methodType(void.class, String.class), Draft.class)
                                 .bindTo(o)
                                 .invokeWithArguments(p);
-
+                        
                         return cntr.newInstance(Writable.class)
                                 .in(Writable.class)
                                 .findSpecial(Writable.class, "write",
