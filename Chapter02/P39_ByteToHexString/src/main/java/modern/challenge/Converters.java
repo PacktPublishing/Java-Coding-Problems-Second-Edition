@@ -59,17 +59,21 @@ public final class Converters {
 
     public static String byteArrToHexStringV1(byte[] varr) {
 
+        if (varr == null || varr.length == 0) {
+            throw new IllegalArgumentException("The given array cannot be null or empty");
+        }
+
         char[] hexArray = "0123456789abcdef".toCharArray();
 
         int l = varr.length;
         char[] cs = new char[l * 2];
-        
+
         for (int i = 0; i < l; i++) {
-            
+
             int hex = varr[i] & 0xFF;;
             int higher = hex >>> 4;
             int lower = hex & 0x0F;
-            
+
             cs[i * 2 + 0] = hexArray[higher];
             cs[i * 2 + 1] = hexArray[lower];
         }
@@ -78,17 +82,30 @@ public final class Converters {
 
     public static String byteArrToHexStringV2(byte[] varr) {
 
+        if (varr == null || varr.length == 0) {
+            throw new IllegalArgumentException("The given array cannot be null or empty");
+        }
+
         return new BigInteger(1, varr).toString(16);
     }
 
     // this is slow, better avoid
     public static String byteArrToHexStringV3(byte[] varr) {
+
+        if (varr == null || varr.length == 0) {
+            throw new IllegalArgumentException("The given array cannot be null or empty");
+        }
+
         return IntStream.range(0, varr.length)
                 .mapToObj(i -> String.format("%02x", varr[i]))
                 .collect(Collectors.joining());
     }
 
     public static String byteArrToHexStringV4(byte[] varr) {
+
+        if (varr == null || varr.length == 0) {
+            throw new IllegalArgumentException("The given array cannot be null or empty");
+        }
 
         HexFormat hex = HexFormat.of();
 
@@ -113,12 +130,20 @@ public final class Converters {
 
     public static byte hexToByteV2(String s) {
 
+        if (s == null || s.length() != 2) {
+            throw new IllegalArgumentException("The given string is not a valid hexadecimal number");
+        }
+
         HexFormat hex = HexFormat.of();
 
         return hex.parseHex(s)[0];
     }
 
     public static byte[] hexStringToByteArrV1(String s) {
+
+        if (s == null || s.length() == 0) {
+            throw new IllegalArgumentException("The given string cannot be null or empty");
+        }
 
         char[] sc = s.toCharArray();
         int l = sc.length / 2;
@@ -141,6 +166,10 @@ public final class Converters {
     }
 
     public static byte[] hexStringToByteArrV2(String s) {
+
+        if (s == null || s.length() == 0) {
+            throw new IllegalArgumentException("The given string cannot be null or empty");
+        }
 
         HexFormat hex = HexFormat.of();
 
