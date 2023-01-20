@@ -5,7 +5,7 @@ public class OldConnection { // singleton
     private OldConnection() {
     }
 
-    private static class LazyConnection { // holderixc
+    private static class LazyConnection { // holder
 
         static final OldConnection INSTANCE = new OldConnection();
 

@@ -7,7 +7,7 @@ public class NewConnection { // singleton
 
     public static NewConnection get() {
 
-        class LazyConnection {
+        class LazyConnection { // holder
 
             static final NewConnection INSTANCE = new NewConnection();
 
