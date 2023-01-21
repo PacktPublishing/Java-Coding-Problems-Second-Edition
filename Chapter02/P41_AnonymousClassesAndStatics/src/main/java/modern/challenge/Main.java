@@ -36,6 +36,30 @@ public class Main {
         */
         
         // JDK 16+
+        /*
+        Printer printer = new Printer() {
+
+            @Override
+            public void print(String quality) {
+
+                if ("excellent".equals(quality)) {
+                    enableLaserGuidance();
+                    setHighResolution();
+                }
+
+                System.out.println("Printing your photos ...");
+            }
+
+            private static void enableLaserGuidance() {
+                System.out.println("Adding laser guidance ...");
+            }
+
+            private static void setHighResolution() {
+                System.out.println("Set high resolution ...");
+            }
+        };
+        */
+                
         Printer printer = new Printer() {
 
             @Override
@@ -59,8 +83,8 @@ public class Main {
                     System.out.println("Set high resolution ...");
                 }
             }
-        };
-         
+        };       
+
         printer.print("ok");
 
         System.out.println();
