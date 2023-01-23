@@ -4,14 +4,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // before JDK 16
+        printerTest();
+    }
+
+    public static void printerTest() {
+
+        // before JDK 16                
         /*
         Printer printer = new Printer() {
 
             @Override
             public void print(String quality) {
 
-                if ("excellent".equals(quality)) {
+                if ("best".equals(quality)) {
 
                     Tools tools = new Tools();
 
@@ -19,10 +24,10 @@ public class Main {
                     tools.setHighResolution();
                 }
 
-                System.out.println("Printing your photos ...");
+                System.out.println("Printing photo-test ...");
             }
 
-            private final class Tools {
+            class Tools {
 
                 private void enableLaserGuidance() {
                     System.out.println("Adding laser guidance ...");
@@ -32,22 +37,53 @@ public class Main {
                     System.out.println("Set high resolution ...");
                 }
             }
-        };
+        };    
         */
         
-        // JDK 16+
+        // before JDK 16 
         /*
         Printer printer = new Printer() {
 
             @Override
             public void print(String quality) {
 
-                if ("excellent".equals(quality)) {
+                class Tools {
+
+                    private void enableLaserGuidance() {
+                        System.out.println("Adding laser guidance ...");
+                    }
+
+                    private void setHighResolution() {
+                        System.out.println("Set high resolution ...");
+                    }
+                }
+
+                if ("best".equals(quality)) {
+
+                    Tools tools = new Tools();
+
+                    tools.enableLaserGuidance();
+                    tools.setHighResolution();
+                }
+
+                System.out.println("Printing photo-test ...");
+            }            
+        };
+        */
+        
+        // JDK 16+        
+        /*
+        Printer printer = new Printer() {
+
+            @Override
+            public void print(String quality) {
+
+                if ("best".equals(quality)) {
                     enableLaserGuidance();
                     setHighResolution();
                 }
 
-                System.out.println("Printing your photos ...");
+                System.out.println("Printing photo-test ...");
             }
 
             private static void enableLaserGuidance() {
@@ -58,19 +94,19 @@ public class Main {
                 System.out.println("Set high resolution ...");
             }
         };
-        */
-                
+        */           
+        
         Printer printer = new Printer() {
 
             @Override
             public void print(String quality) {
 
-                if ("excellent".equals(quality)) {
-                    Tools.enableLaserGuidance();                  
+                if ("best".equals(quality)) {
+                    Tools.enableLaserGuidance();
                     Tools.setHighResolution();
                 }
 
-                System.out.println("Printing your photos ...");
+                System.out.println("Printing photo-test ...");
             }
 
             private final static class Tools {
@@ -83,12 +119,10 @@ public class Main {
                     System.out.println("Set high resolution ...");
                 }
             }
-        };       
-
+        };
+         
         printer.print("ok");
-
         System.out.println();
-
-        printer.print("excellent");
+        printer.print("best");
     }
 }
