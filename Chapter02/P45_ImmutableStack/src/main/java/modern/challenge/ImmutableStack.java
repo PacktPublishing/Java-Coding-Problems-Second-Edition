@@ -7,7 +7,7 @@ public class ImmutableStack<E> implements Stack<E> {
     private final E head;
     private final Stack<E> tail;
 
-    public ImmutableStack(final E head, final Stack<E> tail) {
+    private ImmutableStack(final E head, final Stack<E> tail) {
         this.head = head;
         this.tail = tail;
     }
