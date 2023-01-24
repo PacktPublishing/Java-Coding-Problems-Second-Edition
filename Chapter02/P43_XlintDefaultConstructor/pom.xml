@@ -21,8 +21,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${mvn.compier.version}</version>
                 <configuration>
-                    <compilerArgs>
-                        <arg>-verbose</arg>
+                    <compilerArgs>                        
                         <arg>-Xlint:missing-explicit-ctor</arg>
                     </compilerArgs>
                 </configuration>

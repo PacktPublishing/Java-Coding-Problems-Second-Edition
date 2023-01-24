@@ -2,7 +2,7 @@ package modern.challenge;
 
 public class Parcel {
     
-    public void order(@New Parcel this){}
+    public void order(@New Parcel this) {}
     
     public void shipping(@Ordered Parcel this) {}
     
