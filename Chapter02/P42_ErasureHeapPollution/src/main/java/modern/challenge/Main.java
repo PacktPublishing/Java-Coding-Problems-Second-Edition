@@ -14,7 +14,7 @@ public class Main {
         Main.listsOfYeak(ints);
     }
 
-    // @SuppressWarnings({"unchecked"})
+    // @SuppressWarnings({"unchecked", "varargs"})
     @SafeVarargs
     public static <T> void listOf(List<T> list, T... ts) {
 
