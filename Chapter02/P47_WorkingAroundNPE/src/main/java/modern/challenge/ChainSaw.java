@@ -29,7 +29,8 @@ public final class ChainSaw {
 
         for (String m : MODELS) {
             if (model.endsWith(m)) { // m.endsWith(model) will not fix NPE as in equals() case
-                return new ChainSaw(model, UNKNOWN_POWER, (int) (Math.random() * 100)); // TO DO: replace UNKNOWN_POWER with code
+                // TO DO (JIRA ####): replace UNKNOWN_POWER with code
+                return new ChainSaw(model, UNKNOWN_POWER, (int) (Math.random() * 100));
             }
         }
 
