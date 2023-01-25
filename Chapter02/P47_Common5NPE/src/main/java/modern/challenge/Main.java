@@ -23,8 +23,8 @@ public class Main {
             ChainSaw.initChainSaw("Q22-T450"),
             ChainSaw.initChainSaw("QRT-T300"),
             ChainSaw.initChainSaw("Q-T900"),
-            null,
-            ChainSaw.initChainSaw("QMM3-T850"), // this model is not supported
+            null, // ops!
+            ChainSaw.initChainSaw("QMM-T850"), // this model is not supported
             ChainSaw.initChainSaw("ASR-T900")
         };
         
