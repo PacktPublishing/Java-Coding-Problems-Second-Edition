@@ -57,7 +57,9 @@ public class Usb {
         System.out.println(save(new File("pom.xml")));
         System.out.println(save("This is a plain string"));
         
-        // don't do this
-        // if("foo" instanceof String str) {}
+        // expression type cannot be a subtype of pattern type (upcasting is allowed)
+        // if ("foo" instanceof String str) {}
+        // if ("foo" instanceof CharSequence sequence) {}
+        
     }
 }
