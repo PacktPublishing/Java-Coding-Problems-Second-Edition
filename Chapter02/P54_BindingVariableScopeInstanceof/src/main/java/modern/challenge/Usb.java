@@ -30,7 +30,7 @@ public class Usb {
     }        
     
     // works with early returns
-    public int getStringLength(Object o) {        
+    public static int getStringLength(Object o) {        
         if (!(o instanceof String str)) {
             return 0;
         }
@@ -39,7 +39,7 @@ public class Usb {
     }
     
     // no overlap risks, but DON'T DO THIS!
-    private String strNumber(Object o) {
+    private static String strNumber(Object o) {
         
         if(o instanceof Integer nr) {
             return String.valueOf(nr.intValue());
@@ -52,18 +52,34 @@ public class Usb {
     }
        
     // DON'T DO THIS!
-    private final String str = "   I am a string with leading and trailing spaces     ";
-    public String convert(Object o) {
+    private static final String str = "   I am a string with leading and trailing spaces     ";
+    public static String convert(Object o) {
         if (o instanceof String str) { // local variable (binding variable) hides a field
             return str.strip(); // refers to binding variable, str
         } else {
             return str.strip(); // refers to field, str
         }        
     }
+    
+    // Reassigning binding variable is not possible in JDK 14/15, 
+    // but it is starting with JDK 16+
+    // HOWEVER, DON'T DO THIS!
+    static String dummy = "";
+    private static int getLength(Object o) {        
+        if(o instanceof String str) {
+            str = dummy; // reassigning binding variable
+            
+            return str.length(); // returns the length of 'dummy' not the passed 'str'
+        }
+        
+        return 0;
+    }
 
     public static void main(String[] args) throws IOException {
         System.out.println(save(Paths.get("pom.xml")));
         System.out.println(save(new File("pom.xml")));
         System.out.println(save("This is a plain string"));
+        
+        System.out.println("The string 'text' has a length of: " + getLength("text"));
     }
 }
