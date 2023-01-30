@@ -6,7 +6,7 @@ import java.util.Map;
 public class Main {
     
     interface Status {}    
-    static class Outline implements Status { void write(){}; }
+    static class Outline implements Status { void write() {}; }
     static class Draft implements Status { void review() {}; }
     static class Ready implements Status { void print() {}; }
 
