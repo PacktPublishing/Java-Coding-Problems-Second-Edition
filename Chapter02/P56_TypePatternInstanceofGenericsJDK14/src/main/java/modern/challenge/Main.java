@@ -34,9 +34,9 @@ public class Main {
             if (!chapters.isEmpty()) {
                 Status status = chapters.get(1);
                 if (status instanceof Outline) {
-                    Outline x = (Outline) status;
+                    Outline chapter = (Outline) status;
                     System.out.println("writing ...");
-                    x.write();
+                    chapter.write();
                 }
             }
         }
