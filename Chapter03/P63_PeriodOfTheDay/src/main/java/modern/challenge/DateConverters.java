@@ -1,6 +1,5 @@
 package modern.challenge;
 
-import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -14,7 +13,7 @@ public final class DateConverters {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static String toDayPeriodV1(Date date, ZoneId zoneId) throws ParseException {
+    public static String toDayPeriodV1(Date date, ZoneId zoneId) {
 
         Objects.requireNonNull(date, "The provided date cannot be null");
         Objects.requireNonNull(zoneId, "The provided zone id cannot be null");
