@@ -9,17 +9,17 @@ public final class DateConverters {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static YearMonth from(long t) {
+    public static YearMonth from(int t) {
 
         return YearMonth.of(1970, 1).with(ChronoField.PROLEPTIC_MONTH, t);
     }
 
-    public static long to(YearMonth u) {
+    public static int to(YearMonth u) {
 
         if (u == null) {
             throw new IllegalArgumentException("The given YearMonth cannot be null");
         }
 
-        return u.getLong(ChronoField.PROLEPTIC_MONTH);
+        return (int) u.getLong(ChronoField.PROLEPTIC_MONTH);
     }
 }
