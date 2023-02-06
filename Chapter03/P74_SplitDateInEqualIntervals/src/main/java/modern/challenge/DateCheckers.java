@@ -25,11 +25,11 @@ public final class DateCheckers {
         if (n <= 1) {
             throw new IllegalArgumentException("The given number of intervals must be >= 1");
         }
-
-        List<LocalDateTime> listOfDates = new ArrayList<>();
+        
         Duration range = Duration.between(start, end);
         Duration interval = range.dividedBy(n - 1);
 
+        List<LocalDateTime> listOfDates = new ArrayList<>();
         LocalDateTime timeline = start;
         for (int i = 0; i < n - 1; i++) {
             listOfDates.add(timeline);
