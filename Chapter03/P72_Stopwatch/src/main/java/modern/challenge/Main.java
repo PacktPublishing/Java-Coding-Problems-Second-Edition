@@ -9,23 +9,47 @@ public class Main {
        
        Thread.sleep(1000); // sleep 1s
        
-       long beta = ns.getElapsedTime();
+       long betans = ns.getElapsedTime();
        
        Thread.sleep(2000); // sleep 2s
        
        ns.stop();
        
-       long alfa = ns.getElapsedTime();
+       long alfans = ns.getElapsedTime();
 
-       System.out.println(beta + " nano");
-       System.out.println(ns.elapsedTimeToMillis(beta) + " millis");
-       System.out.println(ns.elapsedTimeToSeconds(beta) + " seconds");                  
+       System.out.println(betans + " nano");
+       System.out.println(ns.elapsedTimeToMillis(betans) + " millis");
+       System.out.println(ns.elapsedTimeToSeconds(betans) + " seconds");                  
+       
+       System.out.println();
+       
+       System.out.println(alfans + " nano");
+       System.out.println(ns.elapsedTimeToMillis(alfans) + " millis");
+       System.out.println(ns.elapsedTimeToSeconds(alfans) + " seconds");                  
+       
+       System.out.println("\n--------------------------------------------------\n");
+               
+       MillisStopwatch ms = new MillisStopwatch();
+       ms.start();
+       
+       Thread.sleep(1000); // sleep 1s
+       
+       long betams = ms.getElapsedTime();
+       
+       Thread.sleep(2000); // sleep 2s
+       
+       ms.stop();
+       
+       long alfams = ms.getElapsedTime();
+
+       System.out.println(betams + " millis");
+       System.out.println(ms.elapsedTimeToNanos(betams) + " nanos");
+       System.out.println(ms.elapsedTimeToSeconds(betams) + " seconds");                  
                    
        System.out.println();
        
-       System.out.println(alfa + " nano");
-       System.out.println(ns.elapsedTimeToMillis(alfa) + " millis");
-       System.out.println(ns.elapsedTimeToSeconds(alfa) + " seconds");       
-              
+       System.out.println(alfams + " millis");
+       System.out.println(ms.elapsedTimeToNanos(alfams) + " nanos");
+       System.out.println(ms.elapsedTimeToSeconds(alfams) + " seconds");                     
     }
 }
