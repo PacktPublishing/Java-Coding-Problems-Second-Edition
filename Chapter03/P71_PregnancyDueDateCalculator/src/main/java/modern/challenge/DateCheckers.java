@@ -12,13 +12,13 @@ public final class DateCheckers {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static void pregnancyCalculator(LocalDate theDay) {
+    public static void pregnancyCalculator(LocalDate firstDay) {
         
-        theDay = theDay.plusDays(PREGNANCY_DAYS);        
-        System.out.println("Due date: " + theDay);
+        firstDay = firstDay.plusDays(PREGNANCY_DAYS);        
+        System.out.println("Due date: " + firstDay);
         
         LocalDate today = LocalDate.now();
-        long betweenDays = Math.abs(ChronoUnit.DAYS.between(theDay, today));
+        long betweenDays = Math.abs(ChronoUnit.DAYS.between(firstDay, today));
         
         long diffDays = PREGNANCY_DAYS - betweenDays;
 
