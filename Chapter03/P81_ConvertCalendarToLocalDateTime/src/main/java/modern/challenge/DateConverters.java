@@ -19,7 +19,7 @@ public final class DateConverters {
         }
 
         // for LocalDate use LocalDate.ofInstant()
-        return LocalDateTime.ofInstant(calendar.toInstant(), // or, Instant.ofEpochMilli(calendar.getTimeInMillis()
+        return LocalDateTime.ofInstant(calendar.toInstant(), // or, Instant.ofEpochMilli(calendar.getTimeInMillis())
                 ZoneId.systemDefault());
     }
 
@@ -40,7 +40,7 @@ public final class DateConverters {
             throw new IllegalArgumentException("The given calendar cannot be null");
         }
 
-        return ZonedDateTime.ofInstant(calendar.toInstant(), // or, Instant.ofEpochMilli(calendar.getTimeInMillis()
+        return ZonedDateTime.ofInstant(calendar.toInstant(), // or, Instant.ofEpochMilli(calendar.getTimeInMillis())
                 calendar.getTimeZone().toZoneId());
     }
     
