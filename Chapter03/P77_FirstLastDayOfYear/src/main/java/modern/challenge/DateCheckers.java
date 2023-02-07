@@ -3,6 +3,7 @@ package modern.challenge;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +31,8 @@ public final class DateCheckers {
     
     public static String firstDayOfYearV2(int year, boolean name) {
 
-        LocalDate firstDay = LocalDate.ofYearDay(year, 1);
+        LocalDate ld = LocalDate.ofYearDay(year, 1);
+        LocalDate firstDay = ld.with(firstDayOfYear());
       
         if (!name) {
             return firstDay.toString();
