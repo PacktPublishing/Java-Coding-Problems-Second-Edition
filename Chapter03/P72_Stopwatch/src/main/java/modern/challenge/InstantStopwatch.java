@@ -1,20 +1,22 @@
 package modern.challenge;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-public final class NanoStopwatch {
+public final class InstantStopwatch {
 
-    private long startTime;
-    private long stopTime;
+    private Instant startTime;
+    private Instant stopTime;
     private boolean running;
 
     public void start() {
-        this.startTime = System.nanoTime();
+        this.startTime = Instant.now();
         this.running = true;
     }
 
     public void stop() {
-        this.stopTime = System.nanoTime();
+        this.stopTime = Instant.now();
         this.running = false;
     }
 
@@ -22,9 +24,9 @@ public final class NanoStopwatch {
     public long getElapsedTime() {
                 
         if (running) {
-            return System.nanoTime() - startTime;
+            return ChronoUnit.NANOS.between(startTime, Instant.now());            
         } else {
-            return stopTime - startTime;            
+            return ChronoUnit.NANOS.between(startTime, stopTime);            
         }        
     }
     
