@@ -1,7 +1,7 @@
 package modern.challenge;
 
 public record MelonRecord(String type, int weight) {
-
+ 
     // provide an explicit constructor for validation purposes
     /*
     public MelonRecord(String type, int weight) {
