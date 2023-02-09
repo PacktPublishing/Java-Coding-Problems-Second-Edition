@@ -7,6 +7,7 @@ public class Main {
         MelonRecord melon = new MelonRecord("Cantaloupe", 2600);
         
         System.out.println(melon);
-        System.out.println(melon.weight() + " g = " + melon.weightToKg() + " Kg");        
+        System.out.println(melon.weight() + " g");
+        melon.exterminatePest();
     }
 }
