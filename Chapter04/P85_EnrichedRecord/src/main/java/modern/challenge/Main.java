@@ -8,5 +8,10 @@ public class Main {
         
         System.out.println(melon);
         System.out.println(melon.weight() + " g = " + melon.weightToKg() + " Kg");        
+        
+        System.out.println();
+        
+        MelonRecord.Slicer slicer= new MelonRecord.Slicer();
+        slicer.slice(melon, 10);
     }
 }
