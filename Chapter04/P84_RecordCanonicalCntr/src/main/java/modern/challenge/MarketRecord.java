@@ -2,9 +2,13 @@ package modern.challenge;
  
 import java.util.Map;
 
-public record MarketRecord(Map<String, Integer> retailPrices) {
+public record MarketRecord(Map<String, Integer> retails) {
 
     public MarketRecord {
-        retailPrices = Map.copyOf(retailPrices);
+        retails.putIfAbsent("Celery", 4); // this is allowed
+        
+        retails = Map.copyOf(retails);
+        
+        // retails.putIfAbsent("Lemon", 11); // this is not allowed
     }
 }
