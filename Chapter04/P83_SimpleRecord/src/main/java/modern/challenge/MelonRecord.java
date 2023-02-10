@@ -1,3 +1,3 @@
 package modern.challenge;
 
-public record MelonRecord(String type, int weight) {}
+public record MelonRecord(String type, float weight) {}
