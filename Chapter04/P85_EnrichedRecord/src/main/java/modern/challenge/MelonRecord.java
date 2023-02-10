@@ -3,15 +3,16 @@ package modern.challenge;
 public record MelonRecord(String type, float weight) {
 
     private static final String DEFAULT_MELON_TYPE = "Crenshaw";
+    private static final float DEFAULT_MELON_WEIGHT = 1000;
 
     public float weightToKg() {
 
         return weight / 1_000;
     }
 
-    public static String getDefaultMelon() {
+    public static MelonRecord getDefaultMelon() {
 
-        return DEFAULT_MELON_TYPE;
+        return new MelonRecord(DEFAULT_MELON_TYPE, DEFAULT_MELON_WEIGHT);
     }
 
     public static class Slicer {
