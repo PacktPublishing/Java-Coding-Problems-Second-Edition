@@ -6,9 +6,9 @@ import java.util.Objects;
 public class Melon implements Serializable {
 
     private final String type;
-    private final int weight;
+    private final float weight;
 
-    public Melon(String type, int weight) {
+    public Melon(String type, float weight) {
         
         Objects.requireNonNull(type, "The melon's type cannot be null");
         
@@ -25,17 +25,17 @@ public class Melon implements Serializable {
         return type;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.type);
-        hash = 47 * hash + this.weight;
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.type);
+        hash = 89 * hash + Float.floatToIntBits(this.weight);
         return hash;
-    }
+    }   
 
     @Override
     public boolean equals(Object obj) {
