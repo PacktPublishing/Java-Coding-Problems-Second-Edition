@@ -55,6 +55,7 @@ public class Main {
 
         System.out.println(desGacContainerR);
         
+        /* this will cause the exception of malicious data
         MelonContainerRecord maliciousDesGacContainerR;
         try ( ObjectInputStream ios = new ObjectInputStream(
                 new FileInputStream("object_record_malicious.data"))) {
@@ -62,5 +63,6 @@ public class Main {
         }
 
         System.out.println(maliciousDesGacContainerR);
+        */
     }
 }
