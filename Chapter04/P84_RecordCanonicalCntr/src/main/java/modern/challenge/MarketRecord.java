@@ -11,4 +11,13 @@ public record MarketRecord(Map<String, Integer> retails) {
         
         // retails.putIfAbsent("Lemon", 11); // this is not allowed
     }
+    
+    public Map<String, Integer> retails() {
+        return Map.copyOf(retails);
+    }
+    
+    // or, getter in Java Bean style
+    public Map<String, Integer> getRetails() {
+        return Map.copyOf(retails);
+    }
 } 
