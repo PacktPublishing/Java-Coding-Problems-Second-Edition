@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.classicmodels</groupId>
-    <artifactId>MultisetAggRelationshipsInto</artifactId>
+    <artifactId>P99_RecordAndjOOQMultisetAgg</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>MultisetAggRelationshipsInto</name>
+    <name>P99_RecordAndjOOQMultisetAgg</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.7</version>
+        <version>3.0.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,11 +21,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         
-        <java.version>17</java.version>                
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>19</java.version>                
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
                 
-        <jooq.version>3.16.2</jooq.version>  
+        <flyway.version>8.2.0</flyway.version>        
         <codehaus.mojo.version>1.0.0</codehaus.mojo.version>              
     </properties>
 
@@ -40,16 +40,16 @@
         </dependency>        
         <dependency>
             <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>         
-            <version>${jooq.version}</version>
+            <artifactId>jooq</artifactId>                     
         </dependency>              
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>    
         </dependency>        
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -108,7 +108,7 @@
                     <user>${spring.datasource.username}</user>
                     <password>${spring.datasource.password}</password>                                          
                     <locations>
-                        <location>filesystem:./../../../../../db/migration/dev/mysql</location>                        
+                        <location>filesystem:./../P99_SQL/mysql</location>                        
                     </locations>                   
                 </configuration>                
             </plugin>
