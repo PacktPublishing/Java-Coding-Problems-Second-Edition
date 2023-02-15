@@ -11,12 +11,12 @@ public final class Hospital {
 
         if (staff instanceof Doctor) {
             Doctor dr = (Doctor) staff;
-            return "Cabinet of " + dr.speciality() + ". Doctor: " + dr.name();
+            return "Cabinet of " + dr.specialty() + ". Doctor: " + dr.name();
         }
         
         if (staff instanceof Resident) {
             Resident rs = (Resident) staff;
-            return "Cabinet of " + rs.doctor().speciality() + ". Doctor: " 
+            return "Cabinet of " + rs.doctor().specialty() + ". Doctor: " 
                     + rs.doctor().name() + ", Resident: " + rs.name();
         }
         
@@ -28,52 +28,52 @@ public final class Hospital {
         
         /*
         if (staff instanceof Doctor dr) { // type pattern matching
-            return "Cabinet of " + dr.speciality() + ". Doctor: " + dr.name();
+            return "Cabinet of " + dr.specialty() + ". Doctor: " + dr.name();
         }
         */
-        
-        if (staff instanceof Doctor(String name, String speciality)) { // record pattern matching
-            return "Cabinet of " + name + ". Doctor: " + speciality;
-        }
-        
+                
+        if (staff instanceof Doctor(String name, String specialty)) { // record pattern matching
+            return "Cabinet of " + name + ". Doctor: " + specialty;
+        }        
+            
         /*
-        if (staff instanceof Doctor(String name, String speciality) dr) { // record pattern matching
-            return "Cabinet of " + dr.speciality() + ". Doctor: " + dr.name();
-        }
+        if (staff instanceof Doctor(String name, String specialty) dr) { // record pattern matching
+            return "Cabinet of " + specialty + ". Doctor ID: " + dr.hashCode() + " (" + name + ")";
+        } 
         */
         
         /*
         if (staff instanceof Resident rs) { // type pattern matching
-            return "Cabinet of " + rs.doctor().speciality() + ". Doctor: " 
+            return "Cabinet of " + rs.doctor().specialty() + ". Doctor: " 
                     + rs.doctor().name() + ", Resident: " + rs.name();
         }
         */
         
         /*
         if (staff instanceof Resident(String name, Doctor dr)) { // record pattern matching
-            return "Cabinet of " + dr.speciality() + ". Doctor: " 
+            return "Cabinet of " + dr.specialty() + ". Doctor: " 
                     + dr.name() + ", Resident: " + name;
         }
         */
                                               
         if (staff instanceof Resident(String rsname, 
-                                      Doctor(String drname, String speciality))) { // record pattern matching
-            return "Cabinet of " + speciality + ". Doctor: " 
+                                      Doctor(String drname, String specialty))) { // record pattern matching
+            return "Cabinet of " + specialty + ". Doctor: " 
                     + drname + ", Resident: " + rsname;
         }        
         
         /*
         if (staff instanceof Resident(String rsname, 
-                                      Doctor(String drname, String speciality) dr)) { // record pattern matching
-            return "Cabinet of " + dr.speciality() + ". Doctor: " 
+                                      Doctor(String drname, String specialty) dr)) { // record pattern matching
+            return "Cabinet of " + dr.specialty() + ". Doctor: " 
                     + dr.name() + ", Resident: " + rsname;
         }
         */
         
         /*
         if (staff instanceof Resident(String rsname, 
-                                      Doctor(String drname, String speciality) dr) rs) { // record pattern matching
-            return "Cabinet of " + dr.speciality() + ". Doctor: " 
+                                      Doctor(String drname, String specialty) dr) rs) { // record pattern matching
+            return "Cabinet of " + dr.specialty() + ". Doctor: " 
                     + dr.name() + ", Resident: " + rs.name();
         } 
         */
@@ -84,31 +84,31 @@ public final class Hospital {
     public static String reception(Object o) {
         
         /*
-        if(o instanceof Patient(String ptname, int npi, 
+        if (o instanceof Patient(String ptname, int npi, 
                         Appointment(LocalDateTime date, 
-                        Doctor (String drname, String speciality)))) {
+                        Doctor (String drname, String specialty)))) {
         
           return "Patient " + ptname + " (NPI: " + npi + ") has an appointment at " 
-                  + date + " to the doctor " + drname + " (" + speciality + ").";
+                  + date + " to the doctor " + drname + " (" + specialty + ").";
         }
         */
         
         /*
-        if(o instanceof Patient(String ptname, int npi, 
-                        Appointment(LocalDateTime date, 
-                        Doctor (String drname, String speciality) dr) ap) pt) {
+        if (o instanceof Patient(String ptname, int npi, 
+                        Appointment(LocalDate date, 
+                        Doctor (String drname, String specialty) dr) ap) pt) {
         
           return "Patient " + pt.name() + " (NPI: " + pt.npi() + ") has an appointment at " 
-                  + ap.date() + " to the doctor " + dr.name() + " (" + dr.speciality() + ").";
+                  + ap.date() + " to the doctor " + dr.name() + " (" + dr.specialty() + ").";
         }
         */
         
-        if(o instanceof Patient(var ptname, var npi, 
+        if (o instanceof Patient(var ptname, var npi, 
                         Appointment(var date, 
-                        Doctor (var drname, var speciality)))) {
+                        Doctor (var drname, var specialty)))) {
         
           return "Patient " + ptname + " (NPI: " + npi + ") has an appointment at " 
-                  + date + " to the doctor " + drname + " (" + speciality + ").";
+                  + date + " to the doctor " + drname + " (" + specialty + ").";
         }
         
         return "";
