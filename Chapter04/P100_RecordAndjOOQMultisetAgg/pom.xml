@@ -108,7 +108,7 @@
                     <user>${spring.datasource.username}</user>
                     <password>${spring.datasource.password}</password>                                          
                     <locations>
-                        <location>filesystem:./../P99_SQL/mysql</location>                        
+                        <location>filesystem:./../P100_SQL/mysql</location>                        
                     </locations>                   
                 </configuration>                
             </plugin>
