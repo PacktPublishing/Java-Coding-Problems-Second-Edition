@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jpa</groupId>
-    <artifactId>P98_DtoRecordResultTransformer</artifactId>
+    <artifactId>P98_JavaRecordsDependencyInjection</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>P98_DtoRecordResultTransformer</name>
+    <name>P98_JavaRecordsDependencyInjection</name>
     <description>JPA project for Spring Boot</description>
 
     <parent>
@@ -26,23 +26,11 @@
         <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
-    <dependencies>       
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>          
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
+    <dependencies>        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>        
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>    
-        </dependency>      
+        </dependency>             
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -55,7 +43,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>                        
+            </plugin>            
         </plugins>
     </build>
 </project>

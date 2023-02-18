@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jpa</groupId>
-    <artifactId>P98_DtoRecordConstructorExpression</artifactId>
+    <artifactId>P99_DtoRecordConstructorExpression</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>P98_DtoRecordConstructorExpression</name>
+    <name>P99_DtoRecordConstructorExpression</name>
     <description>JPA project for Spring Boot</description>
 
     <parent>

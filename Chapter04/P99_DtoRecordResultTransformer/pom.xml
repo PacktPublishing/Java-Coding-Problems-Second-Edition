@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jpa</groupId>
-    <artifactId>P98_RecordAndEmbeddables</artifactId>
+    <artifactId>P99_DtoRecordResultTransformer</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>P98_RecordAndEmbeddables</name>
+    <name>P99_DtoRecordResultTransformer</name>
     <description>JPA project for Spring Boot</description>
 
     <parent>
@@ -29,22 +29,7 @@
     <dependencies>       
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId> 
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                </exclusion>
-            </exclusions>                     
-        </dependency>        
-        <dependency>            
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.2.0.CR2</version>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>          
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

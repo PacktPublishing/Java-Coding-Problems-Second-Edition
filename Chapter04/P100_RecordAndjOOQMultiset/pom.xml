@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.classicmodels</groupId>
-    <artifactId>P99_RecordAndjOOQMultisetAgg</artifactId>
+    <artifactId>P100_RecordAndjOOQMultiset</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>P99_RecordAndjOOQMultisetAgg</name>
+    <name>P100_RecordAndjOOQMultiset</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -24,8 +24,8 @@
         <java.version>19</java.version>                
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
-                
-        <flyway.version>8.2.0</flyway.version>        
+                        
+        <flyway.version>8.2.0</flyway.version>
         <codehaus.mojo.version>1.0.0</codehaus.mojo.version>              
     </properties>
 
@@ -45,12 +45,11 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>    
-        </dependency>        
+        </dependency>         
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -94,6 +93,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>                                  
+                <version>${flyway.version}</version>
                 <executions>
                     <execution>                        
                         <phase>generate-sources</phase>
