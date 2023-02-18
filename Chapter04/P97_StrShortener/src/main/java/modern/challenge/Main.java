@@ -5,8 +5,8 @@ public class Main {
     /*
     public static Str shortener(Str str) {
         
-        if(str instanceof Concat s) {
-            if(s.first() instanceof Variable first 
+        if (str instanceof Concat s) {
+            if (s.first() instanceof Variable first 
                     && s.second() instanceof Literal second && second.text().isBlank()) {
                 return first;
             } else if (s.first() instanceof Literal first 
@@ -29,7 +29,6 @@ public class Main {
     
     public static void main(String[] args) {     
     
-        System.out.println(shortener(new Concat(new Variable("t"), new Literal("   "))));
-        System.out.println(shortener(new Concat(new Variable("t"), new Literal("   "))));               
+        System.out.println(shortener(new Concat(new Variable("t"), new Literal("   "))));     
     }
 }

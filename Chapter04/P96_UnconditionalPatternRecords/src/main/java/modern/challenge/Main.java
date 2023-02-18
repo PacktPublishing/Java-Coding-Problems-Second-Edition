@@ -2,40 +2,67 @@ package modern.challenge;
 
 public class Main {
 
-    public static String buy1(Vegetable vegetable) {
+    public static String buyFruit1(Fruit fruit) {
         
-        return switch(vegetable) {
-            case Eggplant(SeedRecord seed, float weight) -> "This is a " + seed.type() + " eggplant";
-            // case MelonRecord(null, float weight) -> "Ops! What's this?!"; // DOESN'T COMPILE
+        return switch(fruit) {   
+            case null -> "Ops!";
+            case SeedRecord(String type, String country) -> "This is a seed of " + type + " from " + country;
+            case EggplantRecord(SeedRecord seed, float weight) -> "This is a " + seed.type() + " eggplant";
+            // case EggplantRecord(null, float weight) -> "Ops! What's this?!"; // DOESN'T COMPILE
             case MelonRecord(SeedRecord seed, float weight) -> "This is a " + seed.type() + " melon";
-            case Vegetable v -> "This is an unknown vegetable";
+            // case MelonRecord(null, float weight) -> "Ops! What's this?!"; // DOESN'T COMPILE
+            case Fruit v -> "This is an unknown fruit";
         };
     }
     
-    public static String buy2(Vegetable vegetable) {
+    public static String buyFruit2(Fruit fruit) {
         
-        if(vegetable instanceof MelonRecord(SeedRecord seed, float weight)) {
-           return "This is a " + seed.type() + " melon";
+        if (fruit instanceof SeedRecord(String type, String country)) {
+           return "This is a seed of " + type + " from " + country;
         }
         
-        // if(vegetable instanceof MelonRecord(null, float weight)) { // DOESN'T COMPILE
-        //   return "Ops! What's this?!";
-        // }
+        if (fruit instanceof EggplantRecord(SeedRecord seed, float weight)) {
+           return "This is a " + seed.type() + " eggplant";
+        }
         
-        return "";
+        /* // DOESN'T COMPILE 
+        if (fruit instanceof EggplantRecord(null, float weight)) {
+           return "Ops! What's this?!";
+        }
+        */
+        
+        if (fruit instanceof MelonRecord(SeedRecord seed, float weight)) {
+           return "This is a " + seed.type() + " melon";
+        }                
+        
+        /* // DOESN'T COMPILE 
+        if (fruit instanceof MelonRecord(null, float weight)) {
+           return "Ops! What's this?!";
+        }
+        */
+        
+        return "This is an unknown fruit";
     }
     
     public static void main(String[] args) {      
         
-      // System.out.println(buy1(null));
-      // System.out.println(buy2(null));
-      
-      /*
-      Eggplant eggplant = new Eggplant(new SeedRecord("Fairytale", "India"), 300);
-      System.out.println(buy1(eggplant));
-      */
-      
-      MelonRecord melon = new MelonRecord(null, 1000);
-      System.out.println(buy1(melon));      
+       System.out.println(buyFruit1(null)); // Ops!
+       
+       SeedRecord seed = new SeedRecord("Fairytale", "India");
+       EggplantRecord eggplant = new EggplantRecord(seed, 300);
+       System.out.println(buyFruit1(seed));     // This is a seed of Fairytale from India
+       System.out.println(buyFruit1(eggplant)); // This is a Fairytale eggplant
+       
+       EggplantRecord badEggplant = new EggplantRecord(null, 300);
+       // System.out.println(buyFruit(badEggplant)); // java.lang.NullPointerException: Cannot invoke "modern.challenge.SeedRecord.type()" because "seed" is null
+       
+       System.out.println();
+                
+       System.out.println(buyFruit2(null));     // Ops!       
+       
+       System.out.println(buyFruit2(seed));     // This is a seed of Fairytale from India 
+       System.out.println(buyFruit2(eggplant)); // This is a Fairytale eggplant
+       
+       // System.out.println(buyFruit2(badEggplant)); // java.lang.NullPointerException: Cannot invoke "modern.challenge.SeedRecord.type()" because "seed" is null
     }
 }
