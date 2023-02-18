@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.hibernate.transform.ResultTransformer;
+import org.hibernate.query.ResultListTransformer;
+import org.hibernate.query.TupleTransformer;
 
-public class AuthorBookTransformer implements ResultTransformer {
+public class AuthorBookTransformer implements TupleTransformer, ResultListTransformer {
 
-    private Map<Long, AuthorDto> authorsDtoMap = new HashMap<>();
+    private final Map<Long, AuthorDto> authorsDtoMap = new HashMap<>();
 
     @Override
     public Object transformTuple(Object[] os, String[] strings) {
 
         Long authorId = ((Number) os[0]).longValue();
-
+        
         AuthorDto authorDto = authorsDtoMap.get(authorId);
 
         if (authorDto == null) {
@@ -33,7 +34,7 @@ public class AuthorBookTransformer implements ResultTransformer {
     }
 
     @Override
-    public List<AuthorDto> transformList(List list) {
+    public List<AuthorDto> transformList(List list) {        
         return new ArrayList<>(authorsDtoMap.values());
     }
 
