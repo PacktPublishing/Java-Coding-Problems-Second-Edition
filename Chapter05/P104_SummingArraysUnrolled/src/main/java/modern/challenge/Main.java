@@ -10,29 +10,24 @@ public class Main {
 
     public static void sumUnrolled(int x[], int y[], int z[]) {
 
-        IntVector sum1 = IntVector.zero(VS256);
-        IntVector sum2 = IntVector.zero(VS256);
-        IntVector sum3 = IntVector.zero(VS256);
-        IntVector sum4 = IntVector.zero(VS256);
-
         int width = VS256.length();
         int i = 0;
         for (; i <= (x.length - width * 4); i += width * 4) {
 
-            sum1 = IntVector.fromArray(VS256, x, i)
+            IntVector s1 = IntVector.fromArray(VS256, x, i)
                     .add(IntVector.fromArray(VS256, y, i));
-            sum2 = IntVector.fromArray(VS256, x, i + width)
+            IntVector s2 = IntVector.fromArray(VS256, x, i + width)
                     .add(IntVector.fromArray(VS256, y, i + width));
-            sum3 = IntVector.fromArray(VS256, x, i + width * 2)
+            IntVector s3 = IntVector.fromArray(VS256, x, i + width * 2)
                     .add(IntVector.fromArray(VS256, y, i + width * 2));
-            sum4 = IntVector.fromArray(VS256, x, i + width * 3)
+            IntVector s4 = IntVector.fromArray(VS256, x, i + width * 3)
                     .add(IntVector.fromArray(VS256, y, i + width * 3));
-        }
 
-        sum1.intoArray(z, 0);
-        sum2.intoArray(z, 0 + width);
-        sum3.intoArray(z, 0 + width * 2);
-        sum4.intoArray(z, 0 + width * 3);
+            s1.intoArray(z, i);
+            s2.intoArray(z, i + width);
+            s3.intoArray(z, i + width * 2);
+            s4.intoArray(z, i + width * 3);
+        }
 
         for (; i < x.length; i++) {
             z[i] = x[i] + y[i];
