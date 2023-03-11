@@ -58,8 +58,19 @@ public class Main {
     public void computeWithMask(Blackhole blackhole) {
 
         int upperBound = VS.loopBound(x.length);
-        for (int i = 0; i <= upperBound; i += VS.length()) {
+        int i = 0;
+        for (; i < upperBound; i += VS.length()) {
 
+            IntVector xVector = IntVector.fromArray(VS, x, i);
+            IntVector yVector = IntVector.fromArray(VS, y, i);
+            IntVector zVector = xVector.add(yVector);
+            IntVector wVector = xVector.mul(zVector).mul(yVector);
+            IntVector kVector = zVector.add((wVector).mul(yVector));
+
+            kVector.intoArray(k, i);
+        }
+
+        if (i <= (x.length - 1)) {
             VectorMask<Integer> mask = VS.indexInRange(i, x.length);
 
             IntVector xVector = IntVector.fromArray(VS, x, i, mask);
@@ -138,7 +149,7 @@ public class Main {
             w[i] = x[i] * z[i] * y[i];
             k[i] = z[i] + w[i] * y[i];
         }
-        
+
         blackhole.consume(k);
     }
 
