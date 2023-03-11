@@ -101,7 +101,7 @@ public class Main {
     }
 
     @Benchmark
-    public void computeUnrolled(Blackhole blackhole) {
+    public void computeUnrolledNoMask(Blackhole blackhole) {
 
         int width = VS.length();
         int i = 0;
