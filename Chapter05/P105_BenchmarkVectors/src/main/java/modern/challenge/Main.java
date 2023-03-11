@@ -55,7 +55,7 @@ public class Main {
     }
 
     @Benchmark
-    public void sumMask(Blackhole blackhole) {
+    public void computeWithMask(Blackhole blackhole) {
 
         int upperBound = VS.loopBound(x.length);
         for (int i = 0; i <= upperBound; i += VS.length()) {
@@ -75,7 +75,7 @@ public class Main {
     }
 
     @Benchmark
-    public void sumNoMask(Blackhole blackhole) {
+    public void computeNoMask(Blackhole blackhole) {
 
         int upperBound = VS.loopBound(x.length);
 
@@ -101,7 +101,7 @@ public class Main {
     }
 
     @Benchmark
-    public void sumUnrolled(Blackhole blackhole) {
+    public void computeUnrolled(Blackhole blackhole) {
 
         int width = VS.length();
         int i = 0;
@@ -143,7 +143,7 @@ public class Main {
     }
 
     @Benchmark
-    public void sumSimple(Blackhole blackhole) {
+    public void computeArrays(Blackhole blackhole) {
 
         for (int i = 0; i < x.length; i++) {
             z[i] = x[i] + y[i];
