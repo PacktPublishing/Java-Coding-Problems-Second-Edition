@@ -10,6 +10,7 @@ import jdk.incubator.vector.FloatVector;
 import jdk.incubator.vector.IntVector;
 import jdk.incubator.vector.Vector;
 import jdk.incubator.vector.VectorMask;
+import jdk.incubator.vector.VectorOperators;
 import jdk.incubator.vector.VectorShape;
 import jdk.incubator.vector.VectorShuffle;
 import jdk.incubator.vector.VectorSpecies;
@@ -152,5 +153,38 @@ public class Main {
         Vector<Integer> vc = vo.compress(vm);
         System.out.println("Expanded vector: " + Arrays.toString(ve.toIntArray()));        
         System.out.println("Compressed vector: " + Arrays.toString(vc.toIntArray()));        
+                
+        // cast shape
+        VectorSpecies<Integer> VS512cast = IntVector.SPECIES_512;
+        VectorSpecies<Integer> VS256cast = IntVector.SPECIES_256;
+        VectorSpecies<Integer> VS128cast = IntVector.SPECIES_128;
+        IntVector vs1cast = IntVector.fromArray(VS256cast, new int[] {0, 1, 2, 3, 4, 5, 6, 7}, 0);
+        Vector<Integer> vs0cast = vs1cast.castShape(VS512cast, 0);
+        Vector<Integer> vs2cast = vs1cast.castShape(VS128cast, 0);
+        System.out.println("vs0cast: " + Arrays.toString(vs0cast.toIntArray()));        
+        System.out.println("vs1cast: " + Arrays.toString(vs1cast.toIntArray()));        
+        System.out.println("vs2cast: " + Arrays.toString(vs2cast.toIntArray()));        
+        
+        // convert element type        
+        FloatVector vsfloat = FloatVector.fromArray(FloatVector.SPECIES_256, 
+                new float[] {0.5f, 1.4f, 2.2f, 3.7f, 4.3f, 5.7f, 6.7f, 7.7f}, 0);
+        Vector<Integer> vsint = vsfloat.convert(VectorOperators.Conversion.ofCast(float.class, int.class), 0);
+        System.out.println("vsfloat: " + vsfloat);        
+        System.out.println("vsint: " + vsint);        
+                
+        // convert shape and element type
+        FloatVector vsfloat256 = FloatVector.fromArray(FloatVector.SPECIES_256, 
+                new float[] {0.5f, 1.4f, 2.2f, 3.7f, 4.3f, 5.7f, 6.7f, 7.7f}, 0);
+        Vector<Integer> vsint128 = vsfloat256.convertShape(
+                VectorOperators.Conversion.ofCast(float.class, int.class), IntVector.SPECIES_128, 0);
+        System.out.println("vsfloat: " + vsfloat256);        
+        System.out.println("vsint: " + vsint128);   
+        
+        // reinterpret shape
+        FloatVector vsfloatb = FloatVector.fromArray(FloatVector.SPECIES_256, 
+                new float[] {0.5f, 1.4f, 2.2f, 3.7f, 4.3f, 5.7f, 6.7f, 7.7f}, 0);
+        Vector<Float> vsfloata = vsfloatb.reinterpretShape(FloatVector.SPECIES_512, 0);
+        System.out.println("vsfloatb: " + vsfloatb);        
+        System.out.println("vsfloata: " + vsfloata);        
     }
 }
