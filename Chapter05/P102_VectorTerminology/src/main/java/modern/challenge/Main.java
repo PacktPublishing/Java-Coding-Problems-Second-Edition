@@ -11,6 +11,7 @@ import jdk.incubator.vector.IntVector;
 import jdk.incubator.vector.Vector;
 import jdk.incubator.vector.VectorMask;
 import jdk.incubator.vector.VectorShape;
+import jdk.incubator.vector.VectorShuffle;
 import jdk.incubator.vector.VectorSpecies;
 
 public class Main {
@@ -127,5 +128,29 @@ public class Main {
         }
 
         System.out.println("vfms: " + Arrays.toString(vfms.toIntArray()));
+                        
+        // slice
+        int[] v = new int[] {10, 11, 12, 13, 14, 15, 16, 17};  
+        Vector<Integer> vo = VS256.fromArray(v, 0);
+        Vector<Integer> vs = vo.slice(vo.length()/2);
+        System.out.println("Original vector: " + Arrays.toString(vo.toIntArray()));
+        System.out.println("Sliced vector: " + Arrays.toString(vs.toIntArray()));
+        
+        // unslice
+        Vector<Integer> vus = vs.unslice(4, vo, 0);
+        System.out.println("Unsliced vector: " + Arrays.toString(vus.toIntArray()));        
+              
+        // shuffle
+        VectorShuffle<Integer> shuffle = VectorShuffle
+                .fromArray(VS256, new int[] {2, 1, 3, 0, 6, 7, 5, 4}, 0);
+        Vector<Integer> vi = vo.rearrange(shuffle);
+        System.out.println("Shuffled vector: " + Arrays.toString(vi.toIntArray()));        
+        
+        // expand and compress
+        VectorMask vm = VectorMask.fromArray(VS256, new boolean[]{false, false, true, false, false, true, true, false}, 0);
+        Vector<Integer> ve = vo.expand(vm);
+        Vector<Integer> vc = vo.compress(vm);
+        System.out.println("Expanded vector: " + Arrays.toString(ve.toIntArray()));        
+        System.out.println("Compressed vector: " + Arrays.toString(vc.toIntArray()));        
     }
 }
