@@ -6,9 +6,9 @@ import java.util.Queue;
 public class KdTree {
 
     private Node root;
-    private Node suitable;
-    private double suitableDistance;
-    private int marked;
+    private Node found;
+    private double foundDistance;
+    private int visited;
 
     private final class Node {
 
@@ -25,7 +25,7 @@ public class KdTree {
             return coords[index];
         }
 
-        double thisDistance(Node node) {
+        double theDistance(Node node) {
 
             double distTotal = 0;
             for (int i = 0; i < coords.length; ++i) {
@@ -83,49 +83,49 @@ public class KdTree {
             throw new IllegalStateException("The tree is empty (cannot find the root)");
         }
 
-        Node dest = newNode(coords);
+        Node targetNode = newNode(coords);
 
-        marked = 0;
-        suitableDistance = 0;
-        suitable = null;
+        visited = 0;
+        foundDistance = 0;
+        found = null;
 
-        nearest(root, dest, 0);
+        nearest(root, targetNode, 0);
 
-        return suitable.coords.clone();
+        return found.coords.clone();
     }
 
-    private void nearest(Node root, Node dest, int index) {
+    private void nearest(Node root, Node targetNode, int index) {
 
         if (root == null) {
             return;
         }
 
-        marked++;
-        double thisDistance = root.thisDistance(dest);
+        visited++;
+        double theDistance = root.theDistance(targetNode);
 
-        if (suitable == null || thisDistance < suitableDistance) {
-            suitableDistance = thisDistance;
-            suitable = root;
+        if (found == null || theDistance < foundDistance) {
+            foundDistance = theDistance;
+            found = root;
         }
 
-        if (suitableDistance == 0) {
+        if (foundDistance == 0) {
             return;
         }
 
-        double rootDestDistance = root.get(index) - dest.get(index);
+        double rootTargetDistance = root.get(index) - targetNode.get(index);
         index = (index + 1) % 2;
 
-        nearest(rootDestDistance > 0 ? root.left : root.right, dest, index);
+        nearest(rootTargetDistance > 0 ? root.left : root.right, targetNode, index);
 
-        if (rootDestDistance * rootDestDistance >= suitableDistance) {
+        if (rootTargetDistance * rootTargetDistance >= foundDistance) {
             return;
         }
 
-        nearest(rootDestDistance > 0 ? root.right : root.left, dest, index);
+        nearest(rootTargetDistance > 0 ? root.right : root.left, targetNode, index);
     }
 
     public double distance() {
-        return Math.sqrt(suitableDistance);
+        return Math.sqrt(foundDistance);
     }
 
     public void printLevelOrder() {
