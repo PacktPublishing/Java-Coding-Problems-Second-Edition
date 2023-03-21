@@ -16,19 +16,22 @@ public final class Converters {
 
     public static byte[] objectToBytes(Serializable obj) throws IOException {
 
-        ByteArrayOutputStream boas = new ByteArrayOutputStream();
-        try ( ObjectOutputStream ois = new ObjectOutputStream(boas)) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        try ( ObjectOutputStream ois = new ObjectOutputStream(baos)) {
             ois.writeObject(obj);
         }
+        
+        baos.close();
 
-        return boas.toByteArray();
+        return baos.toByteArray();
     }
 
     public static Object bytesToObject(byte[] bytes)
             throws IOException, ClassNotFoundException {
-        
-        InputStream is = new ByteArrayInputStream(bytes);
-        try ( ObjectInputStream ois = new ObjectInputStream(is)) {
+                
+        try ( InputStream is = new ByteArrayInputStream(bytes);
+                ObjectInputStream ois = new ObjectInputStream(is)) {
             return ois.readObject();
         }
     }

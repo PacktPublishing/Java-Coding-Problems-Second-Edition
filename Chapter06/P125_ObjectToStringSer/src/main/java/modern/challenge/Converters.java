@@ -16,12 +16,15 @@ public final class Converters {
 
     public static String objectToString(Serializable obj) throws IOException {
 
-        ByteArrayOutputStream boas = new ByteArrayOutputStream();
-        try ( ObjectOutputStream ois = new ObjectOutputStream(boas)) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        try ( ObjectOutputStream ois = new ObjectOutputStream(baos)) {
             ois.writeObject(obj);
         }
+        
+        baos.close();
 
-        return Base64.getEncoder().encodeToString(boas.toByteArray());
+        return Base64.getEncoder().encodeToString(baos.toByteArray());
     }
 
     public static Object stringToObject(String obj) 
