@@ -3,15 +3,12 @@ package modern.challenge;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Melon implements Serializable {
+public class Pumpkin implements Serializable {
 
-    private String type;
-    private float weight;
+    private final String type;
+    private final float weight;
 
-    // this is needed for XMLEncoder and XmlMapper
-    public Melon() {} 
-    
-    public Melon(String type, float weight) {
+    public Pumpkin(String type, float weight) {
         this.type = type;
         this.weight = weight;
     }
@@ -24,15 +21,6 @@ public class Melon implements Serializable {
         return weight;
     }
 
-    // setters are needed by the XMLEncoder
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }        
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -43,27 +31,33 @@ public class Melon implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        
         if (this == obj) {
             return true;
         }
+        
         if (obj == null) {
             return false;
         }
+        
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Melon other = (Melon) obj;
+        
+        final Pumpkin other = (Pumpkin) obj;
         if (this.weight != other.weight) {
             return false;
         }
+        
         if (!Objects.equals(this.type, other.type)) {
             return false;
         }
+        
         return true;
     }
 
     @Override
     public String toString() {
-        return "Melon{" + "type=" + type + ", weight=" + weight + '}';
+        return "Pumpkin{" + "type=" + type + ", weight=" + weight + '}';
     }   
 }
