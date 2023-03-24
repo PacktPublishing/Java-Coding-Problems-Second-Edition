@@ -1,9 +1,9 @@
 package modern.challenge;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 import java.util.Objects;
 
-public class Melon implements Serializable {
+public class Melon { //implements Serializable { // this is optional
 
     private String type;
     private float weight;

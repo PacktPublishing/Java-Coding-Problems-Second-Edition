@@ -9,7 +9,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 public final class Converters {
 
@@ -17,7 +16,7 @@ public final class Converters {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static String objectToXML(Serializable obj) throws IOException {
+    public static String objectToXML(Object obj) throws IOException {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -39,23 +38,23 @@ public final class Converters {
         }
     }
 
-    public static String objectToXMLJackson(Serializable obj) 
+    public static String objectToXMLJackson(Object obj)
             throws JsonProcessingException {
 
         XmlMapper xmlMapper = new XmlMapper();
-        
-        if(xmlMapper.canSerialize(obj.getClass())) {
+
+        if (xmlMapper.canSerialize(obj.getClass())) {
             return xmlMapper.writeValueAsString(obj);
         }
-        
+
         return "";
     }
-    
-    public static <T> T XMLToObjectJackson(String xml, Class<T> clazz) 
+
+    public static <T> T XMLToObjectJackson(String xml, Class<T> clazz)
             throws JsonProcessingException {
-        
+
         XmlMapper xmlMapper = new XmlMapper();
-        
+
         return xmlMapper.readValue(xml, clazz);
     }
 }
