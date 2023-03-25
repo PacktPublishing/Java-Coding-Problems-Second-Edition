@@ -35,10 +35,10 @@ public final class Converters {
                 ObjectInputStream ois = new ObjectInputStream(is)) {
 
             // set the filter via a lambda expression
-            ois.setObjectInputFilter(info -> ((info.serialClass() != null)
-                    // or, info.serialClass().getName().equals("modern.challenge.Melon")
-                    && info.serialClass().getPackage().getName().equals("modern.challenge")
-                    && info.serialClass().getSimpleName().equals("Melon"))
+            ois.setObjectInputFilter(f -> ((f.serialClass() != null)
+                    // or, filter.serialClass().getName().equals("modern.challenge.Melon")
+                    && f.serialClass().getPackage().getName().equals("modern.challenge")
+                    && f.serialClass().getSimpleName().equals("Melon"))
                     ? Status.REJECTED : Status.UNDECIDED);
 
             return ois.readObject();

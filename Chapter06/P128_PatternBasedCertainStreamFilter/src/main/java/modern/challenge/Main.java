@@ -8,9 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
     
-        /* create a Pattern-based filter for all the streams */
+        /* create a pattern-based filter and set it for a specific stream */
         ObjectInputFilter melonFilter = ObjectInputFilter.Config.createFilter("!modern.challenge.Melon;");
-        ObjectInputFilter.Config.setSerialFilter(melonFilter);
         
         Melon melon = new Melon("Gac", 2500);
 
@@ -19,7 +18,8 @@ public class Main {
 
         System.out.println();
 
-        Melon melonDeser = (Melon) Converters.bytesToObject(melonSer);
+        // pass null for no filter, Converters.bytesToObject(melonSer, null)
+        Melon melonDeser = (Melon) Converters.bytesToObject(melonSer, melonFilter);
         System.out.println("Deserialization: " + melonDeser);
     }
 }
