@@ -36,12 +36,12 @@ public class Main {
         ObjectInputFilter filter = ObjectInputFilter.
                 Config.createFilter("maxdepth=10;java.base/*;!*");
         
-        byte[] mapSer = Converters.objectToBytes(startList);        
-        System.out.println("Serialization: " + Arrays.toString(mapSer));
+        byte[] startListSer = Converters.objectToBytes(startList);        
+        System.out.println("Serialization: " + Arrays.toString(startListSer));
         
         System.out.println();
                 
-        ArrayList mapDeser = (ArrayList) Converters.bytesToObject(mapSer, filter);        
-        System.out.println("Deserialization: " + mapDeser);        
+        ArrayList startListDeser = (ArrayList) Converters.bytesToObject(startListSer, filter);        
+        System.out.println("Deserialization: " + startListDeser);        
     }
 }
