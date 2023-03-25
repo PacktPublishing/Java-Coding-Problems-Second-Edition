@@ -8,19 +8,19 @@ public final class Filters {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static ObjectInputFilter allowFilter() {
+    public static ObjectInputFilter allowMelonFilter() {
 
-        ObjectInputFilter filter = ObjectInputFilter.allowFilter(                        
+        ObjectInputFilter filter = ObjectInputFilter.allowFilter(
                 clazz -> Melon.class.isAssignableFrom(clazz),
                 ObjectInputFilter.Status.REJECTED);
 
         return filter;
     }
-    
-    public static ObjectInputFilter rejectFilter() {
 
-        ObjectInputFilter filter = ObjectInputFilter.rejectFilter(                        
-                clazz -> Muskmelons.class.isAssignableFrom(clazz),
+    public static ObjectInputFilter rejectMuskmelonFilter() {
+
+        ObjectInputFilter filter = ObjectInputFilter.rejectFilter(
+                clazz -> Muskmelon.class.isAssignableFrom(clazz),
                 ObjectInputFilter.Status.UNDECIDED);
 
         return filter;
