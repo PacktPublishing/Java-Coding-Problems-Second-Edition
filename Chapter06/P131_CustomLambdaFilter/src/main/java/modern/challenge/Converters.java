@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputFilter.Status;
+import java.io.ObjectInputFilter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -28,18 +28,14 @@ public final class Converters {
         return baos.toByteArray();
     }
 
-    public static Object bytesToObject(byte[] bytes)
+    public static Object bytesToObject(byte[] bytes, ObjectInputFilter filter)
             throws IOException, ClassNotFoundException {
 
         try ( InputStream is = new ByteArrayInputStream(bytes);  
                 ObjectInputStream ois = new ObjectInputStream(is)) {
 
-            // set the filter via a lambda expression
-            ois.setObjectInputFilter(f -> ((f.serialClass() != null)
-                    // or, filter.serialClass().getName().equals("modern.challenge.Melon")
-                    && f.serialClass().getPackage().getName().equals("modern.challenge")
-                    && f.serialClass().getSimpleName().equals("Melon"))
-                    ? Status.REJECTED : Status.UNDECIDED);
+            // set the filter
+            ois.setObjectInputFilter(filter);
 
             return ois.readObject();
         }
