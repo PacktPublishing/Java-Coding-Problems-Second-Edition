@@ -4,7 +4,7 @@ import java.io.ObjectInputFilter;
 import java.io.ObjectInputFilter.FilterInfo;
 import java.io.ObjectInputFilter.Status;
 
-public class CustomMelonFilter implements ObjectInputFilter {
+public final class MelonFilter implements ObjectInputFilter {
 
     @Override
     public Status checkInput(FilterInfo filterInfo) {
