@@ -6,16 +6,16 @@ import java.util.function.BinaryOperator;
 public class MelonFilterFactory implements BinaryOperator<ObjectInputFilter> {
 
     @Override
-    public ObjectInputFilter apply(ObjectInputFilter t, ObjectInputFilter u) {
-
+    public ObjectInputFilter apply(ObjectInputFilter current, ObjectInputFilter next) {
+        
         System.out.println();
-        System.out.println("Current filter: " + t);
-        System.out.println("Requested filter: " + u);
+        System.out.println("Current filter: " + current);
+        System.out.println("Requested filter: " + next);
 
-        if (t == null) {            
-            return ObjectInputFilter.merge(u, Filters.packageFilter());
+        if (current == null && next != null) {                    
+            return ObjectInputFilter.merge(next, Filters.packageFilter());
         }
 
-        return ObjectInputFilter.merge(u, t);
+        return ObjectInputFilter.merge(next, current);
     }
 }
