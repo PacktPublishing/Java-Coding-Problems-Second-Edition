@@ -8,9 +8,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LibraryLoader<SimpleMath> loader = FFIProvider
-                .getSystemProvider().createLibraryLoader(SimpleMath.class).search("./jnr/cpp");
-        loader = loader.map("sumTwoInt", "_Z9sumTwoIntii");
+        LibraryLoader<SimpleMath> loader = FFIProvider.getSystemProvider()
+                .createLibraryLoader(SimpleMath.class)
+                .search("./jnr/cpp")
+                .map("sumTwoInt", "_Z9sumTwoIntii");
         
         if (Platform.getNativePlatform().getOS() == Platform.OS.WINDOWS) {
 
