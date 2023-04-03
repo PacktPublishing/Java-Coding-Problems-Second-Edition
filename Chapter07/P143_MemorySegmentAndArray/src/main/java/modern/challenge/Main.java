@@ -74,5 +74,15 @@ public class Main {
         }
 
         System.out.println("v3: " + Arrays.toString(v3.toIntArray()));                
+        
+        // on-heap array                            
+        MemorySegment segment = MemorySegment.ofArray(new int[]{
+                        11, 21, 12,
+                        7,  33, 1,
+                        3,  6
+                    });                
+        
+        System.out.println("Fifth element: " + segment.get(ValueLayout.JAVA_INT, 16));                
+        System.out.println("Fifth element: " + segment.getAtIndex(ValueLayout.JAVA_INT, 4));                
     }
 }
