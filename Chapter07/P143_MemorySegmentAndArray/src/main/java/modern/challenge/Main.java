@@ -11,14 +11,14 @@ import jdk.incubator.vector.VectorSpecies;
 public class Main {
 
     public static void main(String[] args) {
-        
+
         VectorSpecies<Integer> VS256 = IntVector.SPECIES_256;
 
         IntVector v0;
         try (Arena arena = Arena.openConfined()) {
 
             // 32 = 256/8, but you can also express it as: ValueLayout.JAVA_INT.byteSize() * 8
-            MemorySegment segment = MemorySegment.allocateNative(32, arena.scope()); 
+            MemorySegment segment = MemorySegment.allocateNative(32, arena.scope());
             segment.set(ValueLayout.JAVA_INT, 0, 11);
             segment.set(ValueLayout.JAVA_INT, 4, 21);
             segment.set(ValueLayout.JAVA_INT, 8, 12);
@@ -32,7 +32,7 @@ public class Main {
         }
 
         System.out.println("v0: " + Arrays.toString(v0.toIntArray()));
-        
+
         IntVector v1;
         try (Arena arena = Arena.openConfined()) {
 
@@ -62,27 +62,20 @@ public class Main {
         System.out.println("v2: " + Arrays.toString(v2.toIntArray()));
 
         IntVector v3;
-        try (Arena arena = Arena.openConfined()) {            
+        try (Arena arena = Arena.openConfined()) {
             MemorySegment segment = arena.allocateArray(
-                    ValueLayout.JAVA_INT, new int[]{
-                        11, 21, 12,
-                        7,  33, 1,
-                        3,  6
-                    });
+                    ValueLayout.JAVA_INT, new int[]{11, 21, 12, 7, 33, 1, 3, 6});
 
             v3 = IntVector.fromMemorySegment(VS256, segment, 0, ByteOrder.nativeOrder());
         }
 
-        System.out.println("v3: " + Arrays.toString(v3.toIntArray()));                
-        
+        System.out.println("v3: " + Arrays.toString(v3.toIntArray()));
+
         // on-heap array                            
-        MemorySegment segment = MemorySegment.ofArray(new int[]{
-                        11, 21, 12,
-                        7,  33, 1,
-                        3,  6
-                    });                
-        
-        System.out.println("Fifth element: " + segment.get(ValueLayout.JAVA_INT, 16));                
-        System.out.println("Fifth element: " + segment.getAtIndex(ValueLayout.JAVA_INT, 4));                
+        MemorySegment segment = MemorySegment
+                .ofArray(new int[]{11, 21, 12, 7, 33, 1, 3, 6});
+
+        System.out.println("On-heap, fifth element: " + segment.get(ValueLayout.JAVA_INT, 16));
+        System.out.println("On-heap, fifth element: " + segment.getAtIndex(ValueLayout.JAVA_INT, 4));
     }
 }
