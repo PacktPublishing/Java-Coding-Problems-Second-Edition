@@ -33,7 +33,7 @@ public class Main {
         System.out.println("\nSingle sequence layout using path element: ");
 
         SequenceLayout seq = MemoryLayout.sequenceLayout(
-                10, ValueLayout.JAVA_DOUBLE.withName("x"));
+                10, ValueLayout.JAVA_DOUBLE);
 
         // VarHandle[varType=double, coord=[interface java.lang.foreign.MemorySegment, long]]
         VarHandle sphandle = seq.varHandle(PathElement.sequenceElement());
@@ -60,6 +60,7 @@ public class Main {
         VarHandle sahandle = ValueLayout.JAVA_DOUBLE.arrayElementVarHandle();
 
         try (Arena arena = Arena.openConfined()) {
+            
             MemorySegment segment = arena.allocate(seq);
 
             System.out.println("\nSequence size in bytes: " + segment.byteSize());
@@ -90,7 +91,7 @@ public class Main {
 
             System.out.println("\nNested sequence size in bytes: " + segment.byteSize());
 
-            long outer = nestedseq.elementCount();
+            long outer = nestedseq.elementCount();            
             long inner = ((SequenceLayout) nestedseq.select(PathElement.sequenceElement())).elementCount();
 
             for (int i = 0; i < outer; i++) {
