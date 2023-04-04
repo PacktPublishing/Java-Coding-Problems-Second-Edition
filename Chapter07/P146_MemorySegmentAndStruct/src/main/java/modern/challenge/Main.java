@@ -17,6 +17,8 @@ public class Main {
             MemorySegment segment = MemorySegment.allocateNative(
                     2 * ValueLayout.JAVA_DOUBLE.byteSize() * 5,
                     ValueLayout.JAVA_DOUBLE.byteAlignment(), arena.scope());
+            
+            System.out.println("\nSegment size in bytes: " + segment.byteSize());
 
             for (int i = 0; i < 5; i++) {
                 segment.setAtIndex(ValueLayout.JAVA_DOUBLE, i * 2, Math.random());
@@ -29,19 +31,22 @@ public class Main {
             }
         }
 
-        System.out.println();
-
+        System.out.println();       
+        
         SequenceLayout struct
                 = MemoryLayout.sequenceLayout(5,
                         MemoryLayout.structLayout(
                                 ValueLayout.JAVA_DOUBLE.withName("x"),
                                 ValueLayout.JAVA_DOUBLE.withName("y")));
 
+        // VarHandle[varType=double, coord=[interface java.lang.foreign.MemorySegment, long]]
         VarHandle xHandle = struct.varHandle(PathElement.sequenceElement(),
                 PathElement.groupElement("x"));
+        
+        // VarHandle[varType=double, coord=[interface java.lang.foreign.MemorySegment, long]]
         VarHandle yHandle = struct.varHandle(PathElement.sequenceElement(),
                 PathElement.groupElement("y"));
-
+              
         try (Arena arena = Arena.openConfined()) {
             MemorySegment segment = arena.allocate(struct);
             
