@@ -17,37 +17,43 @@ public class Main {
             MemorySegment segment = MemorySegment.allocateNative(
                     ValueLayout.JAVA_DOUBLE.byteSize(),
                     ValueLayout.JAVA_DOUBLE.byteAlignment(), arena.scope());
-            
-                segment.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, Math.random());
-                System.out.printf("\nx = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));
-                System.out.printf("\ny = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));            
-                
-                segment.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, Math.random());                                        
-                System.out.printf("\nx = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));
-                System.out.printf("\ny = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));            
+
+            System.out.println("\nUnion size in bytes: " + segment.byteSize());
+
+            segment.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, 500.99);
+            System.out.printf("\nprice = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));
+            segment.setAtIndex(ValueLayout.JAVA_INT, 0, 101000);
+            System.out.printf("\nprice (garbage value) = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));
+            System.out.println("\nsku = " + segment.getAtIndex(ValueLayout.JAVA_INT, 0));
+
+            segment.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, 500.99);
+            System.out.printf("\nprice = %.2f", segment.getAtIndex(ValueLayout.JAVA_DOUBLE, 0));
+            System.out.println("\nsku (garbage value) = " + segment.getAtIndex(ValueLayout.JAVA_INT, 0));
         }
 
         System.out.println();
 
         UnionLayout union = MemoryLayout.unionLayout(
-                ValueLayout.JAVA_DOUBLE.withName("x"),
-                ValueLayout.JAVA_DOUBLE.withName("y"));
+                ValueLayout.JAVA_DOUBLE.withName("price"),
+                ValueLayout.JAVA_INT.withName("sku"));
 
-        VarHandle xHandle = union.varHandle(PathElement.groupElement("x"));
-        VarHandle yHandle = union.varHandle(PathElement.groupElement("y"));
+        VarHandle xHandle = union.varHandle(PathElement.groupElement("price"));
+        VarHandle yHandle = union.varHandle(PathElement.groupElement("sku"));
 
         try (Arena arena = Arena.openConfined()) {
             MemorySegment segment = arena.allocate(union);
 
             System.out.println("\nUnion size in bytes: " + segment.byteSize());
 
-            xHandle.set(segment, Math.random());
-            System.out.printf("\nx = %.2f", xHandle.get(segment));
-            System.out.printf("\ny = %.2f", yHandle.get(segment));
-            
-            yHandle.set(segment, Math.random());
-            System.out.printf("\nx = %.2f", xHandle.get(segment));
-            System.out.printf("\ny = %.2f", yHandle.get(segment));
+            xHandle.set(segment, 500.99);
+            System.out.printf("\nprice = %.2f", xHandle.get(segment));
+            yHandle.set(segment, 101000);
+            System.out.printf("\nprice (garbage value) = %.2f", xHandle.get(segment));
+            System.out.println("\nsku = " + yHandle.get(segment));
+
+            xHandle.set(segment, 500.99);
+            System.out.printf("\nprice = %.2f", xHandle.get(segment));
+            System.out.println("\nsku (garbage value) = " + yHandle.get(segment));
         }
     }
 }
