@@ -44,7 +44,7 @@ public class Main {
             System.out.println("\nAddress 1: " + address1);
             System.out.println("New address 1: " + newAddress1);
             
-            System.out.println("\nReplace the third value (2.2) with the value of the inital first address (1.0)");
+            System.out.println("\nReplace the value from offset 16 (2.2) with the initial value from offset 0 (1.0)");
             segment.set(ValueLayout.ADDRESS, 16, address1);
             System.out.println("Current array: " + Arrays.toString(
                     segment.toArray(ValueLayout.JAVA_DOUBLE)));
@@ -53,7 +53,7 @@ public class Main {
             System.out.println("\nAddress 1: " + address1);
             System.out.println("New address 3: " + initialAddress1);
             
-            System.out.println("\nReplace the first value (Double.MIN_VALUE) with the value of the inital third address (2.2)");
+            System.out.println("\nReplace the value from offset 0 (now, Double.MIN_VALUE) with the initial value from offset 16 (2.2)");
             segment.set(ValueLayout.ADDRESS, 0, address3);
             System.out.println("Current array: " + Arrays.toString(
                     segment.toArray(ValueLayout.JAVA_DOUBLE)));
@@ -62,7 +62,7 @@ public class Main {
             System.out.println("\nAddress 3: " + address3);
             System.out.println("New address 1: " + initialAddress3);
             
-            System.out.println("\nReplace the second value (Double.MAX_VALUE) with the value of the inital second address (3.2)");
+            System.out.println("\nReplace the value from offset 8 (now, Double.MAX_VALUE) with the initial value from offset 8 (3.2)");
             segment.set(ValueLayout.ADDRESS, 8, address2);
             System.out.println("Current array: " + Arrays.toString(
                     segment.toArray(ValueLayout.JAVA_DOUBLE)));
