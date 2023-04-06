@@ -14,39 +14,39 @@ public class Main {
 
     public static void main(String[] args) throws Throwable {
 
-        SequenceLayout inner = MemoryLayout.sequenceLayout(5, ValueLayout.JAVA_DOUBLE);
-        SequenceLayout outer = MemoryLayout.sequenceLayout(10, inner);
+        SequenceLayout innerSeq = MemoryLayout.sequenceLayout(5, ValueLayout.JAVA_DOUBLE);
+        SequenceLayout outerSeq = MemoryLayout.sequenceLayout(10, innerSeq);
 
-        VarHandle handle = outer.varHandle(
+        VarHandle handle = outerSeq.varHandle(
                 PathElement.sequenceElement(),
                 PathElement.sequenceElement());
 
         try (Arena arena = Arena.openConfined()) {
 
-            MemorySegment segment = arena.allocate(outer);
+            MemorySegment segment = arena.allocate(outerSeq);
 
-            System.out.println("Outer: " + outer.elementCount());
-            System.out.println("Inner: " + inner.elementCount());
+            System.out.println("Outer: " + outerSeq.elementCount());
+            System.out.println("Inner: " + innerSeq.elementCount());
 
-            for (int i = 0; i < outer.elementCount(); i++) {
-                for (int j = 0; j < inner.elementCount(); j++) {
+            for (int i = 0; i < outerSeq.elementCount(); i++) {
+                for (int j = 0; j < innerSeq.elementCount(); j++) {
                     handle.set(segment, i, j, Math.random());
                 }
             }
 
-            for (int i = 0; i < outer.elementCount(); i++) {
+            for (int i = 0; i < outerSeq.elementCount(); i++) {
                 System.out.print("\n-----" + i + "-----");
-                for (int j = 0; j < inner.elementCount(); j++) {
+                for (int j = 0; j < innerSeq.elementCount(); j++) {
                     System.out.printf("\nx = %.5f", handle.get(segment, i, j));
                 }
             }
 
-            MethodHandle mHandle = outer.sliceHandle(
+            MethodHandle mHandle = outerSeq.sliceHandle(
                     PathElement.sequenceElement()
             );
 
             System.out.println();
-            System.out.println("\n The third sequence:" 
+            System.out.println("\n The third sequence of 10:" 
                     + Arrays.toString(
                     ((MemorySegment) mHandle.invoke(segment, 3))
                             .toArray(ValueLayout.JAVA_DOUBLE)));
