@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>java.modern.challenge</groupId>
-    <artifactId>P146_MemorySegmentAndStruct</artifactId>
+    <artifactId>P148_IntroPaddingLayout</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
@@ -11,7 +11,7 @@
         <maven.compiler.target>20</maven.compiler.target>
         <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
     </properties>
-    <name>P146_MemorySegmentAndStruct</name>
+    <name>P148_IntroPaddingLayout</name>
     <build>
         <plugins>
             <plugin>
