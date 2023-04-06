@@ -28,7 +28,8 @@ public class Main {
 
         // using a pre-allocated segment that doesn't fit all data
         try (Arena arena = Arena.openConfined()) {
-            SegmentAllocator allocator = SegmentAllocator.slicingAllocator(arena.allocate(10 * 4)); // it should be 14 * 4
+                                                                  // it should be 10 * 4 + 4 * 4
+            SegmentAllocator allocator = SegmentAllocator.slicingAllocator(arena.allocate(10 * 4)); 
 
             MemorySegment segment1 = allocator.allocateArray(ValueLayout.JAVA_INT, arr1);
             MemorySegment segment2 = allocator.allocateArray(ValueLayout.JAVA_INT, arr2);
