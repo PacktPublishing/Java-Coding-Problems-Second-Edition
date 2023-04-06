@@ -12,36 +12,36 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SequenceLayout inner = MemoryLayout.sequenceLayout(5, ValueLayout.JAVA_DOUBLE);
-        SequenceLayout outer = MemoryLayout.sequenceLayout(10, inner);
+        SequenceLayout innerSeq = MemoryLayout.sequenceLayout(5, ValueLayout.JAVA_DOUBLE);
+        SequenceLayout outerSeq = MemoryLayout.sequenceLayout(10, innerSeq);
 
-        VarHandle handle = outer.varHandle(
+        VarHandle handle = outerSeq.varHandle(
                 PathElement.sequenceElement(),
                 PathElement.sequenceElement());
 
         try (Arena arena = Arena.openConfined()) {
 
-            MemorySegment segment = arena.allocate(outer);
+            MemorySegment segment = arena.allocate(outerSeq);
 
-            System.out.println("Outer: " + outer.elementCount());
-            System.out.println("Inner: " + inner.elementCount());
+            System.out.println("Outer: " + outerSeq.elementCount());
+            System.out.println("Inner: " + innerSeq.elementCount());
 
-            for (int i = 0; i < outer.elementCount(); i++) {
-                for (int j = 0; j < inner.elementCount(); j++) {
+            for (int i = 0; i < outerSeq.elementCount(); i++) {
+                for (int j = 0; j < innerSeq.elementCount(); j++) {
                     handle.set(segment, i, j, Math.random());
                 }
             }
 
-            for (int i = 0; i < outer.elementCount(); i++) {
+            for (int i = 0; i < outerSeq.elementCount(); i++) {
                 System.out.print("\n-----" + i + "-----");
-                for (int j = 0; j < inner.elementCount(); j++) {
+                for (int j = 0; j < innerSeq.elementCount(); j++) {
                     System.out.printf("\nx = %.2f", handle.get(segment, i, j));
                 }
             }
         }
 
         // reshape
-        SequenceLayout reshaped = outer.reshape(25, 2);
+        SequenceLayout reshaped = outerSeq.reshape(25, 2);
 
         VarHandle rhandle = reshaped.varHandle(
                 PathElement.sequenceElement(),
@@ -51,24 +51,24 @@ public class Main {
 
             MemorySegment segment = arena.allocate(reshaped);
 
-            System.out.println("\n\nReshaped outer: " + reshaped.elementCount());
-            System.out.println("Reshaped inner: " 
+            System.out.println("\n\nReshaped outerSeq: " + reshaped.elementCount());
+            System.out.println("Reshaped innerSeq: " 
                     + ((SequenceLayout) reshaped.select(
                             PathElement.sequenceElement())).elementCount());
 
-            long outerCount = reshaped.elementCount();
-            long innerCount = ((SequenceLayout) reshaped.select(
+            long outerSeqCount = reshaped.elementCount();
+            long innerSeqCount = ((SequenceLayout) reshaped.select(
                             PathElement.sequenceElement())).elementCount();            
             
-            for (int i = 0; i < outerCount; i++) {
-                for (int j = 0; j < innerCount; j++) {
+            for (int i = 0; i < outerSeqCount; i++) {
+                for (int j = 0; j < innerSeqCount; j++) {
                     rhandle.set(segment, i, j, Math.random());
                 }
             }
 
-            for (int i = 0; i < outerCount; i++) {
+            for (int i = 0; i < outerSeqCount; i++) {
                 System.out.print("\n-----" + i + "-----");
-                for (int j = 0; j < innerCount; j++) {
+                for (int j = 0; j < innerSeqCount; j++) {
                     System.out.printf("\nx = %.2f", rhandle.get(segment, i, j));
                 }
             }
