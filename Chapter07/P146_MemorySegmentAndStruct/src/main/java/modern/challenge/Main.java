@@ -62,5 +62,31 @@ public class Main {
                 System.out.printf("\ny = %.2f", yHandle.get(segment, i));
             }
         }
+        
+        // challenge yourself to fill with data the following layout
+        SequenceLayout product = MemoryLayout.sequenceLayout(3,
+                MemoryLayout.structLayout(
+                        ValueLayout.JAVA_INT.withName("price"),
+                        ValueLayout.JAVA_INT.withName("discount"),
+                        ValueLayout.JAVA_INT.withName("weight"),
+                        MemoryLayout.structLayout(
+                                ValueLayout.JAVA_INT.withName("quantity"),
+                                ValueLayout.JAVA_INT.withName("qrcode")).withName("detail")
+                ).withName("info"));
+
+        VarHandle priceHandle = product.varHandle(
+                PathElement.sequenceElement(), PathElement.groupElement("price"));
+        VarHandle discountHandle = product.varHandle(
+                PathElement.sequenceElement(), PathElement.groupElement("discount"));
+        VarHandle weightHandle = product.varHandle(
+                PathElement.sequenceElement(), PathElement.groupElement("weight"));
+        VarHandle quantityHandle = product.varHandle(
+                PathElement.sequenceElement(), PathElement.groupElement("detail"),
+                PathElement.groupElement("quantity"));
+        VarHandle qrHandle = product.varHandle(
+                PathElement.sequenceElement(), PathElement.groupElement("detail"),
+                PathElement.groupElement("qrcode"));
+        
+        // add here the code for setting/getting data 
     }
 }
