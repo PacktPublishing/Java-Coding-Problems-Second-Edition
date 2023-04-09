@@ -52,7 +52,7 @@ public class Main {
             MemorySegment result = (MemorySegment) func.invokeExact(
                     key, array, 10, ValueLayout.JAVA_INT.byteSize(), comparatorFunc);
 
-            if (result.address() == 0) {
+            if (result.equals(MemorySegment.NULL)) {
                 System.out.println("Element " + elem 
                         + " not found in the given array " + Arrays.toString(arr));
             } else {
