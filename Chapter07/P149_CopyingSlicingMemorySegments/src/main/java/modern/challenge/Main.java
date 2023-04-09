@@ -12,69 +12,66 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try (Arena arena = Arena.openConfined()) {
-            MemorySegment segment = arena.allocateArray(
-                    ValueLayout.JAVA_INT, 1, 2, 3, 4, -1, -1, -1, 52, 22, 33, -1, -1, -1, -1, -1, 4);
-
-            MemorySegment copySegment = segment.copyFrom(segment);
-
-            System.out.println("Data: "
-                    + Arrays.toString(copySegment.toArray(ValueLayout.JAVA_INT)));
-            
-            MemorySegment segmentDest1 = arena.allocateArray(ValueLayout.JAVA_INT, 8);
-            MemorySegment.copy(segment, 32, segmentDest1, 0, 4 * 8);            
-            System.out.println("Destination segment (1): " 
-                    + Arrays.toString(segmentDest1.toArray(ValueLayout.JAVA_INT)));
-            
-            int[] arrayDest1 = new int[8];
-            MemorySegment.copy(segment, ValueLayout.JAVA_INT, 32, arrayDest1, 0, 8);
-            System.out.println("Destination array (1): " + Arrays.toString(arrayDest1));
-            
-            int[] arraySrc1 = new int[]{10, 44, 2, 6, 55, 65, 7, 89};
-            MemorySegment.copy(arraySrc1, 0, segment, ValueLayout.JAVA_INT, 32, 8);
-            System.out.println("Destination segment (2): " 
-                    + Arrays.toString(segment.toArray(ValueLayout.JAVA_INT)));
-         
-            MemorySegment.copy(segmentDest1, ValueLayout.JAVA_INT, 0, segment, ValueLayout.JAVA_INT, 0, 8);
-            System.out.println("Destination segment (3): " 
-                    + Arrays.toString(segment.toArray(ValueLayout.JAVA_INT)));
-        }
-
         VectorSpecies<Integer> VS128 = IntVector.SPECIES_128;
-
         IntVector v1, v2, v3;
+        int[] jv1, jv2, jv3;
+
         try (Arena arena = Arena.openConfined()) {
-            MemorySegment segment = arena.allocateArray(
+            MemorySegment srcSegment = arena.allocateArray(
                     ValueLayout.JAVA_INT, 1, 2, 3, 4, -1, -1, -1, 52, 22, 33, -1, -1, -1, -1, -1, 4);
-            
+
+            MemorySegment copySegment = srcSegment.copyFrom(srcSegment);
+
+            System.out.println("Data of source segment: "
+                    + Arrays.toString(copySegment.toArray(ValueLayout.JAVA_INT)));
+
+            System.out.println("\nCopying ...\n");
+
+            MemorySegment dstSegment1 = arena.allocateArray(ValueLayout.JAVA_INT, 8);
+            MemorySegment.copy(srcSegment, 32, dstSegment1, 0, 4 * 8);
+            System.out.println("Destination segment (1): "
+                    + Arrays.toString(dstSegment1.toArray(ValueLayout.JAVA_INT)));
+
+            int[] dstArray = new int[8];
+            MemorySegment.copy(srcSegment, ValueLayout.JAVA_INT, 32, dstArray, 0, 8);
+            System.out.println("Destination array (2): " + Arrays.toString(dstArray));
+
+            int[] srcArray = new int[]{10, 44, 2, 6, 55, 65, 7, 89};
+            MemorySegment dstSegment2 = arena.allocateArray(ValueLayout.JAVA_INT, 16);
+            MemorySegment.copy(srcArray, 0, dstSegment2, ValueLayout.JAVA_INT, 32, 8);
+            System.out.println("Destination segment (3): "
+                    + Arrays.toString(dstSegment2.toArray(ValueLayout.JAVA_INT)));
+
+            // MemorySegment.copy(srcSegment, 32, dstSegment2, 0, 32);
+            MemorySegment.copy(srcSegment, ValueLayout.JAVA_INT, 32, dstSegment2, ValueLayout.JAVA_INT, 0, 8);
+            System.out.println("Destination segment (4): "
+                    + Arrays.toString(dstSegment2.toArray(ValueLayout.JAVA_INT)));
+
+            System.out.println("\nSlicing ...\n");
+
             v1 = IntVector.fromMemorySegment(VS128,
-                    segment.asSlice(0, 16), 0, ByteOrder.nativeOrder());
+                    srcSegment.asSlice(0, 16), 0, ByteOrder.nativeOrder());
 
             v2 = IntVector.fromMemorySegment(VS128,
-                    segment.asSlice(28, 12), 0L, ByteOrder.nativeOrder(),
+                    srcSegment.asSlice(28, 12), 0L, ByteOrder.nativeOrder(),
                     VS128.indexInRange(0, 3));
 
             v3 = IntVector.fromMemorySegment(VS128,
-                    segment.asSlice(60), 0, ByteOrder.nativeOrder(),
+                    srcSegment.asSlice(60), 0, ByteOrder.nativeOrder(),
                     VS128.indexInRange(0, 1));
-        }
 
-        System.out.println("v1: " + Arrays.toString(v1.toIntArray()));
-        System.out.println("v2: " + Arrays.toString(v2.toIntArray()));
-        System.out.println("v3: " + Arrays.toString(v3.toIntArray()));
-        
-        int[] jv1, jv2, jv3;
-        try (Arena arena = Arena.openConfined()) {
-            MemorySegment segment = arena.allocateArray(
-                    ValueLayout.JAVA_INT, 1, 2, 3, 4, -1, -1, -1, 52, 22, 33, -1, -1, -1, -1, -1, 4);
-                       
-           jv1 = segment.asSlice(0, 16).toArray(ValueLayout.JAVA_INT);
-           jv2 = segment.asSlice(28, 12).toArray(ValueLayout.JAVA_INT);
-           jv3 = segment.asSlice(60).toArray(ValueLayout.JAVA_INT);
+            System.out.println("v1: " + Arrays.toString(v1.toIntArray()));
+            System.out.println("v2: " + Arrays.toString(v2.toIntArray()));
+            System.out.println("v3: " + Arrays.toString(v3.toIntArray()));
+
+            jv1 = srcSegment.asSlice(0, 16).toArray(ValueLayout.JAVA_INT);
+            jv2 = srcSegment.asSlice(28, 12).toArray(ValueLayout.JAVA_INT);
+            jv3 = srcSegment.asSlice(60).toArray(ValueLayout.JAVA_INT);
+
+            System.out.println();
+            System.out.println("jv1: " + Arrays.toString(jv1));
+            System.out.println("jv2: " + Arrays.toString(jv2));
+            System.out.println("jv3: " + Arrays.toString(jv3));
         }
-        
-        System.out.println("jv1: " + Arrays.toString(jv1));
-        System.out.println("jv2: " + Arrays.toString(jv2));
-        System.out.println("jv3: " + Arrays.toString(jv3));
     }
 }
