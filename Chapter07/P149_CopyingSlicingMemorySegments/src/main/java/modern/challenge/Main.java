@@ -73,5 +73,32 @@ public class Main {
             System.out.println("jv2: " + Arrays.toString(jv2));
             System.out.println("jv3: " + Arrays.toString(jv3));
         }
+
+        // asOverlappingSlice()
+        try (Arena arena = Arena.openConfined()) {
+
+            MemorySegment segment = arena.allocateArray(ValueLayout.JAVA_INT,
+                    new int[]{1, 2, 3, 4, 6, 8, 4, 5, 3});
+
+            MemorySegment subsegment = MemorySegment.allocateNative(0, arena.scope());
+
+            int[] subarray = segment.asOverlappingSlice(subsegment)
+                    .orElse(MemorySegment.NULL).toArray(ValueLayout.JAVA_INT);
+
+            System.out.println("\nSub-array: " + Arrays.toString(subarray));
+        }
+
+        // segmentOffset()
+        try (Arena arena = Arena.openConfined()) {
+
+            MemorySegment segment = arena.allocateArray(ValueLayout.JAVA_INT,
+                    new int[]{1, 2, 3, 4, 6, 8, 4, 5, 3});
+
+            MemorySegment subsegment = segment.asSlice(16);
+
+            long offset = segment.segmentOffset(subsegment);
+
+            System.out.println("\nOffset: " + offset + " Value: " + segment.get(ValueLayout.JAVA_INT, offset));
+        }
     }
 }
