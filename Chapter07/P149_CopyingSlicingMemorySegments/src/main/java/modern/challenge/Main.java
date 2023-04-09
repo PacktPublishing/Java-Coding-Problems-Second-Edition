@@ -80,7 +80,7 @@ public class Main {
             MemorySegment segment = arena.allocateArray(ValueLayout.JAVA_INT,
                     new int[]{1, 2, 3, 4, 6, 8, 4, 5, 3});
 
-            MemorySegment subsegment = MemorySegment.allocateNative(0, arena.scope());
+            MemorySegment subsegment = segment.asSlice(12);
 
             int[] subarray = segment.asOverlappingSlice(subsegment)
                     .orElse(MemorySegment.NULL).toArray(ValueLayout.JAVA_INT);
