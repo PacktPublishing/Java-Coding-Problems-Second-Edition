@@ -20,6 +20,24 @@ public class Main {
 
             System.out.println("Data: "
                     + Arrays.toString(copySegment.toArray(ValueLayout.JAVA_INT)));
+            
+            MemorySegment segmentDest1 = arena.allocateArray(ValueLayout.JAVA_INT, 8);
+            MemorySegment.copy(segment, 32, segmentDest1, 0, 4 * 8);            
+            System.out.println("Destination segment (1): " 
+                    + Arrays.toString(segmentDest1.toArray(ValueLayout.JAVA_INT)));
+            
+            int[] arrayDest1 = new int[8];
+            MemorySegment.copy(segment, ValueLayout.JAVA_INT, 32, arrayDest1, 0, 8);
+            System.out.println("Destination array (1): " + Arrays.toString(arrayDest1));
+            
+            int[] arraySrc1 = new int[]{10, 44, 2, 6, 55, 65, 7, 89};
+            MemorySegment.copy(arraySrc1, 0, segment, ValueLayout.JAVA_INT, 32, 8);
+            System.out.println("Destination segment (2): " 
+                    + Arrays.toString(segment.toArray(ValueLayout.JAVA_INT)));
+         
+            MemorySegment.copy(segmentDest1, ValueLayout.JAVA_INT, 0, segment, ValueLayout.JAVA_INT, 0, 8);
+            System.out.println("Destination segment (3): " 
+                    + Arrays.toString(segment.toArray(ValueLayout.JAVA_INT)));
         }
 
         VectorSpecies<Integer> VS128 = IntVector.SPECIES_128;
