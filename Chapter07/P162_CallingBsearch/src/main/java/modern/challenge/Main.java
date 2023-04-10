@@ -23,14 +23,14 @@ public class Main {
     }
 
     public static void main(String[] args) throws Throwable {
-
-        Linker linker = Linker.nativeLinker();
-        SymbolLookup mathLookup = linker.defaultLookup();
-
+        
         MethodHandle comparatorHandle = MethodHandles.lookup()
                 .findStatic(Main.class, "comparator", MethodType.methodType(
                         int.class, MemorySegment.class, MemorySegment.class));
 
+        Linker linker = Linker.nativeLinker();
+        SymbolLookup libLookup = linker.defaultLookup();
+        
         MemorySegment comparatorFunc = linker.upcallStub(comparatorHandle,
                 FunctionDescriptor.of(ValueLayout.JAVA_INT,
                         ValueLayout.ADDRESS.asUnbounded(),
@@ -39,9 +39,9 @@ public class Main {
 
         try (Arena arena = Arena.openConfined()) {
 
-            MemorySegment segmentMath = mathLookup.find("bsearch").get();
+            MemorySegment segmentBsearch = libLookup.find("bsearch").get();
 
-            MethodHandle func = linker.downcallHandle(segmentMath, FunctionDescriptor.of(
+            MethodHandle func = linker.downcallHandle(segmentBsearch, FunctionDescriptor.of(
                     ValueLayout.ADDRESS,
                     ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_INT,
                     ValueLayout.JAVA_LONG, ValueLayout.ADDRESS));
