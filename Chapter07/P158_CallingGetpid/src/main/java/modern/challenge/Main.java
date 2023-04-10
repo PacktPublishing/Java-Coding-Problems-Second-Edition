@@ -16,13 +16,13 @@ public class Main {
         Linker linker = Linker.nativeLinker();
         
         // "_getpid" is part of the Universal C Runtime (UCRT) Library
-        SymbolLookup mathLookup = linker.defaultLookup();
+        SymbolLookup libLookup = linker.defaultLookup();
         
         // find the "_getpid" foreign function
-        MemorySegment segmentMath = mathLookup.find("_getpid").get();
+        MemorySegment segmentGetpid = libLookup.find("_getpid").get();
 
         // create a method handle for "_getpid"
-        MethodHandle func = linker.downcallHandle(segmentMath,
+        MethodHandle func = linker.downcallHandle(segmentGetpid,
                 FunctionDescriptor.of(ValueLayout.JAVA_INT));
 
         // invoke the foreign function, "_getpid" and get the result

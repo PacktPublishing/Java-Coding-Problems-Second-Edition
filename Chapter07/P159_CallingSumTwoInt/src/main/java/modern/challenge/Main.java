@@ -19,10 +19,10 @@ public class Main {
        
         try (Arena arena = Arena.openConfined()) {                        
             
-            SymbolLookup mathLookup = SymbolLookup.libraryLookup(path, arena.scope());            
-            MemorySegment segmentMath = mathLookup.find("_Z9sumTwoIntii").get();
+            SymbolLookup libLookup = SymbolLookup.libraryLookup(path, arena.scope());            
+            MemorySegment segmentSumTwoInt = libLookup.find("_Z9sumTwoIntii").get();
 
-            MethodHandle func = linker.downcallHandle(segmentMath,
+            MethodHandle func = linker.downcallHandle(segmentSumTwoInt,
                     FunctionDescriptor.of(ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT));
 
             long result = (long) func.invokeExact(3, 9);
