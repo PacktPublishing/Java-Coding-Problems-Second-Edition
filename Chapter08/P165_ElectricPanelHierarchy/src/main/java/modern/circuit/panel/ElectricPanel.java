@@ -18,7 +18,7 @@ public class ElectricPanel implements ElectricBreaker {
     private final ElectricCircuit centralCircuit;
     private final ElectricCircuit peripheralCircuit;
     private final ElectricCircuit auxiliaryCircuit;
-
+        
     public ElectricPanel() {
 
         peripheralCircuit = new SeriesCircuit(
@@ -33,7 +33,7 @@ public class ElectricPanel implements ElectricBreaker {
 
         centralCircuit = new ParallelCircuit(peripheralCircuit, auxiliaryCircuit,
                 new CeramicCapacitor(), new BipolarTransistor(), new MetalOxideResistor()              
-        );
+        );            
     }
        
     @Override
