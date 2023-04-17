@@ -2,4 +2,7 @@ package modern.circuit.capacitor;
 
 import modern.circuit.ElectricComponent;
 
-public abstract class Capacitor implements ElectricComponent { Capacitor() {}}
+abstract class Capacitor implements ElectricComponent { 
+    
+    // Capacitor() {} - alternatively, if the class is declared public then we can close it via a package-private constructor
+}
