@@ -1,4 +1,4 @@
-package modern.challenge;
+package com.melon.co;
 
 public sealed interface Melon {}
 

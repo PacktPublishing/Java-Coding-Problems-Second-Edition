@@ -1,4 +1,4 @@
-package modern.challenge;
+package com.truck.co;
 
 public sealed class Truck {}
 
