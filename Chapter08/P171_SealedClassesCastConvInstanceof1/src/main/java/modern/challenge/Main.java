@@ -1,15 +1,16 @@
 package modern.challenge;
 
-public class Main {  
-     
-    public static void drawTriangle (Triangle t) {
-        
-        if(t instanceof Quadrilateral) {
+public class Main {
+
+    public static void drawTriangle(Triangle t) {
+
+        if (t instanceof Quadrilateral) {
             System.out.println("This is not a triangle");
         } else {
             System.out.println("Drawing a triangle");
         }
     }
 
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+    }
 }
