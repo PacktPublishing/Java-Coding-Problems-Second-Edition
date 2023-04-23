@@ -7,7 +7,7 @@ import java.util.List;
 public final class ElectricCircuit implements ElectricComponent {
 
     private final int id;
-    private List<ElectricComponent> comps = new ArrayList<>();
+    private final List<ElectricComponent> comps = new ArrayList<>();
 
     public ElectricCircuit(int id) {
         this.id = id;

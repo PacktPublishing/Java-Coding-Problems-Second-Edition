@@ -28,8 +28,8 @@ public class Main {
         export(ec4);
     }
     
-    private static void export(ElectricComponent... comps) {
+    private static void export(ElectricComponent circuit) {
         XmlExportVisitor exportVisitor = new XmlExportVisitor();
-        System.out.println(exportVisitor.export(comps));
+        System.out.println(exportVisitor.export(circuit));
     }
 }
