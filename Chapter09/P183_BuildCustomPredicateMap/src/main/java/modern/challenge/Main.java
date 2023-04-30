@@ -2,6 +2,7 @@ package modern.challenge;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class Main {
@@ -16,8 +17,16 @@ public class Main {
                 new Car("Lexus", "diesel", 300), new Car("Ford", "electric", 200)
         );
 
-        Predicate<Car> filterPredicate = PredicateBuilder.GT
-                .toPredicate(PredicateBuilder.getFieldByName(Car.class, "horsepower"), 300);
+        Map<String, String> filtersMap = Map.of(
+                "brand", "Chevrolet",
+                "fuel", "diesel"
+        );
+
+        Predicate<Car> filterPredicate = t -> true;
+        for(String key : filtersMap.keySet()){
+            filterPredicate = filterPredicate.and(PredicateBuilder.EQUALS
+                .toPredicate(PredicateBuilder.getFieldByName(Car.class, key), filtersMap.get(key)));             
+        }        
 
         cars.stream()
                 .filter(filterPredicate)

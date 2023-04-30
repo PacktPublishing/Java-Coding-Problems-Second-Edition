@@ -7,33 +7,29 @@ import java.util.function.Predicate;
 
 enum PredicateBuilder {
 
-    GT((t, u) -> t > u),
-    LT((t, u) -> t < u),
-    GE((t, u) -> t >= u),
-    LE((t, u) -> t <= u),
-    EQ((t, u) -> t.intValue() == u.intValue());
+    EQUALS(String::equals);
 
-    private final BiPredicate<Integer, Integer> predicate;
+    private final BiPredicate<String, String> predicate;
 
-    private PredicateBuilder(BiPredicate<Integer, Integer> predicate) {
+    private PredicateBuilder(BiPredicate<String, String> predicate) {
         this.predicate = predicate;
     }
 
-    public <T> Predicate<T> toPredicate(Function<T, Integer> getter, int u) {
+    public <T> Predicate<T> toPredicate(Function<T, String> getter, String u) {
         return obj -> this.predicate.test(getter.apply(obj), u);
     }
 
-    public static <T> Function<T, Integer> getFieldByName(Class<T> cls, String field) {
+    public static <T> Function<T, String> getFieldByName(Class<T> cls, String field) {
         return object -> {
             try {
                 Field f = cls.getDeclaredField(field);
                 f.setAccessible(true);
 
-                return (Integer) f.get(object);
+                return (String) f.get(object);
             } catch (IllegalAccessException | IllegalArgumentException
                     | NoSuchFieldException | SecurityException e) {                
                 throw new RuntimeException(e);
             }
         };
-    }
+    }        
 }
