@@ -12,12 +12,12 @@ public interface Streams<T> {
 
     Stream<T> stream();
 
-    static <T> Streams<T> of(Stream<T> stream) {
+    static <T> Streams<T> from(Stream<T> stream) {
         return () -> stream;
     }
 
     default <U> Streams<U> stream(Function<Stream<T>, Stream<U>> stream) {
-        return of(stream.apply(stream()));
+        return from(stream.apply(stream()));
     }
 
     default boolean contains(T item) {

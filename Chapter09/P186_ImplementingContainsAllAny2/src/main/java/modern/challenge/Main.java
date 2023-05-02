@@ -22,15 +22,15 @@ public class Main {
         
         List cars123 = List.of(car1, car2, car3);
          
-        Streams.of(cars.stream()).stream().forEach(System.out::println);
+        Streams.from(cars.stream()).stream().forEach(System.out::println);
         
         System.out.println();
         
-        boolean f11 = Streams.of(cars.stream()).contains(car1);
-        boolean f12 = Streams.of(cars.stream()).containsAll(car1, car2, car3);
-        boolean f13 = Streams.of(cars.stream()).containsAll(cars123);
-        boolean f14 = Streams.of(cars.stream()).containsAll(cars123.stream());
-        boolean f15 = Streams.of(cars123.stream()).containsAll(cars.stream());
+        boolean f11 = Streams.from(cars.stream()).contains(car1);
+        boolean f12 = Streams.from(cars.stream()).containsAll(car1, car2, car3);
+        boolean f13 = Streams.from(cars.stream()).containsAll(cars123);
+        boolean f14 = Streams.from(cars.stream()).containsAll(cars123.stream());
+        boolean f15 = Streams.from(cars123.stream()).containsAll(cars.stream());
         
         System.out.println("f11: " + f11);
         System.out.println("f12: " + f12);
@@ -40,10 +40,10 @@ public class Main {
                 
         System.out.println();
                 
-        boolean f21 = Streams.of(cars.stream()).containsAny(car1, car2, car3);
-        boolean f22 = Streams.of(cars.stream()).containsAny(cars123);
-        boolean f23 = Streams.of(cars.stream()).containsAny(cars123.stream());
-        boolean f24 = Streams.of(cars123.stream()).containsAny(cars.stream());
+        boolean f21 = Streams.from(cars.stream()).containsAny(car1, car2, car3);
+        boolean f22 = Streams.from(cars.stream()).containsAny(cars123);
+        boolean f23 = Streams.from(cars.stream()).containsAny(cars123.stream());
+        boolean f24 = Streams.from(cars123.stream()).containsAny(cars.stream());
         
         System.out.println("f21: " + f21);
         System.out.println("f22: " + f22);
