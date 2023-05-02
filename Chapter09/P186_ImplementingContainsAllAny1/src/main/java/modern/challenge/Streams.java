@@ -59,8 +59,9 @@ public interface Streams<T> extends Stream<T> {
         }    
             
         
-        if (stream instanceof Streams)
+        if (stream instanceof Streams) {
             return (Streams<T>) stream;
+        }
 
         return new StreamsWrapper(stream);
     }
