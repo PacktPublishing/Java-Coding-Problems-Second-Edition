@@ -57,8 +57,7 @@ public interface Streams<T> extends Stream<T> {
         if (stream == null) {
             return from(Stream.empty());
         }    
-            
-        
+                    
         if (stream instanceof Streams) {
             return (Streams<T>) stream;
         }
