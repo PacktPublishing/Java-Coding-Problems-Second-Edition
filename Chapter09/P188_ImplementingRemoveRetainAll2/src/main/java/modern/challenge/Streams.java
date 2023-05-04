@@ -24,44 +24,43 @@ public interface Streams<T> {
         return stream().anyMatch(isEqual(item));
     }
 
-    default boolean containsAll(T... items) {
-        return containsAll(Stream.of(items));
+    default Streams<T> removeAll(T... items) {
+        return removeAll(Stream.of(items));
     }
 
-    default boolean containsAll(List<? extends T> items) {
-        return containsAll(items.stream());
+    default Streams<T> removeAll(List<? extends T> items) {
+        return removeAll(items.stream());
     }
 
-    default boolean containsAll(Stream<? extends T> items) {
+    default Streams<T> removeAll(Stream<? extends T> items) {
 
         Set<? extends T> set = toSet(items);
 
         if (set.isEmpty()) {
-            return true;
+            return this;
         }
 
-        return stream().filter(item -> set.remove(item))
-                .anyMatch(any -> set.isEmpty());
+        return from(stream().filter(item -> !set.contains(item)));
     }
 
-    default boolean containsAny(T... items) {
-        return containsAny(Stream.of(items));
+    default Streams<T> retainAll(T... items) {
+        return retainAll(Stream.of(items));
     }
 
-    default boolean containsAny(List<? extends T> items) {
-        return containsAny(items.stream());
+    default Streams<T> retainAll(List<? extends T> items) {
+        return retainAll(items.stream());
     }
 
-    default boolean containsAny(Stream<? extends T> items) {
+    default Streams<T> retainAll(Stream<? extends T> items) {
 
         Set<? extends T> set = toSet(items);
 
         if (set.isEmpty()) {
-            return false;
+            return from(Stream.empty());
         }
 
-        return stream().anyMatch(set::contains);
-    }
+        return from(stream().filter(item -> set.contains(item)));
+    }       
 
     static <T> Set<T> toSet(Stream<? extends T> stream) {
 

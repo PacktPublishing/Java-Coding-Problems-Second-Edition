@@ -16,7 +16,6 @@ import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.LongConsumer;
 import java.util.function.Predicate;
-import static java.util.function.Predicate.isEqual;
 import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
@@ -29,49 +28,46 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @SuppressWarnings("unchecked")
-public interface Streams<T> extends Stream<T> {        
-    
-    default boolean contains(T item) {
-        return anyMatch(isEqual(item));
+public interface Streams<T> extends Stream<T> {   
+   
+    default Streams<T> removeAll(T... items) {
+        return removeAll(Stream.of(items));
     }
 
-    default boolean containsAll(T... items) {
-        return containsAll(Stream.of(items));
+    default Streams<T> removeAll(List<? extends T> items) {
+        return removeAll(items.stream());
     }
 
-    default boolean containsAll(List<? extends T> items) {
-        return containsAll(items.stream());
-    }
-
-    default boolean containsAll(Stream<? extends T> items) {
+    default Streams<T> removeAll(Stream<? extends T> items) {
 
         Set<? extends T> set = toSet(items);
 
         if (set.isEmpty()) {
-            return true;
+            return this;
         }
 
-        return filter(item -> set.remove(item))
-                .anyMatch(any -> set.isEmpty());
+        return filter(item -> !set.contains(item))
+                .onClose(items::close);
+    }       
+
+    default Streams<T> retainAll(T... items) {
+        return retainAll(Stream.of(items));
     }
 
-    default boolean containsAny(T... items) {
-        return containsAny(Stream.of(items));
+    default Streams<T> retainAll(List<? extends T> items) {
+        return retainAll(items.stream());
     }
 
-    default boolean containsAny(List<? extends T> items) {
-        return containsAny(items.stream());
-    }
-
-    default boolean containsAny(Stream<? extends T> items) {
+    default Streams<T> retainAll(Stream<? extends T> items) {
 
         Set<? extends T> set = toSet(items);
 
         if (set.isEmpty()) {
-            return false;
+            return from(Stream.empty());
         }
 
-        return anyMatch(set::contains);
+        return filter(item -> set.contains(item))
+                .onClose(items::close);
     }
     
     static <T> Streams<T> from(Stream<? extends T> stream) {
@@ -90,8 +86,8 @@ public interface Streams<T> extends Stream<T> {
     static <T> Set<T> toSet(Stream<? extends T> stream) {
 
         return stream.collect(Collectors.toSet());
-    }        
-        
+    }
+    
     @Override
     public Streams<T> filter(Predicate<? super T> predicate);
     

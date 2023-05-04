@@ -20,13 +20,11 @@ public class Main {
         Car car2 = new Car("Ford", "electric", 80);
         Car car3 = new Car("Chevrolet", "electric", 150);
         
-        List cars123 = List.of(car1, car2, car3);
-         
-        Streams.from(cars.stream()).forEach(System.out::println);
+        List<Car> cars123 = List.of(car1, car2, car3);                 
         
-        System.out.println();
-    
-        boolean f11 = Streams.from(cars.stream()).contains(car1);
+        System.out.println();           
+        boolean f11 = Streams.from(cars.stream())
+                .filter(car->car.getBrand().equals("Mercedes")).contains(car1);
         boolean f12 = Streams.from(cars.stream()).containsAll(car1, car2, car3);
         boolean f13 = Streams.from(cars.stream()).containsAll(cars123);
         boolean f14 = Streams.from(cars.stream()).containsAll(cars123.stream());
@@ -49,5 +47,15 @@ public class Main {
         System.out.println("f22: " + f22);
         System.out.println("f23: " + f23);        
         System.out.println("f24: " + f24);        
+        
+        System.out.println();
+        
+        Car car4 = new Car("Mercedes", "electric", 200);        
+        boolean isit = Streams.from(cars.stream()).filter(car->car.getBrand().equals("Mercedes"))
+                .distinct()
+                .dropWhile(car -> car.getFuel().equals("gasoline"))
+                .contains(car4);
+        
+        System.out.println("Car4? " + isit);                           
     }
 }
