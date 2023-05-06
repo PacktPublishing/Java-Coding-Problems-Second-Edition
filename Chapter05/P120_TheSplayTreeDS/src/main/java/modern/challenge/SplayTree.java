@@ -66,6 +66,18 @@ class SplayTree {
         count++;
     }
     
+    public void insertAll(SplayTree other) {
+        insertAll(other.root);        
+    }
+    
+    private void insertAll(Node node) {
+        if (node != null) {
+            insertAll(node.left);
+            insert(node.data);
+            insertAll(node.right);
+        }
+    }
+    
     private void splay(Node node) {
 
         while (node.parent != null) {
