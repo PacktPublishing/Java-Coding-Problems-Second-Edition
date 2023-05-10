@@ -53,5 +53,9 @@ public class Main {
                 + ", America/Argentina/Buenos_Aires");
         System.out.println("America/Argentina/Buenos_Aires: "
                 + DateConverters.toDayPeriodV2(new Date(), ZoneId.of("America/Argentina/Buenos_Aires")));
+        
+        // print hour-by-hour
+        System.out.println();
+        DateConverters.printToDayPeriod();
     }
 }

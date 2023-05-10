@@ -1,7 +1,10 @@
 package modern.challenge;
 
+import java.time.Instant;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -56,5 +59,19 @@ public final class DateConverters {
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MMM-dd [B]");
 
         return zdt.withZoneSameInstant(zoneId).format(formatter2);
+    }
+    
+    public static void printToDayPeriod() {
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh B");
+        
+        for (int h = 0; h < 24; h++)
+        {
+            final OffsetDateTime odt
+                    = Instant.now().atOffset(ZoneOffset.UTC).withHour(h);
+            
+            System.out.println("Hour " + h 
+                    + ": \"" + formatter.format(odt) + "\"");
+        }
     }
 }
