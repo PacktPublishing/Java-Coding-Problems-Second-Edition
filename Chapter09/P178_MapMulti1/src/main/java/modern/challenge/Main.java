@@ -33,5 +33,15 @@ public class Main {
                 .mapToObj(i -> i) // or, .boxed()
                 .collect(toList());
         System.out.println(evenDoubledMM2);
+
+        int evenDoubledAndSumMM = integers.stream()
+                .mapMultiToInt((i, consumer) -> {
+                    if (i % 2 == 0) {
+                        consumer.accept(i * 2);
+                    }
+                })
+                .sum();
+
+        System.out.println(evenDoubledAndSumMM);
     }
 }
