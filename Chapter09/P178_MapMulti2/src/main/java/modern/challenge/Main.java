@@ -53,7 +53,7 @@ public class Main {
         System.out.println(bookshelfMM);
         System.out.println();
 
-        /* mapMulti() is useful when we keep only a part of the initial elements */
+        /* Case 1: mapMulti() is useful when replacing each stream element with a small (possibly zero) number of elements */
         
         List<Bookshelf> bookshelfGt2005Classic = authors.stream()
                 .flatMap(
@@ -80,13 +80,13 @@ public class Main {
         System.out.println();
         System.out.println(bookshelfGt2005MM1);
 
-        /* use a consumer defined in Author */
+        /* Case 2: mapMulti() is useful when it is easier to use an imperative approach for generating result elements than it is to return them in the form of a Stream */
         
         List<Bookshelf> bookshelfGt2005MM2 = authors.stream()
                 .<Bookshelf>mapMulti(Author::bookshelfGt2005)
                 .collect(Collectors.toList());
 
         System.out.println();
-        System.out.println(bookshelfGt2005MM2);
+        System.out.println(bookshelfGt2005MM2);        
     }
 }
