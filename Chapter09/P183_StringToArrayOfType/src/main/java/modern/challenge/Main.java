@@ -56,7 +56,7 @@ public class Main {
                 .map(s -> {
                     try {
                         return func.apply(s.trim());
-                    } catch (NumberFormatException e) { /* cannot convert to given type */ }
+                    } catch (Exception e) {}
                     return null;
                 })
                 .filter(Objects::nonNull)
