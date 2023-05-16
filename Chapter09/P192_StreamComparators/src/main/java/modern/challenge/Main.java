@@ -93,7 +93,7 @@ public class Main {
         nrs.stream()
                 .sorted()
                 .forEach(System.out::println);
-        */                
+        */               
         
         System.out.println();
         
@@ -122,7 +122,7 @@ public class Main {
         strs.stream()
                 .sorted((s1, s2) -> Character.compare(s1.charAt(s1.length() - 1), 
                         s2.charAt(s2.length() - 1)))
-            .         forEach(System.out::println);
+                .forEach(System.out::println);
                 
         System.out.println();
         
