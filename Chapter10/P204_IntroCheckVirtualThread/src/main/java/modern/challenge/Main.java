@@ -20,5 +20,14 @@ public class Main {
         logger.info(() -> "Is vThread virtual ? " + vThread.isVirtual());
         logger.info(() -> "Is pThread1 virtual ? " + pThread1.isVirtual());
         logger.info(() -> "Is pThread2 virtual ? " + pThread2.isVirtual());
+
+        logger.info(() -> "Is daemon ? " + vThread.isDaemon());
+        // vThread.setDaemon(false); //  java.lang.IllegalArgumentException: 'false' not legal for virtual threads        
+
+        logger.info(() -> "Priority ? " + vThread.getPriority()); // NORM_PRIORITY = 5
+        vThread.setPriority(4);
+        logger.info(() -> "Priority (after setting it 4) ? " + vThread.getPriority()); // NORM_PRIORITY = 5
+        
+        logger.info(() -> "Thread group ? " + vThread.getThreadGroup().getName());
     }
 }
