@@ -15,14 +15,21 @@ public class Main {
 
         logger.info("Before running the task ...");
 
-        // Thread.ofVirtual().start(task);
-        // Thread.ofVirtual().name("my_vThread").start(task);        
-        Thread vThread = Thread.startVirtualThread(task);
+        Thread vThread = Thread.ofVirtual().unstarted(task);
 
-        logger.info("While running the task ...");
+        logger.info(() -> "Virtual thread is created but not started ... " + vThread.isAlive());
+
+        vThread.start();
+
+        logger.info(() -> "While running the task (virtual thread started) ... " + vThread.isAlive());
 
         vThread.join();
 
         logger.info("After running the task ...");
+
+        // this is an unstarted platform thread
+        Thread pThread = Thread.ofPlatform().unstarted(task);
+        logger.info("");
+        logger.info(() -> "Platform thread is created but not started ... " + pThread.isAlive());                
     }
 }
