@@ -41,6 +41,8 @@ public class Main {
             for (int i = 0; i < NUMBER_OF_TASKS; i++) {
 
                 executor.submit(taskr);
+                // Future<?> future = executor.submit(taskr);
+                
             }
         }
 
@@ -51,6 +53,7 @@ public class Main {
             for (int i = 0; i < NUMBER_OF_TASKS; i++) {
 
                 executor.submit(taskc);
+                // Future<Boolean> future = executor.submit(taskc);
             }
         }
 
@@ -61,6 +64,7 @@ public class Main {
             for (int i = 0; i < NUMBER_OF_TASKS; i++) {
 
                 executor.submit(taskr);
+                // Future<?> future = executor.submit(taskr);
             }
         }
 
@@ -71,6 +75,7 @@ public class Main {
             for (int i = 0; i < NUMBER_OF_TASKS; i++) {
 
                 executor.submit(taskc);
+                // Future<Boolean> future = executor.submit(taskc);
             }
         }
     }
