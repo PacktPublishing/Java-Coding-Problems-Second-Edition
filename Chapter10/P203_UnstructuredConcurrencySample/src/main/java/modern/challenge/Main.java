@@ -28,19 +28,19 @@ public class Main {
     public static void buildTestingTeam() throws InterruptedException {
 
         // STOP 1
-        Future<String> future1 = futureUser(1);
-        Future<String> future2 = futureUser(2); // Integer.MAX_VALUE
-        Future<String> future3 = futureUser(3);
+        Future<String> future1 = futureTester(1);
+        Future<String> future2 = futureTester(2); // Integer.MAX_VALUE
+        Future<String> future3 = futureTester(3);
 
         try {
             // STOP 2
-            String user1 = future1.get();
-            String user2 = future2.get();
-            String user3 = future3.get();
+            String tester1 = future1.get();
+            String tester2 = future2.get();
+            String tester3 = future3.get();
 
-            logger.info(user1);
-            logger.info(user2);
-            logger.info(user3);
+            logger.info(tester1);
+            logger.info(tester2);
+            logger.info(tester3);
         } catch (ExecutionException ex) {
             // STOP 3
             throw new RuntimeException(ex);
@@ -51,12 +51,12 @@ public class Main {
     }
 
     // STOP 5
-    public static Future<String> futureUser(int id) {
+    public static Future<String> futureTester(int id) {
 
-        return executor.submit(() -> fetchUser(id));
+        return executor.submit(() -> fetchTester(id));
     }
 
-    public static String fetchUser(int id) throws IOException, InterruptedException {
+    public static String fetchTester(int id) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
 
