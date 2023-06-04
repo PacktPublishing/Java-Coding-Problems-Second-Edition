@@ -21,7 +21,7 @@ public class Main {
                 "[%1$tT] [%4$-7s] %5$s %n");
         
         logger.info("Sleeping 15s ... ");
-        Thread.sleep(Duration.ofSeconds(15)); // connect JMX while sleeping
+        Thread.sleep(Duration.ofSeconds(15)); // connect 'jconsole' while sleeping
         logger.info("Done ... ");
 
         ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(1);
