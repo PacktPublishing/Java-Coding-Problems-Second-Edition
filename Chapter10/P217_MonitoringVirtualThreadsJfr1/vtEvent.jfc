@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration version="2.0" description="test">
+    <event name="jdk.VirtualThreadStart">
+      <setting name="enabled">true</setting>
+      <setting name="stackTrace">true</setting>
+    </event>
+
+    <event name="jdk.VirtualThreadEnd">
+      <setting name="enabled">true</setting>
+    </event>
+
+    <event name="jdk.VirtualThreadPinned">
+      <setting name="enabled">true</setting>
+      <setting name="stackTrace">true</setting>
+      <setting name="threshold">20 ms</setting>
+    </event>
+
+    <event name="jdk.VirtualThreadSubmitFailed">
+      <setting name="enabled">true</setting>
+      <setting name="stackTrace">true</setting>
+    </event>
+</configuration>
