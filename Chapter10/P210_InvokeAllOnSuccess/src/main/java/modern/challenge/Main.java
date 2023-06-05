@@ -25,7 +25,7 @@ public class Main {
         buildTestingTeam();
     }
     
-    public static void buildTestingTeam() throws InterruptedException {
+    public static TestingTeam buildTestingTeam() throws InterruptedException {
         
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
@@ -33,7 +33,10 @@ public class Main {
                     List.of(() -> fetchTester(1), () -> fetchTester(2), () -> fetchTester(3))
             );
             
-            futures.forEach(f -> logger.info(() -> "State: " + f.state()));                        
+            futures.forEach(f -> logger.info(() -> "State: " + f.state()));   
+            
+            return new TestingTeam(futures.get(0).resultNow(), 
+                    futures.get(1).resultNow(), futures.get(2).resultNow());
         }        
     }
 

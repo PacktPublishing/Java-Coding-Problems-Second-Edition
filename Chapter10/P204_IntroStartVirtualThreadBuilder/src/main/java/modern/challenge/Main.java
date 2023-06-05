@@ -15,19 +15,18 @@ public class Main {
 
         logger.info("Before running the task ...");
 
-        // Thread.ofVirtual().start(task);
-        
-        // Thread.ofVirtual().name("my_vThread").start(task);        
-        
-         // Thread.Builder builder = Thread.ofVirtual().name("my_vThread");
-         // Thread vThread = builder.start(task);
-        
-        Thread vThread = Thread.startVirtualThread(task);
-                
+        Thread.Builder builder
+                = Thread.ofVirtual().name("vThread-", 1);
 
-        logger.info("While running the task ...");
+        // name "vThread-1"
+        Thread vThread1 = builder.start(task);
+        vThread1.join();
+        logger.info(() -> vThread1.getName() + " terminated");
 
-        vThread.join();
+        // name "vThread-2"
+        Thread vThread2 = builder.start(task);
+        vThread2.join();
+        logger.info(() -> vThread2.getName() + " terminated");
 
         logger.info("After running the task ...");
     }

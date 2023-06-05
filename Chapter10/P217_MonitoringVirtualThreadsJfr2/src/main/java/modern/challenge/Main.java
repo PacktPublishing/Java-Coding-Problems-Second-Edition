@@ -23,6 +23,11 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
+        buildTestingTeam();
+    }
+    
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+        
         try (ShutdownOnSuccess scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
 
             Stream.of(1, 2, 3)
@@ -34,6 +39,8 @@ public class Main {
             String result = (String) scope.result();
 
             logger.info(result);
+            
+            return new TestingTeam(result);
         }
     }
 

@@ -7,20 +7,21 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Logger;
 import jdk.incubator.concurrent.StructuredTaskScope;
 import jdk.incubator.concurrent.StructuredTaskScope.ShutdownOnSuccess;
 
 public class Main {
 
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
-
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
+
+        buildTestingTeam();
+    }
+
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
 
         try (ShutdownOnSuccess scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
 
@@ -29,8 +30,8 @@ public class Main {
             scope.fork(() -> fetchTester(3));
 
             scope.join();
-
-            logger.info((String) scope.result());
+        
+            return new TestingTeam((String) scope.result());
         }
     }
 

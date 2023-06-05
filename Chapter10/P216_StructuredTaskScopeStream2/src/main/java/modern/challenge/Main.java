@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 import java.util.stream.Stream;
 import jdk.incubator.concurrent.StructuredTaskScope;
 import jdk.incubator.concurrent.StructuredTaskScope.ShutdownOnSuccess;
@@ -25,6 +27,11 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
+        buildTestingTeam();
+    }
+
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+
         try (ShutdownOnSuccess scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
 
             List<Future> futures = Stream.of(Integer.MAX_VALUE, 2, 3)
@@ -34,19 +41,22 @@ public class Main {
 
             scope.join();
 
-            List<Object> results = futures.stream()
-                    .filter(f -> f.state() == Future.State.SUCCESS)
-                    .map(Future::resultNow)
-                    .toList();
-
-            logger.info(results.toString());
-
             List<Throwable> failed = futures.stream()
                     .filter(f -> f.state() == Future.State.FAILED)
                     .map(Future::exceptionNow)
                     .toList();
 
             logger.info(failed.toString());
+
+            TestingTeam result = futures.stream()
+                    .filter(f -> f.state() == Future.State.SUCCESS)
+                    .map(Future::resultNow)                                       
+                    .collect(collectingAndThen(toList(),
+                            list -> { return new TestingTeam(list.toArray(String[]::new)); }));
+
+            logger.info(result.toString());
+            
+            return result;
         }
     }
 

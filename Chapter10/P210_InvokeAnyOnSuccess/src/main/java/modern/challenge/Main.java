@@ -25,7 +25,7 @@ public class Main {
         buildTestingTeam();
     }
     
-    public static void buildTestingTeam() throws InterruptedException, ExecutionException {
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
         
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
@@ -34,6 +34,8 @@ public class Main {
             );
             
             logger.info(result);
+            
+            return new TestingTeam(result);
         }       
     }
 

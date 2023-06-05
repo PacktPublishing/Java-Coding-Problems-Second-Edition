@@ -17,7 +17,12 @@ public class Main {
 
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
-
+        
+        buildTestingTeam();
+    }
+    
+    public static TestingTeam buildTestingTeam() throws InterruptedException {
+        
         try (StructuredTaskScope scope = new StructuredTaskScope<String>()) {
 
             Future<String> future = scope.fork(() -> fetchTester(1));
@@ -29,7 +34,9 @@ public class Main {
             String result = future.resultNow();
 
             logger.info(result);
-        }
+            
+            return new TestingTeam(result);
+        }        
     }
 
     public static String fetchTester(int id) throws IOException, InterruptedException {

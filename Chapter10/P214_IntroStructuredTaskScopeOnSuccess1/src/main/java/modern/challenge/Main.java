@@ -22,33 +22,40 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
-        try(ShutdownOnSuccess scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
-            
+        buildTestingTeam();
+    }
+
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+
+        try (ShutdownOnSuccess scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
+
             Future<String> future1 = scope.fork(() -> fetchTester(1));
             Future<String> future2 = scope.fork(() -> fetchTester(2));
             Future<String> future3 = scope.fork(() -> fetchTester(3));
-                                                
+
             scope.join();
-            
+
             logger.info(() -> "Future-1 state: " + future1.state());
             logger.info(() -> "Future-2 state: " + future2.state());
             logger.info(() -> "Future-3 state: " + future3.state());
-            
+
             String result = (String) scope.result();
-            
+
             logger.info(result);
+
+            return new TestingTeam(result);
         }
     }
 
     public static String fetchTester(int id) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
-        
+
         // intentionally added a delay of 1-5 seconds
         Thread.sleep(Duration.ofMillis(ThreadLocalRandom.current().nextLong(5000)));
-        
+
         HttpRequest requestGet = HttpRequest.newBuilder()
-                .GET()                 
+                .GET()
                 .uri(URI.create("https://reqres.in/api/users/" + id))
                 .build();
 

@@ -21,6 +21,11 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
+        buildTestingTeam();
+    }
+    
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+        
         try (ShutdownOnFailure scope = new StructuredTaskScope.ShutdownOnFailure()) {
 
             Future<String> future1 = scope.fork(() -> fetchTester(1));
@@ -39,11 +44,15 @@ public class Main {
                 logger.info(() -> "Future-1 result: " + future1.resultNow());
                 logger.info(() -> "Future-2 result: " + future2.resultNow());
                 logger.info(() -> "Future-3 result: " + future3.resultNow());
+                
+                return new TestingTeam(future1.resultNow(), future2.resultNow(), future3.resultNow());
             } else {
                 logger.info(() -> exception.get().getMessage());
                 scope.throwIfFailed();
             }
         }
+        
+        return new TestingTeam();
     }
 
     public static String fetchTester(int id) throws IOException, InterruptedException {

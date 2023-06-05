@@ -25,7 +25,7 @@ public class Main {
         buildTestingTeam();
     }
 
-    public static void buildTestingTeam() throws InterruptedException {
+    public static TestingTeam buildTestingTeam() throws InterruptedException {
 
         // STOP 1
         Future<String> future1 = futureTester(1);
@@ -41,6 +41,9 @@ public class Main {
             logger.info(tester1);
             logger.info(tester2);
             logger.info(tester3);
+            
+            return new TestingTeam(tester1, tester2, tester3);
+            
         } catch (ExecutionException ex) {
             // STOP 3
             throw new RuntimeException(ex);

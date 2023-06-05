@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,8 +30,10 @@ public class Main {
         buildTestingTeam();
     }
 
-    public static void buildTestingTeam() throws InterruptedException {
+    public static TestingTeam buildTestingTeam() throws InterruptedException {
 
+        List<String> testers = new ArrayList<>();
+        
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
             List<Future<String>> futures = executor.invokeAll(
@@ -40,20 +43,24 @@ public class Main {
 
             futures.forEach(f -> {
 
-                logger.info(() -> "Analyzing " + f + " state ...");
-
+                logger.info(() -> "Analyzing " + f + " state ...");              
+                
                 switch (f.state()) {
                     case RUNNING ->
                         throw new IllegalStateException("Future is still in the running state ...");
-                    case SUCCESS ->
+                    case SUCCESS -> {
                         logger.info(() -> "Result: " + f.resultNow());
+                        testers.add(f.resultNow());
+                    }
                     case FAILED ->
                         logger.severe(() -> "Exception: " + f.exceptionNow().getMessage());
                     case CANCELLED ->
                         logger.info("Cancelled ?!?");
                 }
-            });
+            });                        
         }
+        
+        return new TestingTeam(testers.toArray(String[]::new));
     }
 
     public static String fetchTester(int id) throws IOException, InterruptedException {

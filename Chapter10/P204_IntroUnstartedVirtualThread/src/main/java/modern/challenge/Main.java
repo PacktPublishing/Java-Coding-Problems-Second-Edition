@@ -16,6 +16,9 @@ public class Main {
         logger.info("Before running the task ...");
 
         Thread vThread = Thread.ofVirtual().unstarted(task);
+        
+        // Thread.Builder builder = Thread.ofVirtual();
+        // Thread vThread = builder.unstarted(task);
 
         logger.info(() -> "Virtual thread is created but not started ... " + vThread.isAlive());
 

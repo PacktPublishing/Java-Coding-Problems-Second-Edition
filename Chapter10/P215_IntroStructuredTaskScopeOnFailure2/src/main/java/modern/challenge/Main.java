@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.concurrent.Future;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import jdk.incubator.concurrent.StructuredTaskScope;
@@ -18,18 +19,26 @@ public class Main {
 
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
-
-        try (ShutdownOnFailure scope = new StructuredTaskScope.ShutdownOnFailure()) {
-
-            scope.fork(() -> fetchTester(1));
-            scope.fork(() -> fetchTester(2));
-            scope.fork(() -> fetchTester(Integer.MAX_VALUE)); // this will cause the exception
-
-            scope.join();
-            scope.throwIfFailed();           
-        }
+        
+        buildTestingTeam();
     }
 
+    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+        
+        try (ShutdownOnFailure scope = new StructuredTaskScope.ShutdownOnFailure()) {
+
+            Future<String> future1 = scope.fork(() -> fetchTester(1));
+            Future<String> future2 = scope.fork(() -> fetchTester(2));
+            Future<String> future3 = scope.fork(() -> fetchTester(Integer.MAX_VALUE)); // this will cause the exception
+
+            scope.join();
+            scope.throwIfFailed();
+
+            // because we have an exception the following code will not be executed
+            return new TestingTeam(future1.resultNow(), future2.resultNow(), future3.resultNow());            
+        }
+    }
+    
     public static String fetchTester(int id) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
