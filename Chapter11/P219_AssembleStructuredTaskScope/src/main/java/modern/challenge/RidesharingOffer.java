@@ -3,4 +3,4 @@ package modern.challenge;
 import java.time.Duration;
 
 public record RidesharingOffer(String company, Duration minutesToYou, 
-        Duration minutesToDest, double price) {}
+        Duration minutesToDest, double price) implements Travel {}

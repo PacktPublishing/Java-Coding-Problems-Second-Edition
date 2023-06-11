@@ -1,92 +1,97 @@
 package modern.challenge;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import jdk.incubator.concurrent.StructuredTaskScope;
-import jdk.incubator.concurrent.StructuredTaskScope.ShutdownOnSuccess;
 
 public class Main {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws InterruptedException {
 
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
-        deliverTestingTeam();        
-    }
-    
-    public static Testing deliverTestingTeam() throws InterruptedException {
-        
-        try (TestingStructuredTaskScope scope = new TestingStructuredTaskScope()) {
-
-            Future<TestingTeam> team = scope.fork(() -> buildTestingTeam());
-            Future<TestingLeader> leader = scope.fork(() -> chooseTestingTeamLeader());
-            
-            scope.join();  
-            
-            Testing testing = new Testing(team.resultNow(), leader.resultNow());
-            
-            logger.info(testing.toString());
-            
-            return testing;
-        }
+        logger.info(fetchTravelOffers().toString());
     }
 
-    public static TestingTeam buildTestingTeam() throws InterruptedException, ExecutionException {
+    public static TravelOffer fetchTravelOffers() throws InterruptedException {
 
-        try (StructuredTaskScope scope = new StructuredTaskScope<String>()) {
+        try (TravelScope scope = new TravelScope()) {
 
-            Future<String> future1 = scope.fork(() -> fetchTester(1));
-            Future<String> future2 = scope.fork(() -> fetchTester(2));
-            Future<String> future3 = scope.fork(() -> fetchTester(3));
+            scope.fork(Main::fetchRidesharingOffers);
+            scope.fork(Main::fetchPublicTransportOffers);
 
             scope.join();
-        
-            return new TestingTeam(future1.resultNow(), future2.resultNow(), future3.resultNow());
-        }
-    }  
-    
-    public static TestingLeader chooseTestingTeamLeader() throws InterruptedException {
 
-        try (TesterStructuredTaskScope scope = new TesterStructuredTaskScope()) {
-
-            scope.fork(() -> fetchTester(10));
-            scope.fork(() -> fetchTester(11));
-            scope.fork(() -> fetchTester(12));
-            scope.fork(() -> fetchTester(13));
-            scope.fork(() -> fetchTester(14));
-
-            scope.join();            
-            
-            return new TestingLeader(scope.bestTester());
+            return scope.recommendedTravelOffer();
         }
     }
 
-    public static String fetchTester(int id) throws IOException, InterruptedException {
+    public static RidesharingOffer fetchRidesharingOffers() throws InterruptedException {
 
-        HttpClient client = HttpClient.newHttpClient();
+        try (StructuredTaskScope scope = new StructuredTaskScope<RidesharingOffer>()) {
 
-        HttpRequest requestGet = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create("https://reqres.in/api/users/" + id))
-                .build();
+            Future<RidesharingOffer> carOneOffer
+                    = scope.fork(() -> Ridesharing.carOneServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            Future<RidesharingOffer> starCarOffer
+                    = scope.fork(() -> Ridesharing.starCarServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            Future<RidesharingOffer> topCarOffer
+                    = scope.fork(() -> Ridesharing.topCarServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
 
-        HttpResponse<String> responseGet = client.send(
-                requestGet, HttpResponse.BodyHandlers.ofString());
+            scope.join();
 
-        if (responseGet.statusCode() == 200) {
-            return responseGet.body();
+            RidesharingOffer offer = Stream.of(carOneOffer, starCarOffer, topCarOffer)
+                    .filter(f -> f.state() == Future.State.SUCCESS)
+                    .<RidesharingOffer>mapMulti((f, c) -> {
+                        c.accept((RidesharingOffer) f.resultNow());
+                    })
+                    .min(Comparator.comparingDouble(RidesharingOffer::price))
+                    .orElseThrow(() -> {
+                        RidesharingException exceptionWrapper 
+                                = new RidesharingException("Ridesharing exception");
+                        Stream.of(carOneOffer, starCarOffer, topCarOffer)
+                                .filter(f -> f.state() == Future.State.FAILED)
+                                .<Throwable>mapMulti((f, c) -> {
+                                    c.accept(f.exceptionNow());
+                                }).forEach(exceptionWrapper::addSuppressed);
+                        throw exceptionWrapper;
+                    });
+
+            // logger.info(offer.toString());
+
+            return offer;
         }
+    }
 
-        throw new UserNotFoundException("Code: " + responseGet.statusCode());
+    public static PublicTransportOffer fetchPublicTransportOffers() throws InterruptedException {
+
+        try (PublicTransportScope scope = new PublicTransportScope()) {
+
+            scope.fork(() -> PublicTransport.busTransportServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            scope.fork(() -> PublicTransport.subwayTransportServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            scope.fork(() -> PublicTransport.trainTransportServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            scope.fork(() -> PublicTransport.tramTransportServer(
+                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+
+            scope.join();
+
+            PublicTransportOffer offer = scope.recommendedPublicTransport();
+
+            // logger.info(offer.toString());
+
+            return offer;
+        }
     }
 }
