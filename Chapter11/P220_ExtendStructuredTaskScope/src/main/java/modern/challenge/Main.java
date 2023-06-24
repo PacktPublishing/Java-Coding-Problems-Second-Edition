@@ -15,23 +15,27 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "[%1$tT] [%4$-7s] %5$s %n");
 
-        fetchRidesharingOffers();
-        fetchPublicTransportOffers();
+        String loc = "124 NW Bobcat L, St. Robert"; // collected from user
+        String dest = "129 West 81st Street";       // collected from user
+        
+        RidesharingOffer roffer = fetchRidesharingOffers(loc, dest);
+        PublicTransportOffer ptoffer = fetchPublicTransportOffers(loc, dest);
+        
+        logger.info(roffer.toString());
+        logger.info(ptoffer.toString());
     }
 
-    public static RidesharingOffer fetchRidesharingOffers() throws InterruptedException {
+    public static RidesharingOffer fetchRidesharingOffers(String loc, String dest) 
+            throws InterruptedException {
 
         try (StructuredTaskScope scope = new StructuredTaskScope<RidesharingOffer>()) {
 
             Future<RidesharingOffer> carOneOffer
-                    = scope.fork(() -> Ridesharing.carOneServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+                    = scope.fork(() -> Ridesharing.carOneServer(loc, dest));
             Future<RidesharingOffer> starCarOffer
-                    = scope.fork(() -> Ridesharing.starCarServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+                    = scope.fork(() -> Ridesharing.starCarServer(loc, dest));
             Future<RidesharingOffer> topCarOffer
-                    = scope.fork(() -> Ridesharing.topCarServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+                    = scope.fork(() -> Ridesharing.topCarServer(loc, dest));
 
             scope.join();
 
@@ -50,32 +54,25 @@ public class Main {
                                     c.accept(f.exceptionNow());
                                 }).forEach(exceptionWrapper::addSuppressed);
                         throw exceptionWrapper;
-                    });
-
-            logger.info(offer.toString());
+                    });            
 
             return offer;
         }
     }
 
-    public static PublicTransportOffer fetchPublicTransportOffers() throws InterruptedException {
+    public static PublicTransportOffer fetchPublicTransportOffers(String loc, String dest) 
+            throws InterruptedException {
 
         try (PublicTransportScope scope = new PublicTransportScope()) {
 
-            scope.fork(() -> PublicTransport.busTransportServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
-            scope.fork(() -> PublicTransport.subwayTransportServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
-            scope.fork(() -> PublicTransport.trainTransportServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
-            scope.fork(() -> PublicTransport.tramTransportServer(
-                    "124 NW Bobcat L, St. Robert", "129 West 81st Street"));
+            scope.fork(() -> PublicTransport.busTransportServer(loc, dest));
+            scope.fork(() -> PublicTransport.subwayTransportServer(loc, dest));
+            scope.fork(() -> PublicTransport.trainTransportServer(loc, dest));
+            scope.fork(() -> PublicTransport.tramTransportServer(loc, dest));
 
             scope.join();
 
-            PublicTransportOffer offer = scope.recommendedPublicTransport();
-
-            logger.info(offer.toString());
+            PublicTransportOffer offer = scope.recommendedPublicTransport();           
 
             return offer;
         }

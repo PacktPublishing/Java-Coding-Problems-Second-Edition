@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>java.modern.challenge</groupId>
-    <artifactId>P218_ExtendStructuredTaskScope</artifactId>
+    <artifactId>P218_SimpleVirtualThreadContinuations</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
@@ -11,7 +11,7 @@
         <maven.compiler.target>20</maven.compiler.target>
         <mavem.compiler.plugin.version>3.8.0</mavem.compiler.plugin.version>
     </properties>
-    <name>P218_ExtendStructuredTaskScope</name>
+    <name>P218_SimpleVirtualThreadContinuations</name>
     <build>
         <plugins>
             <plugin>
@@ -19,8 +19,7 @@
                 <version>${mavem.compiler.plugin.version}</version>
                 <configuration>
                     <compilerArgs>
-                        <arg>--enable-preview</arg>    
-                        <arg>--add-modules=jdk.incubator.concurrent</arg>                    
+                        <arg>--enable-preview</arg>                            
                     </compilerArgs>                    
                 </configuration>
             </plugin>
