@@ -20,7 +20,7 @@ public class Main {
             try { Thread.sleep(Duration.ofSeconds(5)); } catch (InterruptedException ex) {}
             logger.info(() -> Thread.currentThread().toString() + " inserts in the queue");
             
-            queue.add(Integer.MAX_VALUE);
+            queue.offer(Integer.MAX_VALUE);
         };
 
         logger.info("Before running the task ...");
