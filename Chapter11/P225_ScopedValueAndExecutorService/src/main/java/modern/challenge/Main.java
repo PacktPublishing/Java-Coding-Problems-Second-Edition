@@ -35,7 +35,7 @@ public class Main {
         };
         
         // Executors.newFixedThreadPool(10)
-        try (ExecutorService executor = Executors.newFixedThreadPool(10)) {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
             for (int i = 0; i < 10; i++) {
                 int copy_i = i;
