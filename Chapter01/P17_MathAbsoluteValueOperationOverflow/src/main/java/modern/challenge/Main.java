@@ -1,6 +1,7 @@
 package modern.challenge;
 
-import java.util.function.UnaryOperator;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongUnaryOperator;
 
 public class Main {
 
@@ -21,11 +22,11 @@ public class Main {
         System.out.println("The mathematical absolute value of " + y + " via absExact() is: " + absofyExact);
         
         // throw ArithmeticException
-        UnaryOperator<Integer> operatorInt = Math::absExact;
-        UnaryOperator<Long> operatorLong = Math::absExact;
-        int absofxExactUo = operatorInt.apply(x);
-        long absofyExactUo = operatorLong.apply(y);
-        System.out.println("The mathematical absolute value of " + x + " via UnaryOperator is: " + absofxExactUo);
-        System.out.println("The mathematical absolute value of " + y + " via UnaryOperator is: " + absofyExactUo);
+        IntUnaryOperator operatorInt = Math::absExact;
+        LongUnaryOperator operatorLong = Math::absExact;
+        int absofxExactUo = operatorInt.applyAsInt(x);
+        long absofyExactUo = operatorLong.applyAsLong(y);
+        System.out.println("The mathematical absolute value of " + x + " via IntUnaryOperator is: " + absofxExactUo);
+        System.out.println("The mathematical absolute value of " + y + " via LongUnaryOperator is: " + absofyExactUo);
     }
 }
