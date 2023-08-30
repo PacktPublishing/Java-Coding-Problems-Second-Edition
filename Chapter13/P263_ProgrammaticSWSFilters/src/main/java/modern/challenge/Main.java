@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         HttpHandler fileHandler = SimpleFileServer.createFileHandler(
-                Path.of("C:\\SBPBP\\GitHub\\Java-Coding-Problems-Second-Edition\\Chapter13\\P263_ProgrammaticSWS\\docs"));
+                Path.of("./docs").toAbsolutePath());
         
         Path swslog = Paths.get("swslog.txt");
         BufferedOutputStream output = new BufferedOutputStream(Files.newOutputStream(

@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         HttpHandler fileHandler = SimpleFileServer.createFileHandler(
-                Path.of("C:\\SBPBP\\GitHub\\Java-Coding-Problems-Second-Edition\\Chapter13\\P264_ProgrammaticSWSAdaptRequest\\docs"));
+                Path.of("./docs").toAbsolutePath());
                         
         Filter preFilter = Filter.adaptRequest(
                 "Add 'Author' header", r -> r.with("Author", List.of("Anghel Leonard")));

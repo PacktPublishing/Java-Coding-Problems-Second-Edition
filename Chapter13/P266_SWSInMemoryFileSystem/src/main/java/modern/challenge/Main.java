@@ -27,9 +27,9 @@ public class Main {
 
     private static Path inMemoryDirectory() throws IOException {
 
-        FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
+        FileSystem fileSystem = Jimfs.newFileSystem(Configuration.forCurrentPlatform());
 
-        Path docs = fileSystem.getPath("/docs");
+        Path docs = fileSystem.getPath("docs");
         Files.createDirectory(docs);
 
         Path books = docs.resolve("books.txt"); // /docs/books.txt
@@ -40,6 +40,6 @@ public class Main {
                 "The Complete Coding Interview Guide in Java"),
                 StandardCharsets.UTF_8);
 
-        return docs;
+        return docs.toAbsolutePath();
     }
 }

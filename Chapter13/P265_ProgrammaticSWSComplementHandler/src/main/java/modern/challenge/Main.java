@@ -19,7 +19,7 @@ public class Main {
                 "Content-Type", "text/plain"), "No data available");
         
         HttpHandler fileHandler = SimpleFileServer.createFileHandler(
-                Path.of("C:\\SBPBP\\GitHub\\Java-Coding-Problems-Second-Edition\\Chapter13\\P265_ProgrammaticSWSComplementHandler\\docs"));                    
+                Path.of("./docs").toAbsolutePath());                    
         
         Predicate<Request> predicate = request -> request.getRequestMethod().equalsIgnoreCase("GET");
         

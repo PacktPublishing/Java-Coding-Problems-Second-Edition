@@ -12,7 +12,7 @@ public class Main {
 
         HttpServer sws = SimpleFileServer.createFileServer(
                 new InetSocketAddress(9009),
-                Path.of("C:\\SBPBP\\GitHub\\Java-Coding-Problems-Second-Edition\\Chapter13\\P263_ProgrammaticSWS\\docs"),
+                Path.of("./docs").toAbsolutePath(),
                 OutputLevel.VERBOSE);
         
         sws.start();
