@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.classicmodels</groupId>
+    <artifactId>P106_RecordAndjOOQMultisetAgg</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>P106_RecordAndjOOQMultisetAgg</name>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <java.version>19</java.version>                
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
+                
+        <flyway.version>8.2.0</flyway.version>        
+        <codehaus.mojo.version>1.0.0</codehaus.mojo.version>              
+    </properties>
+
+    <dependencies>        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>                     
+        </dependency>              
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>    
+        </dependency>        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>                
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>    
+                <configuration>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>                
+                <version>${codehaus.mojo.version}</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>                                
+                                <file>src/main/resources/application.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> 
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>                                  
+                <executions>
+                    <execution>                        
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>                
+                <configuration>  
+                    <driver>${spring.datasource.driverClassName}</driver>
+                    <url>${spring.datasource.url}</url>
+                    <user>${spring.datasource.username}</user>
+                    <password>${spring.datasource.password}</password>                                          
+                    <locations>
+                        <location>filesystem:./../P106_SQL/mysql</location>                        
+                    </locations>                   
+                </configuration>                
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>               
+                <executions>
+                    <execution>
+                        <id>generate-for-mysql</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>                                  
+                        <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.16.0.xsd">                                                 
+
+                            <!-- Configure the database connection here -->
+                            <jdbc>
+                                <driver>${spring.datasource.driverClassName}</driver>
+                                <url>${spring.datasource.url}</url>
+                                <user>${spring.datasource.username}</user>
+                                <password>${spring.datasource.password}</password>                        
+                            </jdbc>                                        
+
+                            <generator>
+                                <!-- The default code generator. 
+                                     You can override this one, to generate your own code style.
+                                     
+                                Supported generators:                                
+                                - org.jooq.codegen.JavaGenerator
+                                - org.jooq.codegen.ScalaGenerator
+                                - org.jooq.codegen.KotlinGenerator
+                                
+                                Defaults to org.jooq.codegen.JavaGenerator -->
+                                <name>org.jooq.codegen.JavaGenerator</name>
+        
+                                <database>                            
+                                    <!-- The database type. The format here is:
+                                    org.jooq.meta.[database].[database]Database -->
+                                    <name>org.jooq.meta.mysql.MySQLDatabase</name>
+            
+                                    <!-- The database schema (or in the absence of schema support, in your RDBMS this
+                                    can be the owner, user, database name) to be generated. This cannot be combined with the <schemata/> element.                                     
+                                    If <inputSchema/> is missing then all schemas will be considered. -->
+                                    <inputSchema>classicmodels</inputSchema>                 
+            
+                                    <!-- All elements that are generated from your schema
+                                    (A Java regular expression. Use the pipe to separate several expressions)
+                                    Watch out for case-sensitivity. Depending on your database, this might be important! 
+                                    You can create case-insensitive regular expressions using this syntax: (?i:expr).
+                                    Whitespace is ignored and comments are possible. -->       
+                                    <includes>.*</includes>
+                                                
+                                    <!-- All elements that are excluded from your schema
+                                    (A Java regular expression. Use the pipe to separate several expressions).
+                                    Excludes match before includes, i.e. excludes have a higher priority. -->
+                                    <excludes>
+                                        flyway_schema_history | sequences 
+                                        | customer_pgs | refresh_top3_product
+                                        | sale_.* | set_.* | get_.* | .*_master
+                                    </excludes>
+
+                                    <!-- Schema version provider -->            
+                                    <schemaVersionProvider>SELECT MAX(`version`) FROM `flyway_schema_history`</schemaVersionProvider>            
+                                    
+                                    <!-- Give enough time to jOOQ to trigger the queries needed for generating sources 
+                                    (default is 5 seconds) -->
+                                    <logSlowQueriesAfterSeconds>20</logSlowQueriesAfterSeconds>
+                                </database>
+                                <target>
+                                    <!-- The destination package of your generated classes (within the destination directory).
+                                    jOOQ may append the schema name to this package if generating multiple schemas,
+                                       e.g. org.jooq.your.packagename.schema1
+                                       org.jooq.your.packagename.schema2 -->                                    
+                                    <packageName>jooq.generated</packageName>
+            
+                                    <!-- The destination directory of your generated classes. Using Maven directory layout here -->
+                                    <directory>target/generated-sources</directory>
+                                </target>
+                            </generator>    
+                                                                                              
+                            <!-- A boolean property (or constant) can be specified here to tell the plugin not to do anything -->
+                            <skip>false</skip>
+
+                            <!--Additional Maven-specific flags -->
+                            <!-- ============================== -->
+                            <!-- Instead of providing an inline configuration here, you can specify an external XML configuration file here -->
+                            <!-- <configurationFile>${externalfile}</configurationFile> -->
+    
+                            <!-- Alternatively, you can provide several external configuration files. These will be merged by using
+                            Maven's combine.children="append" policy. -->
+                            <!--
+                            <configurationFiles>
+                                <configurationFile>${file1}</configurationFile>
+                                <configurationFile>${file2}</configurationFile>
+                                <configurationFile>...</configurationFile>
+                            </configurationFiles>                                        
+                            -->
+                        </configuration>
+                    </execution>
+                </executions> 
+            </plugin>
+        </plugins>
+    </build>
+</project>
