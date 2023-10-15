@@ -1,0 +1,2 @@
+#### Extracted from: C:\MinGW64\mingw64\x86_64-w64-mingw32\include\crtdefs.h
+--include-function fmodf                   # header: C:\MinGW64\mingw64\x86_64-w64-mingw32\include\math.h
