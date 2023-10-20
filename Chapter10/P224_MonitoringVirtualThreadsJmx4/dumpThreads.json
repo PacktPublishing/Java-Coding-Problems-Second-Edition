@@ -1,0 +1,269 @@
+{
+  "threadDump": {
+    "processId": "6984",
+    "time": "2023-10-19T05:26:08.195291200Z",
+    "runtimeVersion": "21+35-LTS-2513",
+    "threadContainers": [
+      {
+        "container": "<root>",
+        "parent": null,
+        "owner": null,
+        "threads": [
+         {
+           "tid": "1",
+           "name": "main",
+           "stack": [
+              "java.base\/java.lang.Thread.getStackTrace(Thread.java:2450)",
+              "java.base\/jdk.internal.vm.ThreadDumper.dumpThreadToJson(ThreadDumper.java:264)",
+              "java.base\/jdk.internal.vm.ThreadDumper.dumpThreadsToJson(ThreadDumper.java:237)",
+              "java.base\/jdk.internal.vm.ThreadDumper.dumpThreadsToJson(ThreadDumper.java:201)",
+              "java.base\/jdk.internal.vm.ThreadDumper.dumpThreadsToJson(ThreadDumper.java:176)",
+              "jdk.management\/com.sun.management.internal.HotSpotDiagnostic.dumpThreads(HotSpotDiagnostic.java:197)",
+              "jdk.management\/com.sun.management.internal.HotSpotDiagnostic.lambda$dumpThreads$1(HotSpotDiagnostic.java:178)",
+              "java.base\/java.security.AccessController.doPrivileged(AccessController.java:571)",
+              "jdk.management\/com.sun.management.internal.HotSpotDiagnostic.dumpThreads(HotSpotDiagnostic.java:182)",
+              "modern.challenge.Main.main(Main.java:37)"
+           ]
+         },
+         {
+           "tid": "9",
+           "name": "Reference Handler",
+           "stack": [
+              "java.base\/java.lang.ref.Reference.waitForReferencePendingList(Native Method)",
+              "java.base\/java.lang.ref.Reference.processPendingReferences(Reference.java:246)",
+              "java.base\/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:208)"
+           ]
+         },
+         {
+           "tid": "10",
+           "name": "Finalizer",
+           "stack": [
+              "java.base\/java.lang.Object.wait0(Native Method)",
+              "java.base\/java.lang.Object.wait(Object.java:366)",
+              "java.base\/java.lang.Object.wait(Object.java:339)",
+              "java.base\/java.lang.ref.NativeReferenceQueue.await(NativeReferenceQueue.java:48)",
+              "java.base\/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:158)",
+              "java.base\/java.lang.ref.NativeReferenceQueue.remove(NativeReferenceQueue.java:89)",
+              "java.base\/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:173)"
+           ]
+         },
+         {
+           "tid": "11",
+           "name": "Signal Dispatcher",
+           "stack": [
+           ]
+         },
+         {
+           "tid": "12",
+           "name": "Attach Listener",
+           "stack": [
+           ]
+         },
+         {
+           "tid": "19",
+           "name": "Notification Thread",
+           "stack": [
+           ]
+         },
+         {
+           "tid": "20",
+           "name": "Common-Cleaner",
+           "stack": [
+              "java.base\/jdk.internal.misc.Unsafe.park(Native Method)",
+              "java.base\/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)",
+              "java.base\/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)",
+              "java.base\/java.lang.ref.ReferenceQueue.await(ReferenceQueue.java:71)",
+              "java.base\/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:143)",
+              "java.base\/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:218)",
+              "java.base\/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)",
+              "java.base\/java.lang.Thread.run(Thread.java:1583)",
+              "java.base\/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)"
+           ]
+         }
+        ],
+        "threadCount": "7"
+      },
+      {
+        "container": "ForkJoinPool.commonPool\/jdk.internal.vm.SharedThreadContainer@1edf1c96",
+        "parent": "<root>",
+        "owner": null,
+        "threads": [
+        ],
+        "threadCount": "0"
+      },
+      {
+        "container": "java.util.concurrent.ScheduledThreadPoolExecutor@9807454",
+        "parent": "<root>",
+        "owner": null,
+        "threads": [
+        ],
+        "threadCount": "0"
+      },
+      {
+        "container": "java.util.concurrent.ThreadPoolExecutor@15327b79",
+        "parent": "<root>",
+        "owner": null,
+        "threads": [
+        ],
+        "threadCount": "0"
+      },
+      {
+        "container": "ForkJoinPool-1\/jdk.internal.vm.SharedThreadContainer@368102c8",
+        "parent": "<root>",
+        "owner": null,
+        "threads": [
+         {
+           "tid": "23",
+           "name": "ForkJoinPool-1-worker-1",
+           "stack": [
+              "java.base\/jdk.internal.vm.Continuation.run(Continuation.java:248)",
+              "java.base\/java.lang.VirtualThread.runContinuation(VirtualThread.java:223)",
+              "java.base\/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)",
+              "java.base\/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)",
+              "java.base\/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)",
+              "java.base\/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         },
+         {
+           "tid": "26",
+           "name": "ForkJoinPool-1-worker-2",
+           "stack": [
+              "java.base\/jdk.internal.vm.Continuation.run(Continuation.java:248)",
+              "java.base\/java.lang.VirtualThread.runContinuation(VirtualThread.java:223)",
+              "java.base\/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)",
+              "java.base\/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)",
+              "java.base\/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)",
+              "java.base\/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         },
+         {
+           "tid": "27",
+           "name": "ForkJoinPool-1-worker-3",
+           "stack": [
+              "java.base\/jdk.internal.vm.Continuation.run(Continuation.java:248)",
+              "java.base\/java.lang.VirtualThread.runContinuation(VirtualThread.java:223)",
+              "java.base\/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)",
+              "java.base\/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)",
+              "java.base\/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)",
+              "java.base\/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         },
+         {
+           "tid": "28",
+           "name": "ForkJoinPool-1-worker-4",
+           "stack": [
+              "java.base\/jdk.internal.misc.Unsafe.park(Native Method)",
+              "java.base\/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)",
+              "java.base\/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1893)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1809)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         },
+         {
+           "tid": "29",
+           "name": "ForkJoinPool-1-worker-5",
+           "stack": [
+              "java.base\/jdk.internal.misc.Unsafe.park(Native Method)",
+              "java.base\/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)",
+              "java.base\/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1893)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1809)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         },
+         {
+           "tid": "30",
+           "name": "ForkJoinPool-1-worker-6",
+           "stack": [
+              "java.base\/jdk.internal.misc.Unsafe.park(Native Method)",
+              "java.base\/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)",
+              "java.base\/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1893)",
+              "java.base\/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1809)",
+              "java.base\/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)"
+           ]
+         }
+        ],
+        "threadCount": "6"
+      },
+      {
+        "container": "java.util.concurrent.StructuredTaskScope$ShutdownOnSuccess@6d311334",
+        "parent": "<root>",
+        "owner": "1",
+        "threads": [
+         {
+           "tid": "22",
+           "name": "",
+           "stack": [
+              "java.base\/sun.security.jca.ProviderConfig.getProvider(ProviderConfig.java:171)",
+              "java.base\/sun.security.jca.ProviderList.getProvider(ProviderList.java:271)",
+              "java.base\/sun.security.jca.ProviderList.getService(ProviderList.java:384)",
+              "java.base\/sun.security.jca.GetInstance.getInstance(GetInstance.java:157)",
+              "java.base\/javax.net.ssl.SSLContext.getInstance(SSLContext.java:185)",
+              "java.base\/javax.net.ssl.SSLContext.getDefault(SSLContext.java:110)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.<init>(HttpClientImpl.java:458)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.create(HttpClientImpl.java:434)",
+              "java.net.http\/jdk.internal.net.http.HttpClientBuilderImpl.build(HttpClientBuilderImpl.java:143)",
+              "java.net.http\/java.net.http.HttpClient.newHttpClient(HttpClient.java:195)",
+              "modern.challenge.Main.fetchTester(Main.java:50)",
+              "modern.challenge.Main.lambda$main$0(Main.java:33)",
+              "java.base\/java.util.concurrent.StructuredTaskScope$SubtaskImpl.run(StructuredTaskScope.java:889)",
+              "java.base\/java.lang.VirtualThread.run(VirtualThread.java:311)"
+           ]
+         },
+         {
+           "tid": "24",
+           "name": "",
+           "stack": [
+              "java.base\/sun.security.util.KnownOIDs.register(KnownOIDs.java:475)",
+              "java.base\/sun.security.util.KnownOIDs.<clinit>(KnownOIDs.java:459)",
+              "java.base\/sun.security.util.SecurityProviderConstants.<clinit>(SecurityProviderConstants.java:266)",
+              "java.base\/sun.security.provider.SunEntries.addWithAlias(SunEntries.java:326)",
+              "java.base\/sun.security.provider.SunEntries.<init>(SunEntries.java:137)",
+              "java.base\/sun.security.provider.Sun.<init>(Sun.java:56)",
+              "java.base\/sun.security.jca.ProviderConfig.getProvider(ProviderConfig.java:181)",
+              "java.base\/sun.security.jca.ProviderList.getProvider(ProviderList.java:271)",
+              "java.base\/sun.security.jca.ProviderList.getService(ProviderList.java:384)",
+              "java.base\/sun.security.jca.GetInstance.getInstance(GetInstance.java:157)",
+              "java.base\/javax.net.ssl.SSLContext.getInstance(SSLContext.java:185)",
+              "java.base\/javax.net.ssl.SSLContext.getDefault(SSLContext.java:110)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.<init>(HttpClientImpl.java:458)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.create(HttpClientImpl.java:434)",
+              "java.net.http\/jdk.internal.net.http.HttpClientBuilderImpl.build(HttpClientBuilderImpl.java:143)",
+              "java.net.http\/java.net.http.HttpClient.newHttpClient(HttpClient.java:195)",
+              "modern.challenge.Main.fetchTester(Main.java:50)",
+              "modern.challenge.Main.lambda$main$0(Main.java:33)",
+              "java.base\/java.util.concurrent.StructuredTaskScope$SubtaskImpl.run(StructuredTaskScope.java:889)",
+              "java.base\/java.lang.VirtualThread.run(VirtualThread.java:311)"
+           ]
+         },
+         {
+           "tid": "25",
+           "name": "",
+           "stack": [
+              "java.base\/sun.security.jca.ProviderConfig.getProvider(ProviderConfig.java:171)",
+              "java.base\/sun.security.jca.ProviderList.getProvider(ProviderList.java:271)",
+              "java.base\/sun.security.jca.ProviderList.getService(ProviderList.java:384)",
+              "java.base\/sun.security.jca.GetInstance.getInstance(GetInstance.java:157)",
+              "java.base\/javax.net.ssl.SSLContext.getInstance(SSLContext.java:185)",
+              "java.base\/javax.net.ssl.SSLContext.getDefault(SSLContext.java:110)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.<init>(HttpClientImpl.java:458)",
+              "java.net.http\/jdk.internal.net.http.HttpClientImpl.create(HttpClientImpl.java:434)",
+              "java.net.http\/jdk.internal.net.http.HttpClientBuilderImpl.build(HttpClientBuilderImpl.java:143)",
+              "java.net.http\/java.net.http.HttpClient.newHttpClient(HttpClient.java:195)",
+              "modern.challenge.Main.fetchTester(Main.java:50)",
+              "modern.challenge.Main.lambda$main$0(Main.java:33)",
+              "java.base\/java.util.concurrent.StructuredTaskScope$SubtaskImpl.run(StructuredTaskScope.java:889)",
+              "java.base\/java.lang.VirtualThread.run(VirtualThread.java:311)"
+           ]
+         }
+        ],
+        "threadCount": "3"
+      }
+    ]
+  }
+}

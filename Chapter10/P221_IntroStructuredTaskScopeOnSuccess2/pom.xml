@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>java.modern.challenge</groupId>
+    <artifactId>P221_IntroStructuredTaskScopeOnSuccess2</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <mavem.compiler.plugin.version>3.8.0</mavem.compiler.plugin.version>
+    </properties>
+    <name>P221_IntroStructuredTaskScopeOnSuccess2</name>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${mavem.compiler.plugin.version}</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>                            
+                    </compilerArgs>                    
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
