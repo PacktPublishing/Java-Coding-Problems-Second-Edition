@@ -12,48 +12,48 @@ import java.nio.charset.CharsetDecoder;
 
 public class Main {
     
-    private static final int PORT = 5555;
-    private static final String IP = "127.0.0.1"; // modify this accordingly if you want to test remote
-    private static final int MAX_PACKET_SIZE = 65507;
+    private static final int SERVER_PORT = 4444;
+    private static final String SERVER_IP = "127.0.0.1"; // modify this accordingly if you want to test remote
+    private static final int MAX_SIZE_OF_PACKET = 65507;
 
     public static void main(String[] args) throws InterruptedException {
 
-        CharBuffer charBuffer;
+        CharBuffer cBuffer;
         Charset charset = Charset.defaultCharset();
-        CharsetDecoder decoder = charset.newDecoder();
-        ByteBuffer textToEcho = ByteBuffer.wrap(
-                "Echo this: I'm a big and ugly server!".getBytes());
-        ByteBuffer echoedText = ByteBuffer.allocateDirect(MAX_PACKET_SIZE);
+        CharsetDecoder chdecoder = charset.newDecoder();
+        ByteBuffer bufferToEcho = ByteBuffer.wrap(
+                "Echo: I'm a great server!".getBytes());
+        ByteBuffer echoedBuffer = ByteBuffer.allocateDirect(MAX_SIZE_OF_PACKET);
 
-        //create a new datagram channel
-        try (DatagramChannel datagramChannel 
+        // create a datagram channel
+        try (DatagramChannel dchannel 
                 = DatagramChannel.open(StandardProtocolFamily.INET)) {
 
-            // check if it the channel was successfully opened
-            if (datagramChannel.isOpen()) {
+            // if the channel was successfully opened
+            if (dchannel.isOpen()) {
 
-                // set some options
-                datagramChannel.setOption(StandardSocketOptions.SO_RCVBUF, 4 * 1024);
-                datagramChannel.setOption(StandardSocketOptions.SO_SNDBUF, 4 * 1024);
+                // optionally, configure the client side options
+                dchannel.setOption(StandardSocketOptions.SO_RCVBUF, 4 * 1024);
+                dchannel.setOption(StandardSocketOptions.SO_SNDBUF, 4 * 1024);
 
-                // transmitting data packets
-                int sent = datagramChannel.send(textToEcho, new InetSocketAddress(IP, PORT));
+                // sending data packets
+                int sentBytes = dchannel.send(bufferToEcho, new InetSocketAddress(SERVER_IP, SERVER_PORT));
                 
-                System.out.println("I have successfully sent " + sent + " bytes to the Echo Server!");
+                System.out.println("Sent " + sentBytes + " bytes to the server");
 
-                datagramChannel.receive(echoedText);
+                dchannel.receive(echoedBuffer);
 
                 // hack to wait for the server to echo
                 Thread.sleep(5000); 
                 
-                echoedText.flip();
+                echoedBuffer.flip();
                 
-                charBuffer = decoder.decode(echoedText);
-                System.out.println(charBuffer.toString());
-                echoedText.clear();
+                cBuffer = chdecoder.decode(echoedBuffer);
+                System.out.println(cBuffer.toString());
+                echoedBuffer.clear();
 
             } else {
-                System.out.println("The channel cannot be opened!");
+                System.out.println("Cannot open the channel");
             }
         } catch (SecurityException | IOException ex) {            
             System.err.println(ex);

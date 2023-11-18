@@ -6,26 +6,29 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class Main {
-    
+
     public static void main(String[] args) throws SocketException {
-        
-        Enumeration enumInterfaces = NetworkInterface.getNetworkInterfaces();
-        
-        while (enumInterfaces.hasMoreElements()) {
-            
-            NetworkInterface net = (NetworkInterface) enumInterfaces.nextElement();
-            System.out.println("\nNetwork Interface Display Name: " + net.getDisplayName());
-            System.out.println(net.getDisplayName() + " is up and running ? " + net.isUp());
-            System.out.println(net.getDisplayName() + " Supports Multicast: " + net.supportsMulticast());
-            System.out.println(net.getDisplayName() + " Name: " + net.getName());
-            System.out.println(net.getDisplayName() + " Is Virtual:  " + net.isVirtual());
-            
-            System.out.println("IP addresses:");
-            
-            Enumeration enumIP = net.getInetAddresses();
-            while (enumIP.hasMoreElements()) {
-                InetAddress ip = (InetAddress) enumIP.nextElement();
-                System.out.println("IP address:" + ip);
+
+        Enumeration allNetworkInterfaces = NetworkInterface.getNetworkInterfaces();
+
+        while (allNetworkInterfaces.hasMoreElements()) {
+
+            NetworkInterface ni = (NetworkInterface) allNetworkInterfaces.nextElement();
+            System.out.println("\nDisplay Name: " + ni.getDisplayName());
+            System.out.println(ni.getDisplayName() + " is up and running ? " + ni.isUp());
+            System.out.println(ni.getDisplayName() + " is multicast capable ? " + ni.supportsMulticast());
+            System.out.println(ni.getDisplayName() + " name: " + ni.getName());
+            System.out.println(ni.getDisplayName() + " is virtual ? " + ni.isVirtual());
+
+            Enumeration ips = ni.getInetAddresses();
+            if (!ips.hasMoreElements()) {
+                System.out.println("IP addresses: none");
+            } else {
+                System.out.println("IP addresses:");
+                while (ips.hasMoreElements()) {
+                    InetAddress ip = (InetAddress) ips.nextElement();
+                    System.out.println("IP: " + ip);
+                }
             }
         }
     }

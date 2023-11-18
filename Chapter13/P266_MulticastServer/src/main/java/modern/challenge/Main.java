@@ -12,55 +12,52 @@ import java.util.Date;
 
 public class Main {
 
-    private static final int PORT = 5555;    
-    private static final String GROUP = "225.4.5.6";
-    private static final String NETWORK_INTERFACE_NAME = "eth17";
+    private static final int SERVER_PORT = 4444;
+    private static final String MULTICAST_GROUP = "225.4.5.6";
+    private static final String MULTICAST_NI_NAME = "ethernet_32775";
 
     public static void main(String[] args) {
-        
-        ByteBuffer datetime;
 
-        // create a new channel
-        try (DatagramChannel datagramChannel = DatagramChannel.open(StandardProtocolFamily.INET)) {
+        ByteBuffer dtBuffer;
 
-            // check if the channel was successfully created
-            if (datagramChannel.isOpen()) {
+        // create a channel
+        try (DatagramChannel dchannel = DatagramChannel.open(StandardProtocolFamily.INET)) {
 
-                // get the network interface used for multicast
-                NetworkInterface networkInterface = NetworkInterface.getByName(NETWORK_INTERFACE_NAME);
+            // if the channel was successfully opened
+            if (dchannel.isOpen()) {
 
-                // set some options
-                datagramChannel.setOption(StandardSocketOptions.IP_MULTICAST_IF, networkInterface);
-                datagramChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+                // get the multicast network interface
+                NetworkInterface mni = NetworkInterface.getByName(MULTICAST_NI_NAME);
 
-                // bind the channel to the local address
-                datagramChannel.bind(new InetSocketAddress(PORT));
-                System.out.println("Date-time server is ready ... shortly I'll start sending ...");
+                // optionally, configure the server side options
+                dchannel.setOption(StandardSocketOptions.IP_MULTICAST_IF, mni);
+                dchannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 
-                // transmitting datagrams
+                // bind the channel to local address
+                dchannel.bind(new InetSocketAddress(SERVER_PORT));
+                System.out.println("Server is ready ... sending date-time info soon ...");
+
+                // sending datagrams
                 while (true) {
 
-                    // sleep for 10 seconds
+                    // sleep for 10000 ms (10 seconds)
                     try {
                         Thread.sleep(10000);
-                    } catch (InterruptedException ex) {
-                        // handle exception
-                    }
+                    } catch (InterruptedException ex) {}
                     
-                    System.out.println("Sending data ...");
+                    System.out.println("Sending date-time ...");
 
-                    datetime = ByteBuffer.wrap(new Date().toString().getBytes());
-                    datagramChannel.send(datetime, new InetSocketAddress(
-                            InetAddress.getByName(GROUP), PORT));
-                    datetime.flip();
+                    dtBuffer = ByteBuffer.wrap(new Date().toString().getBytes());
+                    dchannel.send(dtBuffer, new InetSocketAddress(
+                            InetAddress.getByName(MULTICAST_GROUP), SERVER_PORT));
+                    dtBuffer.flip();
                 }
 
             } else {
-                System.out.println("The channel cannot be opened!");
+                System.out.println("The channel is unavailable!");
             }
         } catch (IOException ex) {
             System.err.println(ex);
-            // handle exception
         }
     }
 }

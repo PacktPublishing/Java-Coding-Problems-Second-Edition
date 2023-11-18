@@ -16,64 +16,64 @@ import java.util.Map;
 
 public class Main {
 
-    private static final int PORT = 5555;
+    private static final int SERVER_PORT = 4444;
     
-    private final Map<SocketChannel, List<byte[]>> keepDataTrack = new HashMap<>();
-    private final ByteBuffer buffer = ByteBuffer.allocate(2 * 1024);
+    private final Map<SocketChannel, List<byte[]>> registerTrack = new HashMap<>();
+    private final ByteBuffer tBuffer = ByteBuffer.allocate(2 * 1024);
 
     private void startEchoServer() {        
 
-        // open Selector and ServerSocketChannel by calling the open() method
+        // call the open() method for Selector/ServerSocketChannel
         try (Selector selector = Selector.open(); 
-                ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
+                ServerSocketChannel serverSC = ServerSocketChannel.open()) {
 
-            // check that both of them were successfully opened
-            if ((serverSocketChannel.isOpen()) && (selector.isOpen())) {
+            // ServerSocketChannel and Selector successfully opened
+            if ((serverSC.isOpen()) && (selector.isOpen())) {
 
                 // configure non-blocking mode
-                serverSocketChannel.configureBlocking(false);
+                serverSC.configureBlocking(false);
 
-                // set some options
-                serverSocketChannel.setOption(StandardSocketOptions.SO_RCVBUF, 256 * 1024);
-                serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+                // optionally, configure the client side options
+                serverSC.setOption(StandardSocketOptions.SO_RCVBUF, 256 * 1024);
+                serverSC.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 
-                // bind the server socket channel to port
-                serverSocketChannel.bind(new InetSocketAddress(PORT));
+                // bind the server socket channel to the port
+                serverSC.bind(new InetSocketAddress(SERVER_PORT));
 
-                // register the current channel with the given selector
-                serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+                // register this channel with the selector
+                serverSC.register(selector, SelectionKey.OP_ACCEPT);
 
-                // display a waiting message while ... waiting!
-                System.out.println("Waiting for connections ...");
+                // waiting for clients
+                System.out.println("Waiting for clients ...");
 
                 while (true) {
-                    // wait for incomming events
+                    // waiting for events
                     selector.select();
 
-                    // there is something to process on selected keys
-                    Iterator keys = selector.selectedKeys().iterator();
+                    // the selected keys have something to be processed
+                    Iterator itkeys = selector.selectedKeys().iterator();
 
-                    while (keys.hasNext()) {
-                        SelectionKey key = (SelectionKey) keys.next();
+                    while (itkeys.hasNext()) {
+                        SelectionKey selkey = (SelectionKey) itkeys.next();
 
-                        // prevent the same key from coming up again
-                        keys.remove();
+                        // avoid processing the same key twice
+                        itkeys.remove();
 
-                        if (!key.isValid()) {
+                        if (!selkey.isValid()) {
                             continue;
                         }
 
-                        if (key.isAcceptable()) {
-                            acceptOP(key, selector);
-                        } else if (key.isReadable()) {
-                            this.readOP(key);
-                        } else if (key.isWritable()) {
-                            this.writeOP(key);
+                        if (selkey.isAcceptable()) {
+                            acceptOperation(selkey, selector);
+                        } else if (selkey.isReadable()) {
+                            this.readOperation(selkey);
+                        } else if (selkey.isWritable()) {
+                            this.writeOperation(selkey);
                         }
                     }
                 }
             } else {
-                System.out.println("The server socket channel or selector cannot be opened!");
+                System.out.println("Cannot open the selector/channel");
             }
         } catch (IOException ex) {
             System.err.println(ex);
@@ -81,84 +81,86 @@ public class Main {
         }
     }
 
-    // isAcceptable returned true
-    private void acceptOP(SelectionKey key, Selector selector) throws IOException {
+    // isAcceptable = true
+    private void acceptOperation(SelectionKey selkey, Selector selector) throws IOException {
 
-        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
-        SocketChannel socketChannel = serverChannel.accept();
-        socketChannel.configureBlocking(false);
+        ServerSocketChannel serverSC = (ServerSocketChannel) selkey.channel();
+        SocketChannel acceptSC = serverSC.accept();
+        acceptSC.configureBlocking(false);
 
-        System.out.println("Incoming connection from: " + socketChannel.getRemoteAddress());
+        System.out.println("New connection: " + acceptSC.getRemoteAddress());
 
-        // write an welcome message
-        socketChannel.write(ByteBuffer.wrap("Hello!\n".getBytes("UTF-8")));
+        // send an welcome message
+        acceptSC.write(ByteBuffer.wrap("Hey !\n".getBytes("UTF-8")));
 
-        // register channel with selector for further I/O
-        keepDataTrack.put(socketChannel, new ArrayList<>());
-        socketChannel.register(selector, SelectionKey.OP_READ);
+        // register the channel with this selector to support more I/O
+        registerTrack.put(acceptSC, new ArrayList<>());
+        acceptSC.register(selector, SelectionKey.OP_READ);
     }
 
-    //isReadable returned true
-    private void readOP(SelectionKey key) {
+    // isReadable = true
+    private void readOperation(SelectionKey selkey) {
         
         try {
-            SocketChannel socketChannel = (SocketChannel) key.channel();
+            SocketChannel socketC = (SocketChannel) selkey.channel();
 
-            buffer.clear();
+            tBuffer.clear();
 
-            int numRead = -1;
+            int byteRead = -1;
             try {
-                numRead = socketChannel.read(buffer);
+                byteRead = socketC.read(tBuffer);
             } catch (IOException e) {
-                System.err.println("Cannot read error!");
+                System.err.println("Read error!");
                 // handle exception
             }
 
-            if (numRead == -1) {
-                this.keepDataTrack.remove(socketChannel);
-                System.out.println("Connection closed by: " + socketChannel.getRemoteAddress());
-                socketChannel.close();
-                key.cancel();
+            if (byteRead == -1) {
+                this.registerTrack.remove(socketC);
+                
+                System.out.println("Connection was closed by: " + socketC.getRemoteAddress());
+                
+                socketC.close();
+                selkey.cancel();
+                
                 return;
             }
 
-            byte[] data = new byte[numRead];
-            System.arraycopy(buffer.array(), 0, data, 0, numRead);
-            System.out.println(new String(data, "UTF-8") 
-                    + " from " + socketChannel.getRemoteAddress());
+            byte[] byteData = new byte[byteRead];
+            System.arraycopy(tBuffer.array(), 0, byteData, 0, byteRead);
+            System.out.println(new String(byteData, "UTF-8") + " from " + socketC.getRemoteAddress());
 
-            // write back to client
-            doEchoJob(key, data);
+            // send the bytes back to client
+            doEchoTask(selkey, byteData);
         } catch (IOException ex) {
             System.err.println(ex);
             // handle exception
         }
     }
 
-    // isWritable returned true
-    private void writeOP(SelectionKey key) throws IOException {
+    // isWritable = true
+    private void writeOperation(SelectionKey selkey) throws IOException {
 
-        SocketChannel socketChannel = (SocketChannel) key.channel();
+        SocketChannel socketC = (SocketChannel) selkey.channel();
 
-        List<byte[]> channelData = keepDataTrack.get(socketChannel);
-        Iterator<byte[]> its = channelData.iterator();
+        List<byte[]> channelByteData = registerTrack.get(socketC);
+        Iterator<byte[]> iter = channelByteData.iterator();
 
-        while (its.hasNext()) {
-            byte[] it = its.next();
-            its.remove();
-            socketChannel.write(ByteBuffer.wrap(it));
+        while (iter.hasNext()) {
+            byte[] itb = iter.next();
+            iter.remove();
+            socketC.write(ByteBuffer.wrap(itb));
         }
 
-        key.interestOps(SelectionKey.OP_READ);
+        selkey.interestOps(SelectionKey.OP_READ);
     }
 
-    private void doEchoJob(SelectionKey key, byte[] data) {
+    private void doEchoTask(SelectionKey selkey, byte[] dataByte) {
         
-        SocketChannel socketChannel = (SocketChannel) key.channel();
-        List<byte[]> channelData = keepDataTrack.get(socketChannel);
-        channelData.add(data);
+        SocketChannel socketC = (SocketChannel) selkey.channel();
+        List<byte[]> channelByteData = registerTrack.get(socketC);
+        channelByteData.add(dataByte);
 
-        key.interestOps(SelectionKey.OP_WRITE);
+        selkey.interestOps(SelectionKey.OP_WRITE);
     }
 
     public static void main(String[] args) {

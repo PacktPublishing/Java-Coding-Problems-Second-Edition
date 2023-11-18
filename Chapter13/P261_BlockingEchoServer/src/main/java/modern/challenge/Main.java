@@ -9,48 +9,48 @@ import java.nio.channels.SocketChannel;
 
 public class Main {
 
-    private static final int PORT = 5555;
-    private static final String IP = "127.0.0.1";
+    private static final int SERVER_PORT = 4444;
+    private static final String SERVER_IP = "127.0.0.1";
 
     public static void main(String[] args) {
 
-        ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+        ByteBuffer tBuffer = ByteBuffer.allocateDirect(1024);
 
-        // create a new server-socket channel
-        try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
+        // open a brand new server socket channel
+        try (ServerSocketChannel serverSC = ServerSocketChannel.open()) {
 
-            // continue if it was successfully created
-            if (serverSocketChannel.isOpen()) {
+            // server socket channel was created
+            if (serverSC.isOpen()) {
 
-                // set the blocking mode
-                serverSocketChannel.configureBlocking(true);
+                // configure the blocking mode
+                serverSC.configureBlocking(true);
                 
-                // set some options
-                serverSocketChannel.setOption(StandardSocketOptions.SO_RCVBUF, 4 * 1024);
-                serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+                // optionally, configure the server side options
+                serverSC.setOption(StandardSocketOptions.SO_RCVBUF, 4 * 1024);
+                serverSC.setOption(StandardSocketOptions.SO_REUSEADDR, true);
                 
-                // bind the server-socket channel to local address
-                serverSocketChannel.bind(new InetSocketAddress(IP, PORT));
+                // bind the server socket channel to local address
+                serverSC.bind(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 
-                // display a waiting message while ... waiting clients
-                System.out.println("Waiting for connections ...");
+                // waiting for clients
+                System.out.println("Waiting for clients ...");
 
-                // wait for incoming connections
+                // ready to accept incoming connections
                 while (true) {
-                    try (SocketChannel socketChannel = serverSocketChannel.accept()) {
-                        System.out.println("Incoming connection from: " + socketChannel.getRemoteAddress());
+                    try (SocketChannel acceptSC = serverSC.accept()) {
+                        System.out.println("New connection: " + acceptSC.getRemoteAddress());
 
-                        // transmitting data
-                        while (socketChannel.read(buffer) != -1) {
+                        // sending data
+                        while (acceptSC.read(tBuffer) != -1) {
 
-                            buffer.flip();                            
+                            tBuffer.flip();                            
 
-                            socketChannel.write(buffer);
+                            acceptSC.write(tBuffer);
 
-                            if (buffer.hasRemaining()) {
-                                buffer.compact();
+                            if (tBuffer.hasRemaining()) {
+                                tBuffer.compact();
                             } else {
-                                buffer.clear();
+                                tBuffer.clear();
                             }
                         }
                     } catch (IOException ex) {
@@ -58,7 +58,7 @@ public class Main {
                     }
                 }
             } else {
-                System.out.println("The server socket channel cannot be opened!");
+                System.out.println("Server socket channel unavailable!");
             }
         } catch (IOException ex) {
             System.err.println(ex);
