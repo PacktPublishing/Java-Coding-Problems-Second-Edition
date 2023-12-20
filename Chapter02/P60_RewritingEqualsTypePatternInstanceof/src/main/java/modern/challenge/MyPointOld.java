@@ -1,6 +1,6 @@
 package modern.challenge;
 
-public class MyPointOld {
+public final class MyPointOld {
     
     private final int x;
     private final int y;

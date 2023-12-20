@@ -16,7 +16,7 @@ public class Charsets {
 
         String binary = str.chars()
                 .mapToObj(Integer::toBinaryString)
-                .map(t -> "0" + (String) t)
+                .map(t -> "0" + t)
                 .collect(Collectors.joining(" "));
 
         return binary;

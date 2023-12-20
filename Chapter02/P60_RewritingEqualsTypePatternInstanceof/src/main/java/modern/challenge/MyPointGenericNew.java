@@ -2,7 +2,7 @@ package modern.challenge;
 
 import java.util.Objects;
 
-public class MyPointGenericNew<E> {
+public final class MyPointGenericNew<E> {
     
     private final E x;
     private final E y;
