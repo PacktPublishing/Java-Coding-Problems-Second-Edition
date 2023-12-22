@@ -14,7 +14,7 @@ public final class DateCheckers {
         throw new AssertionError("Cannot be instantiated");
     }
     
-    public static String firstDayOfYearV1(int year, boolean name) {
+    public static String fetchFirstDayOfYearV1(int year, boolean name) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -29,7 +29,7 @@ public final class DateCheckers {
         return new SimpleDateFormat("EEEE").format(firstDay);
     }
     
-    public static String firstDayOfYearV2(int year, boolean name) {
+    public static String fetchFirstDayOfYearV2(int year, boolean name) {
 
         LocalDate ld = LocalDate.ofYearDay(year, 1);
         LocalDate firstDay = ld.with(firstDayOfYear());
@@ -41,7 +41,7 @@ public final class DateCheckers {
         return DateTimeFormatter.ofPattern("EEEE").format(firstDay);
     }
 
-    public static String lastDayOfYearV1(int year, boolean name) {
+    public static String fetchLastDayOfYearV1(int year, boolean name) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -56,7 +56,7 @@ public final class DateCheckers {
         return new SimpleDateFormat("EEEE").format(lastDay);
     }
 
-    public static String lastDayOfYearV2(int year, boolean name) {
+    public static String fetchLastDayOfYearV2(int year, boolean name) {
 
         LocalDate ld = LocalDate.ofYearDay(year, 31);
         LocalDate lastDay = ld.with(lastDayOfYear());

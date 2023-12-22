@@ -7,10 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] weekdays = new DateFormatSymbols().getWeekdays();
+        String[] weekdays = new DateFormatSymbols().getWeekdays();                
         
-        IntStream.range(0, weekdays.length)
-                 .filter(t -> !weekdays[t].isBlank())
+        IntStream.range(1, weekdays.length)                 
                  .mapToObj(t -> String.format("Day: %d -> %s", t, weekdays[t]))
                  .forEach(System.out::println);          
     }
