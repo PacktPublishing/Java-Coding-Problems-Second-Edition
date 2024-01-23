@@ -1,7 +1,6 @@
 package modern.challenge;
 
 import java.io.IOException;
-import java.io.ObjectInputFilter;
 import java.io.ObjectInputFilter.Status;
 import java.util.Arrays;
 
