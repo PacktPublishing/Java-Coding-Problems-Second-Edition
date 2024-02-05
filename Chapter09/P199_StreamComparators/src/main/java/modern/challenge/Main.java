@@ -2,6 +2,8 @@ package modern.challenge;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
 import java.util.List;
 
 public class Main {
@@ -156,6 +158,17 @@ public class Main {
                         Comparator.nullsLast(
                                 (s1, s2) -> Character.compare(s1.charAt(s1.length() - 1), 
                                         s2.charAt(s2.length() - 1)))))
+                .forEach(System.out::println);
+        
+         System.out.println();
+         
+        // same result as the previous example but more readable
+        Comparator<String> byCharAt = nullsLast(
+                                (s1, s2) -> Character.compare(s1.charAt(s1.length() - 1), 
+                                        s2.charAt(s2.length() - 1)));
+        Comparator<Car> byFuelAndCharAt = comparing(Car::getFuel, byCharAt);
+        cars.stream()
+                .sorted(byFuelAndCharAt)
                 .forEach(System.out::println);
     }
 }
