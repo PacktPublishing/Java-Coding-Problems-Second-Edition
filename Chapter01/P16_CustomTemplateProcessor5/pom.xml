@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>java.modern.challenge</groupId>
-    <artifactId>P16_CustomTemplateProcessor4</artifactId>
+    <artifactId>P16_CustomTemplateProcessor5</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
@@ -10,17 +10,9 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         
-        <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
-        <jackson.version>2.9.7</jackson.version>
+        <maven.compiler.plugin>3.6.1</maven.compiler.plugin>        
     </properties>
-    <name>P16_CustomTemplateProcessor4</name>
-    <dependencies>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-    </dependencies>
+    <name>P16_CustomTemplateProcessor5</name>    
     <build>
         <plugins>
             <plugin>
