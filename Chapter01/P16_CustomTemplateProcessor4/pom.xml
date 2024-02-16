@@ -11,7 +11,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         
         <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
     </properties>
     <name>P16_CustomTemplateProcessor4</name>
     <dependencies>
