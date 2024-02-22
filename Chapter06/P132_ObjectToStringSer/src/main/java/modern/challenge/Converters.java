@@ -14,17 +14,14 @@ public final class Converters {
         throw new AssertionError("Cannot be instantiated");
     }
 
-    public static String objectToString(Serializable obj) throws IOException {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    public static String objectToString(Serializable obj) throws IOException {       
         
-        try ( ObjectOutputStream ois = new ObjectOutputStream(baos)) {
+        try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream ois = new ObjectOutputStream(baos)) {
             ois.writeObject(obj);
-        }
-        
-        baos.close();
-
-        return Base64.getEncoder().encodeToString(baos.toByteArray());
+            
+            return Base64.getEncoder().encodeToString(baos.toByteArray());
+        }                
     }
 
     public static Object stringToObject(String obj) 
