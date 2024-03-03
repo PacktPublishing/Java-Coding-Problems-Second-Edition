@@ -71,14 +71,14 @@ public class Main {
                 + "(however, think twice if you really need to use escape sequences):");
         
         String txt2 = """
-                       \b\bShe told me\n
+                        \b\bShe told me\n
                       \t""I have no idea what's going on"" 
                       """;
         System.out.println(txt2);
         System.out.println();
         
         String txt3 = """
-                       She told me
+                      She told me
                       
                               ""I have no idea what's going on"" 
                       """;
