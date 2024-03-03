@@ -1,3 +1,3 @@
-module P44_XlintDefaultConstructor {
+module P48_XlintDefaultConstructor {
     exports modern.challenge;
 }      
