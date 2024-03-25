@@ -53,7 +53,7 @@ public class Main {
 
         IntVector v2;
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment segment = arena.allocateFrom(
+            MemorySegment segment = arena.allocateFrom( // JDK 22
                     ValueLayout.JAVA_INT, 11, 21, 12, 7, 33, 1, 3, 6);
 
             v2 = IntVector.fromMemorySegment(VS256, segment, 0, ByteOrder.nativeOrder());
@@ -63,7 +63,7 @@ public class Main {
 
         IntVector v3;
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment segment = arena.allocateFrom(
+            MemorySegment segment = arena.allocateFrom( // JDK 22
                     ValueLayout.JAVA_INT, new int[]{11, 21, 12, 7, 33, 1, 3, 6});
 
             v3 = IntVector.fromMemorySegment(VS256, segment, 0, ByteOrder.nativeOrder());
