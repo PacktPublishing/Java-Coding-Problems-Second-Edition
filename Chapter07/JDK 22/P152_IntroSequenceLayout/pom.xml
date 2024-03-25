@@ -8,8 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
-        <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
+        <maven.compiler.target>22</maven.compiler.target>        
     </properties>
     <name>P152_IntroSequenceLayout</name>    
 </project>
